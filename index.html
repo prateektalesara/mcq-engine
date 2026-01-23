@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APT MCQ Engine</title>
+    <title>React MCQ Engine</title>
 
     <!-- React & ReactDOM -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -84,7 +84,8 @@
             ),
             'play': (<polygon points="5 3 19 12 5 21 5 3" />),
             'info': (<g><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></g>),
-            'search': (<g><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></g>)
+            'search': (<g><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></g>),
+            'history': (<g><path d="M3 3v5h5" /><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8" /><path d="M12 7v5l4 2" /></g>)
         };
 
         const Icon = ({ name, className = "" }) => {
@@ -95,6 +96,24 @@
                     {content}
                 </svg>
             );
+        };
+
+        const calculateStats = (paper, userAnswers) => {
+            let correct = 0, wrong = 0, unattempted = 0, attempted = 0;
+            paper.questions.forEach(q => {
+                const uAns = userAnswers[q.id] || [];
+                if (uAns.length === 0) {
+                    unattempted++;
+                } else {
+                    attempted++;
+                    const sortedU = [...uAns].sort();
+                    const sortedC = [...q.correctIndices].sort();
+                    if (JSON.stringify(sortedU) === JSON.stringify(sortedC)) correct++;
+                    else wrong++;
+                }
+            });
+            const percentage = Math.round((correct / paper.questions.length) * 100);
+            return { correct, wrong, unattempted, attempted, total: paper.questions.length, percentage };
         };
 
         // --- 1. SAMPLE DATA ---
@@ -149,8 +168,11 @@
         // --- 2. INDEXEDDB UTILS ---
         const DB_CONFIG = {
             name: 'QuizMasterDB',
-            version: 1,
-            store: 'papers'
+            version: 2,
+            stores: {
+                papers: 'papers',
+                attempts: 'attempts'
+            }
         };
 
         const SimpleDB = {
@@ -159,8 +181,12 @@
                     const request = indexedDB.open(DB_CONFIG.name, DB_CONFIG.version);
                     request.onupgradeneeded = (event) => {
                         const db = event.target.result;
-                        if (!db.objectStoreNames.contains(DB_CONFIG.store)) {
-                            db.createObjectStore(DB_CONFIG.store, { keyPath: 'id' });
+                        if (!db.objectStoreNames.contains('papers')) {
+                            db.createObjectStore('papers', { keyPath: 'id' });
+                        }
+                        if (!db.objectStoreNames.contains('attempts')) {
+                            const store = db.createObjectStore('attempts', { keyPath: 'id', autoIncrement: true });
+                            store.createIndex('paperId', 'paperId', { unique: false });
                         }
                     };
                     request.onsuccess = () => resolve(request.result);
@@ -168,31 +194,42 @@
                 });
             },
 
-            async getAll() {
+            async getAll(storeName) {
                 const db = await this.getDB();
                 return new Promise((resolve, reject) => {
-                    const tx = db.transaction(DB_CONFIG.store, 'readonly');
-                    const request = tx.objectStore(DB_CONFIG.store).getAll();
+                    const tx = db.transaction(storeName, 'readonly');
+                    const request = tx.objectStore(storeName).getAll();
                     request.onsuccess = () => resolve(request.result);
                     request.onerror = () => reject(request.error);
                 });
             },
 
-            async put(item) {
+            async put(storeName, item) {
                 const db = await this.getDB();
                 return new Promise((resolve, reject) => {
-                    const tx = db.transaction(DB_CONFIG.store, 'readwrite');
-                    const request = tx.objectStore(DB_CONFIG.store).put(item);
+                    const tx = db.transaction(storeName, 'readwrite');
+                    const request = tx.objectStore(storeName).put(item);
                     request.onsuccess = () => resolve(request.result);
                     request.onerror = () => reject(request.error);
                 });
             },
 
-            async get(id) {
+            async get(storeName, id) {
                 const db = await this.getDB();
                 return new Promise((resolve, reject) => {
-                    const tx = db.transaction(DB_CONFIG.store, 'readonly');
-                    const request = tx.objectStore(DB_CONFIG.store).get(id);
+                    const tx = db.transaction(storeName, 'readonly');
+                    const request = tx.objectStore(storeName).get(id);
+                    request.onsuccess = () => resolve(request.result);
+                    request.onerror = () => reject(request.error);
+                });
+            },
+
+            async getAllFromIndex(storeName, indexName, value) {
+                const db = await this.getDB();
+                return new Promise((resolve, reject) => {
+                    const tx = db.transaction(storeName, 'readonly');
+                    const index = tx.objectStore(storeName).index(indexName);
+                    const request = index.getAll(value);
                     request.onsuccess = () => resolve(request.result);
                     request.onerror = () => reject(request.error);
                 });
@@ -203,22 +240,22 @@
         const QuizService = {
             async init() {
                 // Check if DB has data, if not seed with MOCK_DB
-                const existing = await SimpleDB.getAll();
+                const existing = await SimpleDB.getAll('papers');
                 if (existing.length === 0) {
                     console.log("Initializing DB with seed data...");
                     for (const p of MOCK_DB) {
-                        await SimpleDB.put(p);
+                        await SimpleDB.put('papers', p);
                     }
                 }
             },
 
             async getAvailablePapers() {
                 await this.init();
-                return await SimpleDB.getAll();
+                return await SimpleDB.getAll('papers');
             },
 
             async getPaperById(id) {
-                const paper = await SimpleDB.get(id);
+                const paper = await SimpleDB.get('papers', id);
                 if (!paper) throw new Error("Paper not found");
                 return paper;
             },
@@ -233,13 +270,21 @@
                     }
 
                     // Idempotent Save (put upserts/overwrites based on 'id')
-                    await SimpleDB.put(paper);
+                    await SimpleDB.put('papers', paper);
                     return true;
                 } catch (e) {
                     console.error("Upload failed", e);
                     alert("Upload failed: " + e.message);
                     return false;
                 }
+            },
+
+            async saveAttempt(attemptData) {
+                return await SimpleDB.put('attempts', attemptData);
+            },
+
+            async getAttemptsByPaper(paperId) {
+                return await SimpleDB.getAllFromIndex('attempts', 'paperId', paperId);
             }
         };
 
@@ -279,8 +324,100 @@
             );
         };
 
+        // View: Attempts History
+        const AttemptsView = ({ paperId, onBack, onNewAttempt }) => {
+            const [attempts, setAttempts] = useState([]);
+            const [loading, setLoading] = useState(true);
+            const [paperTitle, setPaperTitle] = useState("");
+
+            useEffect(() => {
+                const loadData = async () => {
+                    try {
+                        const paper = await QuizService.getPaperById(paperId);
+                        setPaperTitle(paper.title);
+                        const history = await QuizService.getAttemptsByPaper(paperId);
+                        // Sort by latest first
+                        history.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                        setAttempts(history);
+                    } catch (e) {
+                        console.error(e);
+                    } finally {
+                        setLoading(false);
+                    }
+                };
+                loadData();
+            }, [paperId]);
+
+            if (loading) return <div className="flex items-center justify-center h-screen text-slate-500">Loading history...</div>;
+
+            return (
+                <div className="max-w-4xl mx-auto p-6 fade-in">
+                    <header className="flex justify-between items-center mb-8">
+                        <div>
+                            <h1 className="text-2xl font-bold text-slate-800">Attempt History</h1>
+                            <p className="text-slate-500">{paperTitle}</p>
+                        </div>
+                        <button onClick={onBack} className="text-slate-600 hover:text-slate-900 font-medium flex items-center gap-2">
+                            <Icon name="chevron-left" className="w-4 h-4" /> Back to Dashboard
+                        </button>
+                    </header>
+
+                    {attempts.length === 0 ? (
+                        <div className="text-center py-12 bg-white rounded-xl border border-slate-200 shadow-sm">
+                            <div className="bg-slate-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <Icon name="history" className="w-8 h-8 text-slate-400" />
+                            </div>
+                            <h3 className="text-lg font-medium text-slate-800 mb-2">No attempts yet</h3>
+                            <p className="text-slate-500 mb-6">You haven't attempted this quiz yet.</p>
+                            <button onClick={onNewAttempt} className="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition">
+                                Start First Attempt
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                            <div className="grid grid-cols-4 bg-slate-50 p-4 border-b border-slate-200 font-semibold text-sm text-slate-600 uppercase tracking-wider">
+                                <div className="col-span-2">Date & Time</div>
+                                <div className="text-center">Score</div>
+                                <div className="text-center">Outcome</div>
+                            </div>
+                            <div className="divide-y divide-slate-100">
+                                {attempts.map((attempt) => (
+                                    <div key={attempt.id} className="grid grid-cols-4 p-4 hover:bg-slate-50 transition items-center">
+                                        <div className="col-span-2">
+                                            <div className="font-medium text-slate-800">
+                                                {new Date(attempt.timestamp).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' })}
+                                            </div>
+                                            <div className="text-sm text-slate-500">
+                                                {new Date(attempt.timestamp).toLocaleTimeString()}
+                                            </div>
+                                        </div>
+                                        <div className="text-center">
+                                            <div className="text-xl font-bold text-slate-800">{attempt.stats.percentage}%</div>
+                                            <div className="text-xs text-slate-500">{attempt.stats.correct}/{attempt.stats.total} Correct</div>
+                                        </div>
+                                        <div className="text-center flex justify-center">
+                                            {attempt.stats.percentage >= 70 ? (
+                                                <span className="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-bold">Passed</span>
+                                            ) : (
+                                                <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-bold">Failed</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="p-4 bg-slate-50 border-t border-slate-200 text-right">
+                                <button onClick={onNewAttempt} className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition flex items-center gap-2 ml-auto">
+                                    <Icon name="play" className="w-4 h-4" /> New Attempt
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
         // View: Home
-        const HomeView = ({ onSelectPaper, onUpload }) => {
+        const HomeView = ({ onSelectPaper, onViewAttempts, onUpload }) => {
             const [papers, setPapers] = useState([]);
             const [loading, setLoading] = useState(true);
             const [searchTerm, setSearchTerm] = useState("");
@@ -360,17 +497,16 @@
                                         <span className="flex items-center gap-1"><Icon name="book-open" className="w-3 h-3" /> {paper.questions.length} Qs</span>
                                     </div>
                                 </div>
-                                <button onClick={() => onSelectPaper(paper.id)} className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold flex items-center justify-center gap-2 transition">
-                                    <Icon name="play" className="w-4 h-4" /> Start Quiz
-                                </button>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <button onClick={() => onViewAttempts(paper.id)} className="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium text-sm flex items-center justify-center gap-2 transition">
+                                        <Icon name="history" className="w-4 h-4" /> Attempts
+                                    </button>
+                                    <button onClick={() => onSelectPaper(paper.id)} className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium text-sm flex items-center justify-center gap-2 transition">
+                                        <Icon name="play" className="w-4 h-4" /> Start
+                                    </button>
+                                </div>
                             </div>
                         ))}
-
-                        {filteredPapers.length === 0 && searchTerm && (
-                            <div className="col-span-1 md:col-span-2 text-center py-10 text-slate-400">
-                                No papers found matching "{searchTerm}"
-                            </div>
-                        )}
                     </div>
                 </div>
             );
@@ -403,7 +539,6 @@
             };
 
             const handleSubmitClick = () => {
-                // If user clicks Submit, we show a confirmation inline (safer than window.confirm)
                 setShowConfirm(true);
             };
 
@@ -501,22 +636,7 @@
         const ResultView = ({ paper, userAnswers, onHome }) => {
             const [activeQIndex, setActiveQIndex] = useState(0);
 
-            const stats = useMemo(() => {
-                let correct = 0, wrong = 0, unattempted = 0, attempted = 0;
-                paper.questions.forEach(q => {
-                    const uAns = userAnswers[q.id] || [];
-                    if (uAns.length === 0) {
-                        unattempted++;
-                    } else {
-                        attempted++;
-                        const sortedU = [...uAns].sort();
-                        const sortedC = [...q.correctIndices].sort();
-                        if (JSON.stringify(sortedU) === JSON.stringify(sortedC)) correct++;
-                        else wrong++;
-                    }
-                });
-                return { correct, wrong, unattempted, attempted, total: paper.questions.length };
-            }, [paper, userAnswers]);
+            const stats = useMemo(() => calculateStats(paper, userAnswers), [paper, userAnswers]);
 
             const getQuestionStatus = (q) => {
                 const uAns = userAnswers[q.id] || [];
@@ -529,7 +649,6 @@
             const activeQ = paper.questions[activeQIndex];
             const activeStatus = getQuestionStatus(activeQ);
 
-            // Generate the correct answer string for the explanation box
             const correctAnswerText = activeQ.correctIndices.map(i => activeQ.options[i]).join(", ");
 
             return (
@@ -544,7 +663,7 @@
                     <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
                         <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
                             <div className="text-slate-500 text-sm font-medium mb-1">Score</div>
-                            <div className="text-3xl font-bold text-slate-800">{Math.round((stats.correct / stats.total) * 100)}%</div>
+                            <div className="text-3xl font-bold text-slate-800">{stats.percentage}%</div>
                         </div>
                         <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
                             <div className="text-blue-600 text-sm font-medium mb-1">Attempted</div>
@@ -649,9 +768,10 @@
         };
 
         const App = () => {
-            const [view, setView] = useState('home');
+            const [view, setView] = useState('home'); // home | quiz | results | attempts
             const [currentPaper, setCurrentPaper] = useState(null);
             const [finalAnswers, setFinalAnswers] = useState(null);
+            const [viewAttemptsId, setViewAttemptsId] = useState(null);
 
             const startQuiz = async (paperId) => {
                 const paper = await QuizService.getPaperById(paperId);
@@ -659,8 +779,21 @@
                 setView('quiz');
             };
 
-            const submitQuiz = (answers) => {
+            const viewAttempts = (paperId) => {
+                setViewAttemptsId(paperId);
+                setView('attempts');
+            };
+
+            const submitQuiz = async (answers) => {
                 setFinalAnswers(answers);
+                // Calculate stats immediately to save attempt
+                const stats = calculateStats(currentPaper, answers);
+                const attemptData = {
+                    paperId: currentPaper.id,
+                    timestamp: new Date().toISOString(),
+                    stats: stats
+                };
+                await QuizService.saveAttempt(attemptData);
                 setView('results');
             };
 
@@ -668,9 +801,10 @@
 
             return (
                 <div>
-                    {view === 'home' && <HomeView onSelectPaper={startQuiz} onUpload={handleUpload} />}
+                    {view === 'home' && <HomeView onSelectPaper={startQuiz} onViewAttempts={viewAttempts} onUpload={handleUpload} />}
                     {view === 'quiz' && <QuizTaker paper={currentPaper} onSubmit={submitQuiz} />}
                     {view === 'results' && <ResultView paper={currentPaper} userAnswers={finalAnswers} onHome={() => setView('home')} />}
+                    {view === 'attempts' && <AttemptsView paperId={viewAttemptsId} onBack={() => setView('home')} onNewAttempt={() => startQuiz(viewAttemptsId)} />}
                 </div>
             );
         };
