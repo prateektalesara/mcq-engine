@@ -83,7 +83,8 @@
                 <g><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></g>
             ),
             'play': (<polygon points="5 3 19 12 5 21 5 3" />),
-            'info': (<g><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></g>)
+            'info': (<g><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></g>),
+            'search': (<g><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></g>)
         };
 
         const Icon = ({ name, className = "" }) => {
@@ -145,32 +146,104 @@
             }
         ];
 
-        // --- 2. SERVICE ---
-        const QuizService = {
-            _localStore: [...MOCK_DB],
-            async getAvailablePapers() {
-                return new Promise(resolve => setTimeout(() => resolve(this._localStore), 400));
-            },
-            async getPaperById(id) {
+        // --- 2. INDEXEDDB UTILS ---
+        const DB_CONFIG = {
+            name: 'QuizMasterDB',
+            version: 1,
+            store: 'papers'
+        };
+
+        const SimpleDB = {
+            async getDB() {
                 return new Promise((resolve, reject) => {
-                    const paper = this._localStore.find(p => p.id === id);
-                    setTimeout(() => paper ? resolve(JSON.parse(JSON.stringify(paper))) : reject("Paper not found"), 300);
+                    const request = indexedDB.open(DB_CONFIG.name, DB_CONFIG.version);
+                    request.onupgradeneeded = (event) => {
+                        const db = event.target.result;
+                        if (!db.objectStoreNames.contains(DB_CONFIG.store)) {
+                            db.createObjectStore(DB_CONFIG.store, { keyPath: 'id' });
+                        }
+                    };
+                    request.onsuccess = () => resolve(request.result);
+                    request.onerror = (e) => reject(e);
                 });
             },
-            addPaper(jsonContent) {
+
+            async getAll() {
+                const db = await this.getDB();
+                return new Promise((resolve, reject) => {
+                    const tx = db.transaction(DB_CONFIG.store, 'readonly');
+                    const request = tx.objectStore(DB_CONFIG.store).getAll();
+                    request.onsuccess = () => resolve(request.result);
+                    request.onerror = () => reject(request.error);
+                });
+            },
+
+            async put(item) {
+                const db = await this.getDB();
+                return new Promise((resolve, reject) => {
+                    const tx = db.transaction(DB_CONFIG.store, 'readwrite');
+                    const request = tx.objectStore(DB_CONFIG.store).put(item);
+                    request.onsuccess = () => resolve(request.result);
+                    request.onerror = () => reject(request.error);
+                });
+            },
+
+            async get(id) {
+                const db = await this.getDB();
+                return new Promise((resolve, reject) => {
+                    const tx = db.transaction(DB_CONFIG.store, 'readonly');
+                    const request = tx.objectStore(DB_CONFIG.store).get(id);
+                    request.onsuccess = () => resolve(request.result);
+                    request.onerror = () => reject(request.error);
+                });
+            }
+        };
+
+        // --- 3. SERVICE ---
+        const QuizService = {
+            async init() {
+                // Check if DB has data, if not seed with MOCK_DB
+                const existing = await SimpleDB.getAll();
+                if (existing.length === 0) {
+                    console.log("Initializing DB with seed data...");
+                    for (const p of MOCK_DB) {
+                        await SimpleDB.put(p);
+                    }
+                }
+            },
+
+            async getAvailablePapers() {
+                await this.init();
+                return await SimpleDB.getAll();
+            },
+
+            async getPaperById(id) {
+                const paper = await SimpleDB.get(id);
+                if (!paper) throw new Error("Paper not found");
+                return paper;
+            },
+
+            async addPaper(jsonContent) {
                 try {
                     const paper = typeof jsonContent === 'string' ? JSON.parse(jsonContent) : jsonContent;
-                    if (!paper.id || !paper.questions) throw new Error("Invalid JSON structure");
-                    this._localStore.push(paper);
+
+                    // Validation
+                    if (!paper.id || !paper.questions || !Array.isArray(paper.questions)) {
+                        throw new Error("Invalid JSON structure: Missing 'id' or 'questions' array.");
+                    }
+
+                    // Idempotent Save (put upserts/overwrites based on 'id')
+                    await SimpleDB.put(paper);
                     return true;
                 } catch (e) {
-                    console.error(e);
+                    console.error("Upload failed", e);
+                    alert("Upload failed: " + e.message);
                     return false;
                 }
             }
         };
 
-        // --- 3. COMPONENTS ---
+        // --- 4. COMPONENTS ---
 
         // Helper: Timer (Optimized with useRef to prevent resets)
         const Timer = ({ duration, onTimeUp, isActive }) => {
@@ -210,44 +283,74 @@
         const HomeView = ({ onSelectPaper, onUpload }) => {
             const [papers, setPapers] = useState([]);
             const [loading, setLoading] = useState(true);
+            const [searchTerm, setSearchTerm] = useState("");
             const fileInputRef = useRef(null);
 
-            useEffect(() => {
+            const loadPapers = useCallback(() => {
+                setLoading(true);
                 QuizService.getAvailablePapers().then(data => {
                     setPapers(data);
                     setLoading(false);
                 });
             }, []);
 
+            useEffect(() => {
+                loadPapers();
+            }, [loadPapers]);
+
             const handleFileChange = (e) => {
                 const file = e.target.files[0];
                 if (!file) return;
                 const reader = new FileReader();
-                reader.onload = (event) => {
-                    if (onUpload(event.target.result)) {
-                        QuizService.getAvailablePapers().then(setPapers);
-                    } else {
-                        alert("Invalid JSON file format.");
+                reader.onload = async (event) => {
+                    const success = await onUpload(event.target.result);
+                    if (success) {
+                        loadPapers();
                     }
                 };
                 reader.readAsText(file);
             };
 
+            // Filter logic
+            const filteredPapers = papers.filter(p => {
+                const term = searchTerm.toLowerCase();
+                return (
+                    (p.title && p.title.toLowerCase().includes(term)) ||
+                    (p.id && p.id.toLowerCase().includes(term))
+                );
+            });
+
             if (loading) return <div className="flex items-center justify-center h-screen text-slate-500">Loading library...</div>;
 
             return (
                 <div className="max-w-4xl mx-auto p-6 fade-in">
-                    <header className="mb-10 text-center">
+                    <header className="mb-8 text-center">
                         <h1 className="text-4xl font-extrabold text-slate-800 mb-2">Quiz Master</h1>
                         <p className="text-slate-500">Select a paper to begin or upload your own.</p>
                     </header>
+
+                    {/* Search Bar */}
+                    <div className="mb-8 relative max-w-md mx-auto">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                            <Icon name="search" className="w-5 h-5" />
+                        </div>
+                        <input
+                            type="text"
+                            placeholder="Search papers by Title or ID..."
+                            className="block w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out shadow-sm"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </div>
+
                     <div className="grid md:grid-cols-2 gap-6">
-                        <div onClick={() => fileInputRef.current.click()} className="border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center text-slate-400 hover:border-blue-500 hover:text-blue-500 hover:bg-blue-50 transition cursor-pointer group">
+                        <div onClick={() => fileInputRef.current.click()} className="border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center text-slate-400 hover:border-blue-500 hover:text-blue-500 hover:bg-blue-50 transition cursor-pointer group h-full">
                             <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept=".json" />
                             <Icon name="upload" className="w-10 h-10 mb-3 group-hover:scale-110 transition-transform" />
                             <span className="font-semibold">Upload .json Paper</span>
                         </div>
-                        {papers.map(paper => (
+
+                        {filteredPapers.map(paper => (
                             <div key={paper.id} className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition flex flex-col justify-between">
                                 <div>
                                     <h3 className="text-xl font-bold text-slate-800 mb-2">{paper.title}</h3>
@@ -262,6 +365,12 @@
                                 </button>
                             </div>
                         ))}
+
+                        {filteredPapers.length === 0 && searchTerm && (
+                            <div className="col-span-1 md:col-span-2 text-center py-10 text-slate-400">
+                                No papers found matching "{searchTerm}"
+                            </div>
+                        )}
                     </div>
                 </div>
             );
