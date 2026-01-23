@@ -1,0 +1,22 @@
+{
+    "id": "quiz-101",
+    "title": "React Fundamentals",
+    "durationMinutes": 10,
+    "questions": [
+        {
+            "id": 1,
+            "text": "What is the virtual DOM?",
+            "options": [
+                "A library",
+                "A programming concept",
+                "A direct copy of the DOM",
+                "A CSS framework"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Think about how React updates the UI efficiently.",
+            "explanation": "The virtual DOM is a concept where a 'virtual' representation of a UI is kept in memory."
+        }
+    ]
+}

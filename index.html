@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React MCQ Engine</title>
+
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Custom scrollbar for better UI */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo, useRef, useCallback } = React;
+
+        // --- 0. UTILS & ICONS ---
+        const ICONS = {
+            'clock': (
+                <g><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></g>
+            ),
+            'check': (<polyline points="20 6 9 17 4 12" />),
+            'check-circle': (
+                <g><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></g>
+            ),
+            'x-circle': (
+                <g><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></g>
+            ),
+            'alert-circle': (
+                <g><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></g>
+            ),
+            'book-open': (
+                <g><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></g>
+            ),
+            'chevron-left': (<polyline points="15 18 9 12 15 6" />),
+            'chevron-right': (<polyline points="9 18 15 12 9 6" />),
+            'upload': (
+                <g><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></g>
+            ),
+            'play': (<polygon points="5 3 19 12 5 21 5 3" />),
+            'info': (<g><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></g>)
+        };
+
+        const Icon = ({ name, className = "" }) => {
+            const content = ICONS[name];
+            if (!content) return null;
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    {content}
+                </svg>
+            );
+        };
+
+        // --- 1. SAMPLE DATA ---
+        const MOCK_DB = [
+            {
+                id: "react-basics-101",
+                title: "React Core Concepts",
+                description: "Test your knowledge on JSX, Components, and Props.",
+                durationMinutes: 5,
+                questions: [
+                    {
+                        id: 1,
+                        text: "What is the primary purpose of `useState` in React?",
+                        options: [
+                            "To handle side effects like API calls",
+                            "To manage local state within a functional component",
+                            "To optimize performance by caching values",
+                            "To share state across the entire application"
+                        ],
+                        correctIndices: [1],
+                        hint: "Think about 'variables' that trigger re-renders.",
+                        explanation: "`useState` is a Hook that lets you add React state to function components. Changes to this state trigger a re-render."
+                    },
+                    {
+                        id: 2,
+                        text: "Which of the following are valid React Hooks? (Select all that apply)",
+                        options: ["useReact", "useEffect", "useContext", "useRouter"],
+                        correctIndices: [1, 2],
+                        hint: "Standard hooks usually start with 'use' and are built into the library.",
+                        explanation: "`useEffect` and `useContext` are built-in React hooks. `useRouter` is common in Next.js but not core React."
+                    },
+                    {
+                        id: 3,
+                        text: "React uses a virtual DOM to optimize rendering.",
+                        options: ["True", "False"],
+                        correctIndices: [0],
+                        hint: "This is one of React's main performance features.",
+                        explanation: "True. React creates a lightweight copy of the DOM (Virtual DOM), compares it with the previous version (diffing), and only updates the real DOM where necessary."
+                    },
+                    {
+                        id: 4,
+                        text: "How do you pass data from a parent to a child component?",
+                        options: ["State", "Props", "Context", "Redux"],
+                        correctIndices: [1],
+                        hint: "It stands for properties.",
+                        explanation: "Props (properties) are the mechanism to pass data down the component tree from parent to child."
+                    }
+                ]
+            }
+        ];
+
+        // --- 2. SERVICE ---
+        const QuizService = {
+            _localStore: [...MOCK_DB],
+            async getAvailablePapers() {
+                return new Promise(resolve => setTimeout(() => resolve(this._localStore), 400));
+            },
+            async getPaperById(id) {
+                return new Promise((resolve, reject) => {
+                    const paper = this._localStore.find(p => p.id === id);
+                    setTimeout(() => paper ? resolve(JSON.parse(JSON.stringify(paper))) : reject("Paper not found"), 300);
+                });
+            },
+            addPaper(jsonContent) {
+                try {
+                    const paper = typeof jsonContent === 'string' ? JSON.parse(jsonContent) : jsonContent;
+                    if (!paper.id || !paper.questions) throw new Error("Invalid JSON structure");
+                    this._localStore.push(paper);
+                    return true;
+                } catch (e) {
+                    console.error(e);
+                    return false;
+                }
+            }
+        };
+
+        // --- 3. COMPONENTS ---
+
+        // Helper: Timer (Optimized with useRef to prevent resets)
+        const Timer = ({ duration, onTimeUp, isActive }) => {
+            const [timeLeft, setTimeLeft] = useState(duration);
+            const savedCallback = useRef(onTimeUp);
+
+            useEffect(() => { savedCallback.current = onTimeUp; }, [onTimeUp]);
+
+            useEffect(() => {
+                if (!isActive) return;
+                const interval = setInterval(() => {
+                    setTimeLeft(t => {
+                        if (t <= 1) {
+                            clearInterval(interval);
+                            savedCallback.current();
+                            return 0;
+                        }
+                        return t - 1;
+                    });
+                }, 1000);
+                return () => clearInterval(interval);
+            }, [isActive]);
+
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            const isUrgent = timeLeft < 60;
+
+            return (
+                <div className={`flex items-center gap-2 font-mono text-xl font-bold px-4 py-2 rounded-lg border ${isUrgent ? 'bg-red-50 text-red-600 border-red-200 animate-pulse' : 'bg-blue-50 text-blue-700 border-blue-200'}`}>
+                    <Icon name="clock" className="w-5 h-5" />
+                    {mins.toString().padStart(2, '0')}:{secs.toString().padStart(2, '0')}
+                </div>
+            );
+        };
+
+        // View: Home
+        const HomeView = ({ onSelectPaper, onUpload }) => {
+            const [papers, setPapers] = useState([]);
+            const [loading, setLoading] = useState(true);
+            const fileInputRef = useRef(null);
+
+            useEffect(() => {
+                QuizService.getAvailablePapers().then(data => {
+                    setPapers(data);
+                    setLoading(false);
+                });
+            }, []);
+
+            const handleFileChange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    if (onUpload(event.target.result)) {
+                        QuizService.getAvailablePapers().then(setPapers);
+                    } else {
+                        alert("Invalid JSON file format.");
+                    }
+                };
+                reader.readAsText(file);
+            };
+
+            if (loading) return <div className="flex items-center justify-center h-screen text-slate-500">Loading library...</div>;
+
+            return (
+                <div className="max-w-4xl mx-auto p-6 fade-in">
+                    <header className="mb-10 text-center">
+                        <h1 className="text-4xl font-extrabold text-slate-800 mb-2">Quiz Master</h1>
+                        <p className="text-slate-500">Select a paper to begin or upload your own.</p>
+                    </header>
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div onClick={() => fileInputRef.current.click()} className="border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center text-slate-400 hover:border-blue-500 hover:text-blue-500 hover:bg-blue-50 transition cursor-pointer group">
+                            <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept=".json" />
+                            <Icon name="upload" className="w-10 h-10 mb-3 group-hover:scale-110 transition-transform" />
+                            <span className="font-semibold">Upload .json Paper</span>
+                        </div>
+                        {papers.map(paper => (
+                            <div key={paper.id} className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition flex flex-col justify-between">
+                                <div>
+                                    <h3 className="text-xl font-bold text-slate-800 mb-2">{paper.title}</h3>
+                                    <p className="text-sm text-slate-500 mb-4">{paper.description || "No description provided."}</p>
+                                    <div className="flex items-center gap-4 text-xs font-medium text-slate-400 mb-6">
+                                        <span className="flex items-center gap-1"><Icon name="clock" className="w-3 h-3" /> {paper.durationMinutes} mins</span>
+                                        <span className="flex items-center gap-1"><Icon name="book-open" className="w-3 h-3" /> {paper.questions.length} Qs</span>
+                                    </div>
+                                </div>
+                                <button onClick={() => onSelectPaper(paper.id)} className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold flex items-center justify-center gap-2 transition">
+                                    <Icon name="play" className="w-4 h-4" /> Start Quiz
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        // View: Quiz Taker
+        const QuizTaker = ({ paper, onSubmit }) => {
+            const [answers, setAnswers] = useState({});
+            const [currentQIndex, setCurrentQIndex] = useState(0);
+            const [showConfirm, setShowConfirm] = useState(false);
+
+            const currentQ = paper.questions[currentQIndex];
+            const isLastQuestion = currentQIndex === paper.questions.length - 1;
+
+            const handleOptionToggle = (qId, optionIdx, isMulti) => {
+                setAnswers(prev => {
+                    const currentSelection = prev[qId] || [];
+                    if (isMulti) {
+                        return currentSelection.includes(optionIdx)
+                            ? { ...prev, [qId]: currentSelection.filter(i => i !== optionIdx) }
+                            : { ...prev, [qId]: [...currentSelection, optionIdx] };
+                    }
+                    return { ...prev, [qId]: [optionIdx] };
+                });
+            };
+
+            const isAnswered = (idx) => {
+                const q = paper.questions[idx];
+                return answers[q.id] && answers[q.id].length > 0;
+            };
+
+            const handleSubmitClick = () => {
+                // If user clicks Submit, we show a confirmation inline (safer than window.confirm)
+                setShowConfirm(true);
+            };
+
+            return (
+                <div className="max-w-5xl mx-auto p-4 md:p-6 h-screen flex flex-col fade-in relative">
+                    {/* Confirmation Modal Overlay */}
+                    {showConfirm && (
+                        <div className="absolute inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center rounded-xl">
+                            <div className="bg-white p-6 rounded-xl shadow-2xl max-w-sm w-full text-center m-4">
+                                <h3 className="text-xl font-bold mb-2">Submit Quiz?</h3>
+                                <p className="text-slate-500 mb-6">You have answered {Object.keys(answers).length} out of {paper.questions.length} questions.</p>
+                                <div className="flex gap-3 justify-center">
+                                    <button onClick={() => setShowConfirm(false)} className="px-4 py-2 border rounded-lg hover:bg-slate-50 font-medium">Cancel</button>
+                                    <button onClick={() => onSubmit(answers)} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium">Yes, Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    <header className="flex justify-between items-center mb-6 bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                        <div>
+                            <h2 className="text-lg font-bold text-slate-800">{paper.title}</h2>
+                            <span className="text-sm text-slate-500">Question {currentQIndex + 1} of {paper.questions.length}</span>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <Timer duration={paper.durationMinutes * 60} isActive={true} onTimeUp={() => onSubmit(answers)} />
+                            <button onClick={handleSubmitClick} className="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2 rounded-lg font-medium transition">
+                                Submit
+                            </button>
+                        </div>
+                    </header>
+
+                    <div className="flex-1 flex gap-6 overflow-hidden">
+                        <main className="flex-1 overflow-y-auto bg-white rounded-xl shadow-sm border border-slate-200 p-8 flex flex-col">
+                            <div className="mb-6">
+                                <h3 className="text-xl md:text-2xl font-semibold text-slate-900 leading-relaxed">{currentQ.text}</h3>
+                                {currentQ.correctIndices.length > 1 && (
+                                    <span className="inline-block mt-2 text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-1 rounded">Multiple Selection</span>
+                                )}
+                            </div>
+
+                            <div className="space-y-3 flex-1">
+                                {currentQ.options.map((opt, idx) => {
+                                    const isSelected = answers[currentQ.id]?.includes(idx);
+                                    return (
+                                        <label key={idx} className={`flex items-center p-4 rounded-lg border-2 cursor-pointer transition ${isSelected ? 'border-blue-500 bg-blue-50' : 'border-slate-100 hover:border-slate-300 hover:bg-slate-50'}`}>
+                                            <div className={`w-6 h-6 rounded flex items-center justify-center border transition ${isSelected ? 'bg-blue-500 border-blue-500 text-white' : 'bg-white border-slate-300'} ${currentQ.correctIndices.length === 1 && 'rounded-full'}`}>
+                                                {isSelected && <Icon name="check" className="w-4 h-4" />}
+                                            </div>
+                                            <input type={currentQ.correctIndices.length > 1 ? "checkbox" : "radio"} name={`q-${currentQ.id}`} className="hidden" checked={isSelected || false} onChange={() => handleOptionToggle(currentQ.id, idx, currentQ.correctIndices.length > 1)} />
+                                            <span className={`ml-4 text-lg ${isSelected ? 'text-blue-900 font-medium' : 'text-slate-700'}`}>{opt}</span>
+                                        </label>
+                                    );
+                                })}
+                            </div>
+
+                            <div className="mt-10 pt-6 border-t border-slate-100 flex justify-between items-center">
+                                <button disabled={currentQIndex === 0} onClick={() => setCurrentQIndex(i => i - 1)} className="px-4 py-2 text-slate-600 disabled:opacity-30 hover:bg-slate-100 rounded-lg flex items-center gap-2">
+                                    <Icon name="chevron-left" className="w-5 h-5" /> Prev
+                                </button>
+
+                                {isLastQuestion ? (
+                                    <button onClick={handleSubmitClick} className="px-6 py-2 bg-green-600 text-white hover:bg-green-700 rounded-lg flex items-center gap-2 font-bold shadow-md transform hover:scale-105 transition">
+                                        Submit Quiz <Icon name="check" className="w-5 h-5" />
+                                    </button>
+                                ) : (
+                                    <button onClick={() => setCurrentQIndex(i => i + 1)} className="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-lg flex items-center gap-2 shadow-sm">
+                                        Next <Icon name="chevron-right" className="w-5 h-5" />
+                                    </button>
+                                )}
+                            </div>
+                        </main>
+
+                        <aside className="w-64 hidden md:flex flex-col bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+                            <h4 className="font-bold text-slate-700 mb-4 text-sm uppercase tracking-wider">Question Map</h4>
+                            <div className="grid grid-cols-4 gap-2 content-start">
+                                {paper.questions.map((q, idx) => (
+                                    <button key={q.id} onClick={() => setCurrentQIndex(idx)} className={`h-10 rounded-lg font-medium text-sm transition ${currentQIndex === idx ? 'ring-2 ring-blue-500 ring-offset-2 bg-blue-100 text-blue-700' : isAnswered(idx) ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
+                                        {idx + 1}
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="mt-auto pt-4 text-xs text-slate-400 flex flex-col gap-2">
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 bg-blue-600 rounded"></div> Answered</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 bg-slate-100 rounded"></div> Pending</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 bg-blue-100 border border-blue-500 rounded"></div> Current</div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            );
+        };
+
+        // View: Results
+        const ResultView = ({ paper, userAnswers, onHome }) => {
+            const [activeQIndex, setActiveQIndex] = useState(0);
+
+            const stats = useMemo(() => {
+                let correct = 0, wrong = 0, unattempted = 0, attempted = 0;
+                paper.questions.forEach(q => {
+                    const uAns = userAnswers[q.id] || [];
+                    if (uAns.length === 0) {
+                        unattempted++;
+                    } else {
+                        attempted++;
+                        const sortedU = [...uAns].sort();
+                        const sortedC = [...q.correctIndices].sort();
+                        if (JSON.stringify(sortedU) === JSON.stringify(sortedC)) correct++;
+                        else wrong++;
+                    }
+                });
+                return { correct, wrong, unattempted, attempted, total: paper.questions.length };
+            }, [paper, userAnswers]);
+
+            const getQuestionStatus = (q) => {
+                const uAns = userAnswers[q.id] || [];
+                if (uAns.length === 0) return 'skipped';
+                const sortedU = [...uAns].sort();
+                const sortedC = [...q.correctIndices].sort();
+                return JSON.stringify(sortedU) === JSON.stringify(sortedC) ? 'correct' : 'wrong';
+            };
+
+            const activeQ = paper.questions[activeQIndex];
+            const activeStatus = getQuestionStatus(activeQ);
+
+            // Generate the correct answer string for the explanation box
+            const correctAnswerText = activeQ.correctIndices.map(i => activeQ.options[i]).join(", ");
+
+            return (
+                <div className="max-w-6xl mx-auto p-4 md:p-8 fade-in min-h-screen flex flex-col">
+                    <div className="flex justify-between items-center mb-8">
+                        <h1 className="text-2xl font-bold text-slate-800">Results: {paper.title}</h1>
+                        <button onClick={onHome} className="text-slate-600 hover:text-slate-900 font-medium flex items-center gap-2">
+                            <Icon name="chevron-left" className="w-4 h-4" /> Back to Home
+                        </button>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+                        <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                            <div className="text-slate-500 text-sm font-medium mb-1">Score</div>
+                            <div className="text-3xl font-bold text-slate-800">{Math.round((stats.correct / stats.total) * 100)}%</div>
+                        </div>
+                        <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                            <div className="text-blue-600 text-sm font-medium mb-1">Attempted</div>
+                            <div className="text-3xl font-bold text-blue-700">{stats.attempted}</div>
+                        </div>
+                        <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
+                            <div className="text-emerald-600 text-sm font-medium mb-1">Correct</div>
+                            <div className="text-3xl font-bold text-emerald-700">{stats.correct}</div>
+                        </div>
+                        <div className="bg-red-50 p-4 rounded-xl border border-red-100">
+                            <div className="text-red-600 text-sm font-medium mb-1">Wrong</div>
+                            <div className="text-3xl font-bold text-red-700">{stats.wrong}</div>
+                        </div>
+                        <div className="bg-slate-100 p-4 rounded-xl border border-slate-200">
+                            <div className="text-slate-500 text-sm font-medium mb-1">Unattempted</div>
+                            <div className="text-3xl font-bold text-slate-600">{stats.unattempted}</div>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col md:flex-row gap-6 flex-1">
+                        <div className="flex-1 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+                            <div className={`p-6 border-b flex items-center gap-3 ${activeStatus === 'correct' ? 'bg-emerald-50 border-emerald-100' : activeStatus === 'wrong' ? 'bg-red-50 border-red-100' : 'bg-slate-50 border-slate-100'}`}>
+                                {activeStatus === 'correct' && <Icon name="check-circle" className="w-6 h-6 text-emerald-600" />}
+                                {activeStatus === 'wrong' && <Icon name="x-circle" className="w-6 h-6 text-red-600" />}
+                                {activeStatus === 'skipped' && <Icon name="alert-circle" className="w-6 h-6 text-slate-400" />}
+                                <span className="font-bold text-lg capitalize text-slate-800">
+                                    Question {activeQIndex + 1}: {activeStatus === 'skipped' ? 'Unattempted' : activeStatus}
+                                </span>
+                            </div>
+
+                            <div className="p-8 overflow-y-auto flex-1">
+                                <h3 className="text-xl font-semibold text-slate-900 mb-6">{activeQ.text}</h3>
+                                <div className="space-y-3 mb-8">
+                                    {activeQ.options.map((opt, idx) => {
+                                        const isSelected = userAnswers[activeQ.id]?.includes(idx);
+                                        const isCorrect = activeQ.correctIndices.includes(idx);
+                                        let baseClass = "p-4 rounded-lg border flex justify-between items-center ";
+                                        if (isCorrect) baseClass += "bg-emerald-50 border-emerald-500 text-emerald-900 font-medium";
+                                        else if (isSelected && !isCorrect) baseClass += "bg-red-50 border-red-400 text-red-900";
+                                        else baseClass += "bg-white border-slate-200 text-slate-500 opacity-70";
+                                        return (
+                                            <div key={idx} className={baseClass}>
+                                                <span>{opt}</span>
+                                                {isCorrect && <span className="text-xs bg-emerald-200 text-emerald-800 px-2 py-1 rounded font-bold">CORRECT</span>}
+                                                {isSelected && !isCorrect && <span className="text-xs bg-red-200 text-red-800 px-2 py-1 rounded font-bold">YOURS</span>}
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+
+                                <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
+                                    <h4 className="flex items-center gap-2 font-bold text-blue-800 mb-2">
+                                        <Icon name="book-open" className="w-4 h-4" /> Explanation
+                                    </h4>
+                                    {activeStatus !== 'correct' && (
+                                        <div className="mb-3 pb-3 border-b border-blue-200">
+                                            <p className="text-sm font-bold text-blue-700 uppercase tracking-wide mb-1">Correct Answer</p>
+                                            <p className="text-blue-900 font-medium">{correctAnswerText}</p>
+                                        </div>
+                                    )}
+                                    <p className="text-blue-900 mb-4">{activeQ.explanation}</p>
+                                    <div className="text-sm text-blue-600 pt-4 border-t border-blue-200"><strong>Hint provided:</strong> {activeQ.hint}</div>
+                                </div>
+                            </div>
+
+                            <div className="p-4 bg-slate-50 border-t border-slate-200 flex justify-between">
+                                <button disabled={activeQIndex === 0} onClick={() => setActiveQIndex(i => i - 1)} className="px-4 py-2 text-slate-600 disabled:opacity-30 hover:bg-white rounded-lg flex items-center gap-2">
+                                    <Icon name="chevron-left" className="w-4 h-4" /> Prev
+                                </button>
+                                <button disabled={activeQIndex === paper.questions.length - 1} onClick={() => setActiveQIndex(i => i + 1)} className="px-4 py-2 bg-slate-800 text-white hover:bg-slate-700 rounded-lg flex items-center gap-2 disabled:opacity-50">
+                                    Next <Icon name="chevron-right" className="w-4 h-4" />
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="w-full md:w-72 bg-white rounded-xl shadow-sm border border-slate-200 p-4 h-fit">
+                            <h4 className="font-bold text-slate-700 mb-4">Question Map</h4>
+                            <div className="grid grid-cols-5 gap-2">
+                                {paper.questions.map((q, idx) => {
+                                    const status = getQuestionStatus(q);
+                                    let colorClass = "";
+                                    if (status === 'correct') colorClass = "bg-emerald-100 text-emerald-700 hover:bg-emerald-200 border-emerald-300";
+                                    else if (status === 'wrong') colorClass = "bg-red-100 text-red-700 hover:bg-red-200 border-red-300";
+                                    else colorClass = "bg-slate-100 text-slate-500 hover:bg-slate-200 border-slate-200";
+                                    if (activeQIndex === idx) colorClass += " ring-2 ring-blue-500 ring-offset-1";
+                                    return (
+                                        <button key={q.id} onClick={() => setActiveQIndex(idx)} className={`h-10 rounded font-bold text-sm border transition ${colorClass}`}>
+                                            {idx + 1}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                            <div className="mt-6 space-y-3 text-xs font-medium text-slate-500 border-t pt-4">
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 bg-emerald-200 border border-emerald-400 rounded"></div> Correct</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 bg-red-200 border border-red-400 rounded"></div> Wrong</div>
+                                <div className="flex items-center gap-2"><div className="w-3 h-3 bg-slate-100 border border-slate-300 rounded"></div> Unattempted</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [view, setView] = useState('home');
+            const [currentPaper, setCurrentPaper] = useState(null);
+            const [finalAnswers, setFinalAnswers] = useState(null);
+
+            const startQuiz = async (paperId) => {
+                const paper = await QuizService.getPaperById(paperId);
+                setCurrentPaper(paper);
+                setView('quiz');
+            };
+
+            const submitQuiz = (answers) => {
+                setFinalAnswers(answers);
+                setView('results');
+            };
+
+            const handleUpload = (jsonString) => QuizService.addPaper(jsonString);
+
+            return (
+                <div>
+                    {view === 'home' && <HomeView onSelectPaper={startQuiz} onUpload={handleUpload} />}
+                    {view === 'quiz' && <QuizTaker paper={currentPaper} onSubmit={submitQuiz} />}
+                    {view === 'results' && <ResultView paper={currentPaper} userAnswers={finalAnswers} onHome={() => setView('home')} />}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
