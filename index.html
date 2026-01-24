@@ -50,22 +50,6 @@
                 transform: translateY(0);
             }
         }
-
-        .modal-enter {
-            animation: modalPop 0.2s ease-out;
-        }
-
-        @keyframes modalPop {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
     </style>
 </head>
 
@@ -74,6 +58,9 @@
 
     <script type="text/babel">
         const { useState, useEffect, useMemo, useRef, useCallback } = React;
+
+        // --- CONFIGURATION ---
+        const REGISTRY_URL = "https://api.npoint.io/7cf881597217124db5d3";
 
         // --- 0. UTILS & ICONS ---
         const ICONS = {
@@ -90,7 +77,8 @@
             'info': (<g><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></g>),
             'search': (<g><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></g>),
             'history': (<g><path d="M3 3v5h5" /><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8" /><path d="M12 7v5l4 2" /></g>),
-            'file-text': (<g><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></g>)
+            'file-text': (<g><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></g>),
+            'settings': (<g><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></g>)
         };
 
         const Icon = ({ name, className = "" }) => {
@@ -173,7 +161,7 @@
         // --- 2. INDEXEDDB UTILS ---
         const DB_CONFIG = {
             name: 'QuizMasterDB',
-            version: 2,
+            version: 4, // BUMPED VERSION TO FORCE REPAIR OF ATTEMPTS STORE
             stores: {
                 papers: 'papers',
                 attempts: 'attempts'
@@ -184,16 +172,33 @@
             async getDB() {
                 return new Promise((resolve, reject) => {
                     const request = indexedDB.open(DB_CONFIG.name, DB_CONFIG.version);
+
                     request.onupgradeneeded = (event) => {
                         const db = event.target.result;
+                        const txn = event.target.transaction;
+
+                        console.log("Upgrading Database to version " + DB_CONFIG.version);
+
+                        // 1. Create/Upgrade Papers Store
                         if (!db.objectStoreNames.contains('papers')) {
                             db.createObjectStore('papers', { keyPath: 'id' });
                         }
+
+                        // 2. Create/Upgrade Attempts Store
+                        let attemptsStore;
                         if (!db.objectStoreNames.contains('attempts')) {
-                            const store = db.createObjectStore('attempts', { keyPath: 'id', autoIncrement: true });
-                            store.createIndex('paperId', 'paperId', { unique: false });
+                            attemptsStore = db.createObjectStore('attempts', { keyPath: 'id', autoIncrement: true });
+                        } else {
+                            attemptsStore = txn.objectStore('attempts');
+                        }
+
+                        // 3. Ensure 'paperId' index exists
+                        if (!attemptsStore.indexNames.contains('paperId')) {
+                            attemptsStore.createIndex('paperId', 'paperId', { unique: false });
+                            console.log("Created 'paperId' index on attempts store");
                         }
                     };
+
                     request.onsuccess = () => resolve(request.result);
                     request.onerror = (e) => reject(e);
                 });
@@ -279,8 +284,62 @@
                 }
             },
 
+            async syncRegistry() {
+                try {
+                    console.log("Fetching registry from:", REGISTRY_URL);
+                    const response = await fetch(REGISTRY_URL);
+                    if (!response.ok) throw new Error(`Network error: ${response.status}`);
+                    const data = await response.json();
+
+                    const list = Array.isArray(data) ? data : (data.papers || [data]);
+
+                    let addedCount = 0;
+
+                    for (const item of list) {
+                        // CASE 1: Full Paper Object
+                        if (item.id && item.questions && Array.isArray(item.questions)) {
+                            await SimpleDB.put('papers', item);
+                            addedCount++;
+                        }
+                        // CASE 2: Pointer to Paper (URL)
+                        else if (item.url) {
+                            try {
+                                console.log(`Fetching linked paper: ${item.title || item.url}`);
+                                const pRes = await fetch(item.url);
+                                if (pRes.ok) {
+                                    const paper = await pRes.json();
+                                    if (paper.id && paper.questions && Array.isArray(paper.questions)) {
+                                        await SimpleDB.put('papers', paper);
+                                        addedCount++;
+                                    }
+                                }
+                            } catch (err) {
+                                console.warn(`Failed to fetch paper from ${item.url}`, err);
+                            }
+                        }
+                    }
+                    console.log(`Synced ${addedCount} papers from registry.`);
+                    return { success: true, count: addedCount };
+                } catch (e) {
+                    console.error("Sync failed", e);
+                    return { success: false, message: e.message };
+                }
+            },
+
             async saveAttempt(attemptData) {
-                return await SimpleDB.put('attempts', attemptData);
+                if (!attemptData.paperId) {
+                    console.error("Cannot save attempt: missing paperId");
+                    return { error: "Missing ID" };
+                }
+                try {
+                    const result = await SimpleDB.put('attempts', attemptData);
+                    console.log("Attempt successfully saved to DB:", result);
+                    return result;
+                } catch (e) {
+                    console.error("DB Save Failed", e);
+                    alert("Failed to save attempt to history. " + e.message);
+                    return null;
+                }
             },
 
             async getAttemptsByPaper(paperId) {
@@ -323,12 +382,11 @@
             );
         };
 
-        // Component: Upload Modal
-        const UploadModal = ({ isOpen, onClose, onUpload }) => {
+        // Component: Admin View (Upload)
+        const AdminView = ({ onBack, onUpload }) => {
             const [jsonText, setJsonText] = useState("");
             const [error, setError] = useState("");
-
-            if (!isOpen) return null;
+            const [successMsg, setSuccessMsg] = useState("");
 
             const handleImport = async () => {
                 if (!jsonText.trim()) {
@@ -341,45 +399,62 @@
                 if (result.success) {
                     setJsonText("");
                     setError("");
-                    onClose();
+                    setSuccessMsg("Paper uploaded successfully to local storage!");
+                    setTimeout(() => setSuccessMsg(""), 3000);
                 } else {
                     setError(result.message || "Invalid JSON structure.");
+                    setSuccessMsg("");
                 }
             };
 
             return (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4 fade-in" onClick={onClose}>
-                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl flex flex-col max-h-[90vh] modal-enter" onClick={e => e.stopPropagation()}>
-                        <div className="p-6 border-b border-slate-100 flex justify-between items-center">
-                            <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
-                                <Icon name="upload" className="w-6 h-6 text-blue-600" /> Import Quiz JSON
-                            </h2>
-                            <button onClick={onClose} className="text-slate-400 hover:text-slate-600 transition">
-                                <Icon name="x-circle" className="w-8 h-8" />
-                            </button>
+                <div className="max-w-4xl mx-auto p-6 fade-in min-h-screen flex flex-col">
+                    <header className="flex justify-between items-center mb-8 border-b border-slate-200 pb-4">
+                        <div className="flex items-center gap-3">
+                            <Icon name="settings" className="w-8 h-8 text-slate-700" />
+                            <h1 className="text-2xl font-bold text-slate-800">Admin Dashboard</h1>
                         </div>
-                        <div className="p-6 flex-1 overflow-hidden flex flex-col">
+                        <button onClick={onBack} className="text-slate-600 hover:text-slate-900 font-medium flex items-center gap-2">
+                            <Icon name="chevron-left" className="w-4 h-4" /> Back to Home
+                        </button>
+                    </header>
+
+                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col overflow-hidden">
+                        <div className="p-6 border-b border-slate-100 bg-slate-50">
+                            <h2 className="text-lg font-bold text-slate-800 mb-1">Import Local Paper</h2>
+                            <p className="text-sm text-slate-500">Paste your quiz JSON below to add it to your browser's local storage.</p>
+                        </div>
+
+                        <div className="p-6 flex-1 flex flex-col">
                             <label className="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-2">
-                                <Icon name="file-text" className="w-4 h-4" /> Paste JSON Content:
+                                <Icon name="file-text" className="w-4 h-4" /> JSON Content:
                             </label>
                             <textarea
-                                className="w-full flex-1 border border-slate-300 rounded-lg p-4 font-mono text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none bg-slate-50 text-slate-700"
+                                className="w-full flex-1 border border-slate-300 rounded-lg p-4 font-mono text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none bg-slate-50 text-slate-700 min-h-[400px]"
                                 placeholder='{ "id": "my-quiz-01", "title": "My Quiz", ... }'
                                 value={jsonText}
-                                onChange={e => { setJsonText(e.target.value); setError(""); }}
+                                onChange={e => { setJsonText(e.target.value); setError(""); setSuccessMsg(""); }}
                                 spellCheck="false"
                             />
+
                             {error && (
                                 <div className="mt-4 bg-red-50 text-red-700 px-4 py-3 rounded-lg text-sm flex items-start gap-2 border border-red-200">
                                     <Icon name="alert-circle" className="w-5 h-5 flex-shrink-0 mt-0.5" />
                                     <span>{error}</span>
                                 </div>
                             )}
+
+                            {successMsg && (
+                                <div className="mt-4 bg-emerald-50 text-emerald-700 px-4 py-3 rounded-lg text-sm flex items-start gap-2 border border-emerald-200">
+                                    <Icon name="check-circle" className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                                    <span>{successMsg}</span>
+                                </div>
+                            )}
                         </div>
-                        <div className="p-6 border-t border-slate-100 flex justify-end gap-3 bg-slate-50 rounded-b-xl">
-                            <button onClick={onClose} className="px-5 py-2.5 text-slate-600 hover:bg-slate-200 rounded-lg font-medium transition">Cancel</button>
+
+                        <div className="p-6 border-t border-slate-100 flex justify-end gap-3 bg-slate-50">
                             <button onClick={handleImport} className="px-6 py-2.5 bg-blue-600 text-white hover:bg-blue-700 rounded-lg font-bold shadow-sm transition flex items-center gap-2">
-                                Import Quiz <Icon name="check" className="w-4 h-4" />
+                                Save to Local Library <Icon name="check" className="w-4 h-4" />
                             </button>
                         </div>
                     </div>
@@ -477,11 +552,10 @@
             );
         };
 
-        const HomeView = ({ onSelectPaper, onViewAttempts, onUpload }) => {
+        const HomeView = ({ onSelectPaper, onViewAttempts, onAdmin }) => {
             const [papers, setPapers] = useState([]);
             const [loading, setLoading] = useState(true);
             const [searchTerm, setSearchTerm] = useState("");
-            const [showUploadModal, setShowUploadModal] = useState(false);
 
             const loadPapers = useCallback(() => {
                 setLoading(true);
@@ -492,16 +566,17 @@
             }, []);
 
             useEffect(() => {
+                // Initial Load
                 loadPapers();
-            }, [loadPapers]);
 
-            const handleUploadSuccess = async (jsonText) => {
-                const result = await onUpload(jsonText);
-                if (result.success) {
-                    loadPapers();
-                }
-                return result;
-            };
+                // Silent Sync from Registry
+                QuizService.syncRegistry().then(result => {
+                    if (result.success && result.count > 0) {
+                        console.log("Registry sync complete, reloading papers...");
+                        loadPapers();
+                    }
+                });
+            }, [loadPapers]);
 
             const filteredPapers = papers.filter(p => {
                 const term = searchTerm.toLowerCase();
@@ -515,15 +590,16 @@
 
             return (
                 <div className="max-w-4xl mx-auto p-6 fade-in">
-                    <UploadModal
-                        isOpen={showUploadModal}
-                        onClose={() => setShowUploadModal(false)}
-                        onUpload={handleUploadSuccess}
-                    />
-
-                    <header className="mb-8 text-center">
+                    <header className="mb-8 text-center relative">
+                        <button
+                            onClick={onAdmin}
+                            className="absolute right-0 top-0 text-slate-400 hover:text-slate-700 transition"
+                            title="Admin Dashboard"
+                        >
+                            <Icon name="settings" className="w-6 h-6" />
+                        </button>
                         <h1 className="text-4xl font-extrabold text-slate-800 mb-2">Quiz Master</h1>
-                        <p className="text-slate-500">Select a paper to begin or upload your own.</p>
+                        <p className="text-slate-500">Select a paper to begin.</p>
                     </header>
 
                     <div className="mb-8 relative max-w-md mx-auto">
@@ -532,7 +608,7 @@
                         </div>
                         <input
                             type="text"
-                            placeholder="Search papers by Title or ID..."
+                            placeholder="Search papers..."
                             className="block w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out shadow-sm"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
@@ -540,17 +616,6 @@
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-6">
-                        <div
-                            onClick={() => setShowUploadModal(true)}
-                            className="border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center text-slate-400 hover:border-blue-500 hover:text-blue-500 hover:bg-blue-50 transition cursor-pointer group h-full"
-                        >
-                            <div className="bg-slate-100 p-4 rounded-full mb-3 group-hover:bg-blue-100 transition">
-                                <Icon name="upload" className="w-8 h-8 group-hover:scale-110 transition-transform text-slate-500 group-hover:text-blue-600" />
-                            </div>
-                            <span className="font-semibold text-lg">Import Paper</span>
-                            <span className="text-xs text-slate-400 mt-1">Paste JSON Content</span>
-                        </div>
-
                         {filteredPapers.map(paper => (
                             <div key={paper.id} className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition flex flex-col justify-between">
                                 <div>
@@ -571,6 +636,12 @@
                                 </div>
                             </div>
                         ))}
+
+                        {filteredPapers.length === 0 && (
+                            <div className="col-span-2 text-center py-12 text-slate-400">
+                                No papers found.
+                            </div>
+                        )}
                     </div>
                 </div>
             );
@@ -829,7 +900,7 @@
         };
 
         const App = () => {
-            const [view, setView] = useState('home');
+            const [view, setView] = useState('home'); // home | quiz | results | attempts | admin
             const [currentPaper, setCurrentPaper] = useState(null);
             const [finalAnswers, setFinalAnswers] = useState(null);
             const [viewAttemptsId, setViewAttemptsId] = useState(null);
@@ -861,7 +932,8 @@
 
             return (
                 <div>
-                    {view === 'home' && <HomeView onSelectPaper={startQuiz} onViewAttempts={viewAttempts} onUpload={handleUpload} />}
+                    {view === 'home' && <HomeView onSelectPaper={startQuiz} onViewAttempts={viewAttempts} onAdmin={() => setView('admin')} />}
+                    {view === 'admin' && <AdminView onBack={() => setView('home')} onUpload={handleUpload} />}
                     {view === 'quiz' && <QuizTaker paper={currentPaper} onSubmit={submitQuiz} />}
                     {view === 'results' && <ResultView paper={currentPaper} userAnswers={finalAnswers} onHome={() => setView('home')} />}
                     {view === 'attempts' && <AttemptsView paperId={viewAttemptsId} onBack={() => setView('home')} onNewAttempt={() => startQuiz(viewAttemptsId)} />}
