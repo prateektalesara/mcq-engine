@@ -50,6 +50,22 @@
                 transform: translateY(0);
             }
         }
+
+        .modal-enter {
+            animation: modalPop 0.2s ease-out;
+        }
+
+        @keyframes modalPop {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 
@@ -61,31 +77,20 @@
 
         // --- 0. UTILS & ICONS ---
         const ICONS = {
-            'clock': (
-                <g><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></g>
-            ),
+            'clock': (<g><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></g>),
             'check': (<polyline points="20 6 9 17 4 12" />),
-            'check-circle': (
-                <g><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></g>
-            ),
-            'x-circle': (
-                <g><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></g>
-            ),
-            'alert-circle': (
-                <g><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></g>
-            ),
-            'book-open': (
-                <g><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></g>
-            ),
+            'check-circle': (<g><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></g>),
+            'x-circle': (<g><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></g>),
+            'alert-circle': (<g><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></g>),
+            'book-open': (<g><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></g>),
             'chevron-left': (<polyline points="15 18 9 12 15 6" />),
             'chevron-right': (<polyline points="9 18 15 12 9 6" />),
-            'upload': (
-                <g><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></g>
-            ),
+            'upload': (<g><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></g>),
             'play': (<polygon points="5 3 19 12 5 21 5 3" />),
             'info': (<g><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></g>),
             'search': (<g><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></g>),
-            'history': (<g><path d="M3 3v5h5" /><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8" /><path d="M12 7v5l4 2" /></g>)
+            'history': (<g><path d="M3 3v5h5" /><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8" /><path d="M12 7v5l4 2" /></g>),
+            'file-text': (<g><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></g>)
         };
 
         const Icon = ({ name, className = "" }) => {
@@ -239,10 +244,8 @@
         // --- 3. SERVICE ---
         const QuizService = {
             async init() {
-                // Check if DB has data, if not seed with MOCK_DB
                 const existing = await SimpleDB.getAll('papers');
                 if (existing.length === 0) {
-                    console.log("Initializing DB with seed data...");
                     for (const p of MOCK_DB) {
                         await SimpleDB.put('papers', p);
                     }
@@ -264,18 +267,15 @@
                 try {
                     const paper = typeof jsonContent === 'string' ? JSON.parse(jsonContent) : jsonContent;
 
-                    // Validation
                     if (!paper.id || !paper.questions || !Array.isArray(paper.questions)) {
                         throw new Error("Invalid JSON structure: Missing 'id' or 'questions' array.");
                     }
 
-                    // Idempotent Save (put upserts/overwrites based on 'id')
                     await SimpleDB.put('papers', paper);
-                    return true;
+                    return { success: true };
                 } catch (e) {
                     console.error("Upload failed", e);
-                    alert("Upload failed: " + e.message);
-                    return false;
+                    return { success: false, message: e.message };
                 }
             },
 
@@ -290,7 +290,6 @@
 
         // --- 4. COMPONENTS ---
 
-        // Helper: Timer (Optimized with useRef to prevent resets)
         const Timer = ({ duration, onTimeUp, isActive }) => {
             const [timeLeft, setTimeLeft] = useState(duration);
             const savedCallback = useRef(onTimeUp);
@@ -324,7 +323,70 @@
             );
         };
 
-        // View: Attempts History
+        // Component: Upload Modal
+        const UploadModal = ({ isOpen, onClose, onUpload }) => {
+            const [jsonText, setJsonText] = useState("");
+            const [error, setError] = useState("");
+
+            if (!isOpen) return null;
+
+            const handleImport = async () => {
+                if (!jsonText.trim()) {
+                    setError("Please paste some JSON content.");
+                    return;
+                }
+
+                const result = await onUpload(jsonText);
+
+                if (result.success) {
+                    setJsonText("");
+                    setError("");
+                    onClose();
+                } else {
+                    setError(result.message || "Invalid JSON structure.");
+                }
+            };
+
+            return (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4 fade-in" onClick={onClose}>
+                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl flex flex-col max-h-[90vh] modal-enter" onClick={e => e.stopPropagation()}>
+                        <div className="p-6 border-b border-slate-100 flex justify-between items-center">
+                            <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
+                                <Icon name="upload" className="w-6 h-6 text-blue-600" /> Import Quiz JSON
+                            </h2>
+                            <button onClick={onClose} className="text-slate-400 hover:text-slate-600 transition">
+                                <Icon name="x-circle" className="w-8 h-8" />
+                            </button>
+                        </div>
+                        <div className="p-6 flex-1 overflow-hidden flex flex-col">
+                            <label className="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-2">
+                                <Icon name="file-text" className="w-4 h-4" /> Paste JSON Content:
+                            </label>
+                            <textarea
+                                className="w-full flex-1 border border-slate-300 rounded-lg p-4 font-mono text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none bg-slate-50 text-slate-700"
+                                placeholder='{ "id": "my-quiz-01", "title": "My Quiz", ... }'
+                                value={jsonText}
+                                onChange={e => { setJsonText(e.target.value); setError(""); }}
+                                spellCheck="false"
+                            />
+                            {error && (
+                                <div className="mt-4 bg-red-50 text-red-700 px-4 py-3 rounded-lg text-sm flex items-start gap-2 border border-red-200">
+                                    <Icon name="alert-circle" className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                                    <span>{error}</span>
+                                </div>
+                            )}
+                        </div>
+                        <div className="p-6 border-t border-slate-100 flex justify-end gap-3 bg-slate-50 rounded-b-xl">
+                            <button onClick={onClose} className="px-5 py-2.5 text-slate-600 hover:bg-slate-200 rounded-lg font-medium transition">Cancel</button>
+                            <button onClick={handleImport} className="px-6 py-2.5 bg-blue-600 text-white hover:bg-blue-700 rounded-lg font-bold shadow-sm transition flex items-center gap-2">
+                                Import Quiz <Icon name="check" className="w-4 h-4" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
         const AttemptsView = ({ paperId, onBack, onNewAttempt }) => {
             const [attempts, setAttempts] = useState([]);
             const [loading, setLoading] = useState(true);
@@ -336,7 +398,6 @@
                         const paper = await QuizService.getPaperById(paperId);
                         setPaperTitle(paper.title);
                         const history = await QuizService.getAttemptsByPaper(paperId);
-                        // Sort by latest first
                         history.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
                         setAttempts(history);
                     } catch (e) {
@@ -416,12 +477,11 @@
             );
         };
 
-        // View: Home
         const HomeView = ({ onSelectPaper, onViewAttempts, onUpload }) => {
             const [papers, setPapers] = useState([]);
             const [loading, setLoading] = useState(true);
             const [searchTerm, setSearchTerm] = useState("");
-            const fileInputRef = useRef(null);
+            const [showUploadModal, setShowUploadModal] = useState(false);
 
             const loadPapers = useCallback(() => {
                 setLoading(true);
@@ -435,20 +495,14 @@
                 loadPapers();
             }, [loadPapers]);
 
-            const handleFileChange = (e) => {
-                const file = e.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = async (event) => {
-                    const success = await onUpload(event.target.result);
-                    if (success) {
-                        loadPapers();
-                    }
-                };
-                reader.readAsText(file);
+            const handleUploadSuccess = async (jsonText) => {
+                const result = await onUpload(jsonText);
+                if (result.success) {
+                    loadPapers();
+                }
+                return result;
             };
 
-            // Filter logic
             const filteredPapers = papers.filter(p => {
                 const term = searchTerm.toLowerCase();
                 return (
@@ -461,12 +515,17 @@
 
             return (
                 <div className="max-w-4xl mx-auto p-6 fade-in">
+                    <UploadModal
+                        isOpen={showUploadModal}
+                        onClose={() => setShowUploadModal(false)}
+                        onUpload={handleUploadSuccess}
+                    />
+
                     <header className="mb-8 text-center">
                         <h1 className="text-4xl font-extrabold text-slate-800 mb-2">Quiz Master</h1>
                         <p className="text-slate-500">Select a paper to begin or upload your own.</p>
                     </header>
 
-                    {/* Search Bar */}
                     <div className="mb-8 relative max-w-md mx-auto">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                             <Icon name="search" className="w-5 h-5" />
@@ -481,10 +540,15 @@
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-6">
-                        <div onClick={() => fileInputRef.current.click()} className="border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center text-slate-400 hover:border-blue-500 hover:text-blue-500 hover:bg-blue-50 transition cursor-pointer group h-full">
-                            <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept=".json" />
-                            <Icon name="upload" className="w-10 h-10 mb-3 group-hover:scale-110 transition-transform" />
-                            <span className="font-semibold">Upload .json Paper</span>
+                        <div
+                            onClick={() => setShowUploadModal(true)}
+                            className="border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center text-slate-400 hover:border-blue-500 hover:text-blue-500 hover:bg-blue-50 transition cursor-pointer group h-full"
+                        >
+                            <div className="bg-slate-100 p-4 rounded-full mb-3 group-hover:bg-blue-100 transition">
+                                <Icon name="upload" className="w-8 h-8 group-hover:scale-110 transition-transform text-slate-500 group-hover:text-blue-600" />
+                            </div>
+                            <span className="font-semibold text-lg">Import Paper</span>
+                            <span className="text-xs text-slate-400 mt-1">Paste JSON Content</span>
                         </div>
 
                         {filteredPapers.map(paper => (
@@ -512,7 +576,6 @@
             );
         };
 
-        // View: Quiz Taker
         const QuizTaker = ({ paper, onSubmit }) => {
             const [answers, setAnswers] = useState({});
             const [currentQIndex, setCurrentQIndex] = useState(0);
@@ -544,7 +607,6 @@
 
             return (
                 <div className="max-w-5xl mx-auto p-4 md:p-6 h-screen flex flex-col fade-in relative">
-                    {/* Confirmation Modal Overlay */}
                     {showConfirm && (
                         <div className="absolute inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center rounded-xl">
                             <div className="bg-white p-6 rounded-xl shadow-2xl max-w-sm w-full text-center m-4">
@@ -632,7 +694,6 @@
             );
         };
 
-        // View: Results
         const ResultView = ({ paper, userAnswers, onHome }) => {
             const [activeQIndex, setActiveQIndex] = useState(0);
 
@@ -768,7 +829,7 @@
         };
 
         const App = () => {
-            const [view, setView] = useState('home'); // home | quiz | results | attempts
+            const [view, setView] = useState('home');
             const [currentPaper, setCurrentPaper] = useState(null);
             const [finalAnswers, setFinalAnswers] = useState(null);
             const [viewAttemptsId, setViewAttemptsId] = useState(null);
@@ -786,7 +847,6 @@
 
             const submitQuiz = async (answers) => {
                 setFinalAnswers(answers);
-                // Calculate stats immediately to save attempt
                 const stats = calculateStats(currentPaper, answers);
                 const attemptData = {
                     paperId: currentPaper.id,
