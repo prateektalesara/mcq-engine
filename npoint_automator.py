@@ -17,8 +17,10 @@ def run():
     # Get list of changed files passed from GitHub Action env var
     files_env = os.getenv("CHANGED_FILES", "")
     
-    # If strictly testing locally, you can uncomment this:
-    # files_env = "lessons/grade-5-plants.json"
+    # --- LOCAL DEBUGGING SETUP ---
+    # If running locally, you often won't have the CHANGED_FILES env var set.
+    # Uncomment the line below and point it to a real file to test the script locally.
+    # files_env = "lessons/grade-5-plants.json" 
 
     if not files_env:
         print("No files to process. Exiting.")
@@ -29,14 +31,25 @@ def run():
     print(f"Processing files: {files_to_process}")
 
     new_registry_entries = []
+    
+    # Detect if running in GitHub Actions (CI) or Locally
+    is_ci = os.getenv("GITHUB_ACTIONS") == "true"
+    
+    # If Local: Headless=False (Show Browser), SlowMo=1000ms (Human speed)
+    # If CI: Headless=True (Hidden), SlowMo=0ms (Fastest)
+    headless_mode = is_ci
+    slow_mo_delay = 0 if is_ci else 1000
+
+    print(f"Launching Browser (Headless: {headless_mode})...")
 
     with sync_playwright() as p:
-        # headless=True is MANDATORY for GitHub Actions
-        browser = p.chromium.launch(headless=True)
+        # Launch browser with settings determined above
+        browser = p.chromium.launch(headless=headless_mode, slow_mo=slow_mo_delay)
         
         # FIX 1: Set a real User-Agent to avoid bot detection/white screens
         context = browser.new_context(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+            permissions=["clipboard-read", "clipboard-write"]
         )
         
         # CRITICAL: Grant clipboard permissions for Headless mode to work with copy/paste
@@ -72,17 +85,18 @@ def run():
             
             print("Clicking Login...")
             # Target the button strictly inside the login component
-            page.click('.login-component button')
-            
+            page.click('.login-component button.button.primary');
             # Wait for redirection to the dashboard (/docs)
-            # page.wait_for_url("**/docs", timeout=30000)
-            time.sleep(2)
+            page.wait_for_url("**/docs", timeout=30000)
             print("Logged in successfully.")
             
         except Exception as e:
             print(f"!!! LOGIN FAILED !!!")
             print(f"Current URL: {page.url}")
             print(f"Page Title: {page.title()}")
+            # Take a screenshot to debug visual errors
+            page.screenshot(path="debug_error_login.png")
+            print("Saved screenshot to debug_error_login.png")
             raise e
 
         # --- Step 2: Loop through each new file and create a bin ---
@@ -125,25 +139,18 @@ def run():
                 # --- EDIT CONTENT ---
                 # Click into the editor area
                 print("Focusing editor...")
-                # Try finding CodeMirror first (standard), fallback to generic textarea if changed
-                try:
-                    page.wait_for_selector('.CodeMirror', state="visible", timeout=10000)
-                    page.click('.CodeMirror')
-                except:
-                    # Fallback if they use a plain textarea now
-                    page.click('textarea')
+                # 2. Wait for the Ace editor container to be visible
+                # The HTML shows id="brace-editor", which is a very robust selector
+                page.wait_for_selector('#brace-editor', state="visible")
+
+                # 3. Click the main editor body to focus it
+                page.click('#brace-editor')
 
                 # Clear existing text (Select All + Backspace)
-                page.keyboard.press("Control+A")
+                page.keyboard.press("ControlOrMeta+a")
                 page.keyboard.press("Backspace")
                 
-                # Robust Paste Logic
-                try:
-                    page.evaluate(f"navigator.clipboard.writeText({json.dumps(json_content_str)})")
-                    page.keyboard.press("Control+V")
-                except Exception as clipboard_error:
-                    print(f"Clipboard access failed, falling back to typing...")
-                    page.keyboard.insert_text(json_content_str)
+                page.keyboard.insert_text(json_content_str)
                 
                 # Click Save
                 print("Saving...")
@@ -166,6 +173,7 @@ def run():
                 })
             except Exception as e:
                 print(f"ERROR processing {file_path}: {e}")
+                page.screenshot(path=f"debug_error_{bin_id_key}.png")
 
         # --- Step 3: Update Registry (Only if we have new entries) ---
         if new_registry_entries:
@@ -190,19 +198,12 @@ def run():
             page.goto(registry_edit_url)
             
             # Edit Registry
-            page.wait_for_selector('.CodeMirror', state="visible", timeout=15000)
-            page.click('.CodeMirror')
-            
             updated_registry_str = json.dumps(updated_registry, indent=2)
-            
-            page.keyboard.press("Control+A")
-            page.keyboard.press("Backspace")
-
-            try:
-                page.evaluate(f"navigator.clipboard.writeText({json.dumps(updated_registry_str)})")
-                page.keyboard.press("Control+V")
-            except Exception:
-                page.keyboard.insert_text(updated_registry_str)
+            page.click('#brace-editor')
+            # Clear existing text (Select All + Backspace)
+            page.keyboard.press("ControlOrMeta+a")
+            page.keyboard.press("Backspace")    
+            page.keyboard.insert_text(updated_registry_str)
             
             # Save
             page.click('button:has-text("Save")')
