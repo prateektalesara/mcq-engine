@@ -37,7 +37,7 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           pip install playwright python-dotenv requests
-          playwright install chromium
+          playwright install --with-deps chromium
 
       - name: Run Automator Script
         if: steps.changed-files.outputs.any_changed == 'true'

@@ -36,7 +36,8 @@ def run():
         context = browser.new_context()
         
         # CRITICAL: Grant clipboard permissions for Headless mode to work with copy/paste
-        context.grant_permissions(['clipboard-read', 'clipboard-write'])
+        # FIX: Added origin to ensure permissions apply specifically to npoint
+        context.grant_permissions(['clipboard-read', 'clipboard-write'], origin='https://www.npoint.io')
         
         page = context.new_page()
 
@@ -49,7 +50,8 @@ def run():
         page.click('button[type="submit"]')
         
         # Wait specifically for the dashboard or nav to ensure login success
-        page.wait_for_url("https://www.npoint.io/")
+        # Increased timeout for slower CI runners
+        page.wait_for_url("https://www.npoint.io/", timeout=30000)
         print("Logged in successfully.")
 
         # --- Step 2: Loop through each new file and create a bin ---
@@ -83,9 +85,15 @@ def run():
                 page.keyboard.press("Control+A")
                 page.keyboard.press("Backspace")
                 
-                # Paste content using clipboard API (fastest method)
-                page.evaluate(f"navigator.clipboard.writeText({json.dumps(json_content_str)})")
-                page.keyboard.press("Control+V")
+                # Robust Paste Logic with Fallback
+                try:
+                    # Attempt 1: Fast Clipboard Injection
+                    page.evaluate(f"navigator.clipboard.writeText({json.dumps(json_content_str)})")
+                    page.keyboard.press("Control+V")
+                except Exception as clipboard_error:
+                    # Attempt 2: Slow Typing (Fallback for restricted CI environments)
+                    print(f"Clipboard access failed ({clipboard_error}), falling back to direct typing...")
+                    page.keyboard.insert_text(json_content_str)
                 
                 # Click Save
                 page.click('button:has-text("Save")')
@@ -133,7 +141,7 @@ def run():
             registry_edit_url = f"https://www.npoint.io/docs/{REGISTRY_BIN_ID}"
             page.goto(registry_edit_url)
             
-            # Paste Logic
+            # Paste Logic with Fallback
             page.wait_for_selector('.CodeMirror')
             page.click('.CodeMirror')
             
@@ -141,8 +149,13 @@ def run():
             
             page.keyboard.press("Control+A")
             page.keyboard.press("Backspace")
-            page.evaluate(f"navigator.clipboard.writeText({json.dumps(updated_registry_str)})")
-            page.keyboard.press("Control+V")
+
+            try:
+                page.evaluate(f"navigator.clipboard.writeText({json.dumps(updated_registry_str)})")
+                page.keyboard.press("Control+V")
+            except Exception:
+                print("Clipboard failed for registry update, typing manually...")
+                page.keyboard.insert_text(updated_registry_str)
             
             # Save
             page.click('button:has-text("Save")')
