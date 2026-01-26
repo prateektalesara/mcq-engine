@@ -283,7 +283,7 @@
             async syncRegistry() {
                 try {
                     console.log("Fetching registry from:", REGISTRY_URL);
-                    const response = await fetch(REGISTRY_URL);
+                    const response = await fetch(REGISTRY_URL, { cache: "no-store" });
                     if (!response.ok) throw new Error(`Network error: ${response.status}`);
                     const data = await response.json();
 
@@ -298,7 +298,7 @@
                         }
                         else if (item.url) {
                             try {
-                                const pRes = await fetch(item.url);
+                                const pRes = await fetch(item.url, { cache: "no-store" });
                                 if (pRes.ok) {
                                     const paper = await pRes.json();
                                     if (paper.id && paper.questions && Array.isArray(paper.questions)) {
