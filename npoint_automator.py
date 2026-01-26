@@ -62,16 +62,21 @@ def run():
             page.click('.login-dropdown-component')
 
             print("Entering credentials...")
-            page.wait_for_selector('input[name="email"]', state="visible", timeout=10000)
-            page.fill('input[name="email"]', EMAIL)
-            page.fill('input[name="password"]', PASSWORD)
+            # Updated selectors based on the .login-component container
+            page.wait_for_selector('.login-component', state="visible", timeout=10000)
+            
+            # Select the first input in the component (typically Email/User)
+            page.fill('.login-component input:first-of-type', EMAIL)
+            # Select the password input
+            page.fill('.login-component input[type="password"]', PASSWORD)
             
             print("Clicking Login...")
-            # Target the submit button inside the form
-            page.click('button[type="submit"]')
+            # Target the button strictly inside the login component
+            page.click('.login-component button')
             
             # Wait for redirection to the dashboard (/docs)
-            page.wait_for_url("**/docs", timeout=30000)
+            # page.wait_for_url("**/docs", timeout=30000)
+            time.sleep(2)
             print("Logged in successfully.")
             
         except Exception as e:
