@@ -47,31 +47,37 @@ def run():
         print("--- Step 1: Logging into npoint.io ---")
         
         try:
-            # Increased timeout for slow CI networks
-            page.goto("https://www.npoint.io/login", timeout=60000)
+            # Go to Home Page
+            page.goto("https://www.npoint.io/", timeout=60000)
             
-            # FIX 2: Wait for network to idle (ensures React app is fully loaded)
+            # FIX 2: Wait for network to idle
             try:
                 page.wait_for_load_state("networkidle", timeout=5000)
             except:
-                pass # Continue if network doesn't settle, might just be analytics
+                pass 
             
-            # Login Logic with explicit wait
-            print("Waiting for email input...")
-            page.wait_for_selector('input[name="email"]', state="visible", timeout=20000)
+            # Login Flow: Click Dropdown -> Fill Form -> Submit
+            print("Opening Login Dropdown...")
+            page.wait_for_selector('.login-dropdown-component', state="visible", timeout=20000)
+            page.click('.login-dropdown-component')
+
+            print("Entering credentials...")
+            page.wait_for_selector('input[name="email"]', state="visible", timeout=10000)
             page.fill('input[name="email"]', EMAIL)
             page.fill('input[name="password"]', PASSWORD)
+            
+            print("Clicking Login...")
+            # Target the submit button inside the form
             page.click('button[type="submit"]')
             
-            # Wait specifically for the dashboard or nav to ensure login success
-            page.wait_for_url("https://www.npoint.io/", timeout=30000)
+            # Wait for redirection to the dashboard (/docs)
+            page.wait_for_url("**/docs", timeout=30000)
             print("Logged in successfully.")
             
         except Exception as e:
             print(f"!!! LOGIN FAILED !!!")
             print(f"Current URL: {page.url}")
             print(f"Page Title: {page.title()}")
-            # This helps debug if we are stuck on a captcha or 403 page
             raise e
 
         # --- Step 2: Loop through each new file and create a bin ---
@@ -85,43 +91,64 @@ def run():
             try:
                 with open(file_path, 'r') as f:
                     file_data = json.load(f)
-                    # Convert to string for pasting
                     json_content_str = json.dumps(file_data, indent=2)
 
-                # Metadata for registry
-                # Uses the 'title' inside the JSON, or filename if missing
                 bin_title = file_data.get("title", os.path.basename(file_path))
-                # Uses the 'id' inside the JSON, or filename stem if missing
                 bin_id_key = file_data.get("id", os.path.splitext(os.path.basename(file_path))[0])
 
-                # Go to homepage to create new bin
-                page.goto("https://www.npoint.io/")
+                # --- NEW CREATE FLOW ---
+                # Click "+ New" button to generate a new bin slug
+                print("Creating new bin...")
                 
-                # Wait for the editor to appear
-                page.wait_for_selector('.CodeMirror', state="visible", timeout=15000)
-                page.click('.CodeMirror') 
+                # We try to find the "+ New" button. It is usually in the navbar.
+                # If we can't find it, we force navigate to dashboard.
+                try:
+                    page.click('button:has-text("+ New")', timeout=5000)
+                except:
+                    print("'+ New' button not found instantly, going to dashboard...")
+                    page.goto("https://www.npoint.io/docs")
+                    page.click('button:has-text("+ New")')
+
+                # Wait for the URL to change to a specific bin slug (something longer than just /docs)
+                # We wait for the browser to settle on the new bin URL
+                time.sleep(2) # Brief wait for the redirect to start
+                page.wait_for_url(lambda url: "/docs/" in url and len(url.split("/")) > 4, timeout=20000)
                 
-                # Clear existing text
+                current_bin_url = page.url
+                print(f"Draft initialized at: {current_bin_url}")
+
+                # --- EDIT CONTENT ---
+                # Click into the editor area
+                print("Focusing editor...")
+                # Try finding CodeMirror first (standard), fallback to generic textarea if changed
+                try:
+                    page.wait_for_selector('.CodeMirror', state="visible", timeout=10000)
+                    page.click('.CodeMirror')
+                except:
+                    # Fallback if they use a plain textarea now
+                    page.click('textarea')
+
+                # Clear existing text (Select All + Backspace)
                 page.keyboard.press("Control+A")
                 page.keyboard.press("Backspace")
                 
-                # Robust Paste Logic with Fallback
+                # Robust Paste Logic
                 try:
-                    # Attempt 1: Fast Clipboard Injection
                     page.evaluate(f"navigator.clipboard.writeText({json.dumps(json_content_str)})")
                     page.keyboard.press("Control+V")
                 except Exception as clipboard_error:
-                    # Attempt 2: Slow Typing (Fallback for restricted CI environments)
-                    print(f"Clipboard access failed ({clipboard_error}), falling back to direct typing...")
+                    print(f"Clipboard access failed, falling back to typing...")
                     page.keyboard.insert_text(json_content_str)
                 
                 # Click Save
+                print("Saving...")
                 page.click('button:has-text("Save")')
                 
-                # Wait for URL to change to /docs/xyz
-                page.wait_for_url("**/docs/*")
+                # Wait for Save confirmation (usually button state change or toast)
+                # We'll wait a moment to ensure server sync
+                time.sleep(2)
                 
-                # Capture URL
+                # Capture URL (should differ if it was a "new" slug vs "saved" slug, but usually consistent on npoint)
                 generated_bin_id = page.url.split("/")[-1]
                 public_api_url = f"https://api.npoint.io/{generated_bin_id}"
                 
@@ -139,7 +166,7 @@ def run():
         if new_registry_entries:
             print("--- Step 3: Updating Registry ---")
             
-            # Fetch existing registry via Public API (Safer/Faster)
+            # Fetch existing registry
             registry_api_url = f"https://api.npoint.io/{REGISTRY_BIN_ID}"
             try:
                 current_registry = requests.get(registry_api_url).json()
@@ -148,20 +175,16 @@ def run():
             except:
                 current_registry = []
 
-            # Update logic: Remove old entries with same ID, append new ones
+            # Update logic
             new_ids = [entry['id'] for entry in new_registry_entries]
-            
-            # Keep entries that are NOT in our new list (preserve old data)
             updated_registry = [item for item in current_registry if item.get('id') not in new_ids]
-            
-            # Add new items
             updated_registry.extend(new_registry_entries)
 
             # Navigate to Registry Edit Page
             registry_edit_url = f"https://www.npoint.io/docs/{REGISTRY_BIN_ID}"
             page.goto(registry_edit_url)
             
-            # Paste Logic with Fallback
+            # Edit Registry
             page.wait_for_selector('.CodeMirror', state="visible", timeout=15000)
             page.click('.CodeMirror')
             
@@ -174,13 +197,10 @@ def run():
                 page.evaluate(f"navigator.clipboard.writeText({json.dumps(updated_registry_str)})")
                 page.keyboard.press("Control+V")
             except Exception:
-                print("Clipboard failed for registry update, typing manually...")
                 page.keyboard.insert_text(updated_registry_str)
             
             # Save
             page.click('button:has-text("Save")')
-            
-            # Brief wait to ensure save request hits server
             time.sleep(2) 
             print("Registry Updated Successfully!")
         else:
