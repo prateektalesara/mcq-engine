@@ -33,26 +33,46 @@ def run():
     with sync_playwright() as p:
         # headless=True is MANDATORY for GitHub Actions
         browser = p.chromium.launch(headless=True)
-        context = browser.new_context()
+        
+        # FIX 1: Set a real User-Agent to avoid bot detection/white screens
+        context = browser.new_context(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        )
         
         # CRITICAL: Grant clipboard permissions for Headless mode to work with copy/paste
-        # FIX: Added origin to ensure permissions apply specifically to npoint
         context.grant_permissions(['clipboard-read', 'clipboard-write'], origin='https://www.npoint.io')
         
         page = context.new_page()
 
         print("--- Step 1: Logging into npoint.io ---")
-        page.goto("https://www.npoint.io/login")
         
-        # Login Logic
-        page.fill('input[name="email"]', EMAIL)
-        page.fill('input[name="password"]', PASSWORD)
-        page.click('button[type="submit"]')
-        
-        # Wait specifically for the dashboard or nav to ensure login success
-        # Increased timeout for slower CI runners
-        page.wait_for_url("https://www.npoint.io/", timeout=30000)
-        print("Logged in successfully.")
+        try:
+            # Increased timeout for slow CI networks
+            page.goto("https://www.npoint.io/login", timeout=60000)
+            
+            # FIX 2: Wait for network to idle (ensures React app is fully loaded)
+            try:
+                page.wait_for_load_state("networkidle", timeout=5000)
+            except:
+                pass # Continue if network doesn't settle, might just be analytics
+            
+            # Login Logic with explicit wait
+            print("Waiting for email input...")
+            page.wait_for_selector('input[name="email"]', state="visible", timeout=20000)
+            page.fill('input[name="email"]', EMAIL)
+            page.fill('input[name="password"]', PASSWORD)
+            page.click('button[type="submit"]')
+            
+            # Wait specifically for the dashboard or nav to ensure login success
+            page.wait_for_url("https://www.npoint.io/", timeout=30000)
+            print("Logged in successfully.")
+            
+        except Exception as e:
+            print(f"!!! LOGIN FAILED !!!")
+            print(f"Current URL: {page.url}")
+            print(f"Page Title: {page.title()}")
+            # This helps debug if we are stuck on a captcha or 403 page
+            raise e
 
         # --- Step 2: Loop through each new file and create a bin ---
         for file_path in files_to_process:
@@ -78,7 +98,7 @@ def run():
                 page.goto("https://www.npoint.io/")
                 
                 # Wait for the editor to appear
-                page.wait_for_selector('.CodeMirror')
+                page.wait_for_selector('.CodeMirror', state="visible", timeout=15000)
                 page.click('.CodeMirror') 
                 
                 # Clear existing text
@@ -142,7 +162,7 @@ def run():
             page.goto(registry_edit_url)
             
             # Paste Logic with Fallback
-            page.wait_for_selector('.CodeMirror')
+            page.wait_for_selector('.CodeMirror', state="visible", timeout=15000)
             page.click('.CodeMirror')
             
             updated_registry_str = json.dumps(updated_registry, indent=2)
