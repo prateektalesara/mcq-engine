@@ -1,0 +1,51 @@
+name: Upload JSONs to npoint
+
+on:
+  push:
+    paths:
+      - 'lessons/**'  # CHANGE THIS to your actual folder name (e.g., "data/**" or just "**/*.json")
+      - '**.json'
+
+# Concurrency ensures that if you push twice quickly, they run one after another
+# so the registry doesn't get corrupted by simultaneous writes.
+concurrency: 
+  group: npoint-registry-update
+  cancel-in-progress: false
+
+jobs:
+  update-bins:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            lessons/**.json
+            **.json
+
+      - name: Set up Python
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          pip install playwright python-dotenv requests
+          playwright install chromium
+
+      - name: Run Automator Script
+        if: steps.changed-files.outputs.any_changed == 'true'
+        env:
+          NPOINT_EMAIL: ${{ secrets.NPOINT_EMAIL }}
+          NPOINT_PASSWORD: ${{ secrets.NPOINT_PASSWORD }}
+          REGISTRY_BIN_ID: ${{ secrets.REGISTRY_BIN_ID }}
+          # This passes the list of files (e.g. "file1.json file2.json") to the script
+          CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          python npoint_automator.py
