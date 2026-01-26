@@ -25,7 +25,6 @@ jobs:
         with:
           files: |
             lessons/**.json
-            **.json
 
       - name: Set up Python
         if: steps.changed-files.outputs.any_changed == 'true'
