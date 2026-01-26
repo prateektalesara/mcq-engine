@@ -1,0 +1,906 @@
+{
+    "id": "grade-5-moon-solar-system-mastery-1",
+    "title": "The Moon and the Solar System Quiz",
+    "description": "A comprehensive 60-question quiz covering the Earth-Sun-Moon relationship, moon phases, eclipses, planets, and artificial satellites for Grade 5 students.",
+    "durationMinutes": 45,
+    "questions": [
+        {
+            "id": 1,
+            "text": "Which star is at the center of our solar system?",
+            "options": [
+                "The Sun",
+                "Proxima Centauri",
+                "Polaris",
+                "Sirius"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "It provides light and heat to Earth.",
+            "explanation": "The Sun is the central star around which all planets in our solar system orbit."
+        },
+        {
+            "id": 2,
+            "text": "What causes day and night on Earth?",
+            "options": [
+                "Earth orbiting the Sun",
+                "The Moon blocking the Sun",
+                "Earth's rotation on its axis",
+                "The Sun moving across the sky"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Think about Earth spinning like a top.",
+            "explanation": "As Earth rotates on its axis, different parts face the Sun (day) or face away (night)."
+        },
+        {
+            "id": 3,
+            "text": "How long does it take Earth to complete one full revolution around the Sun?",
+            "options": [
+                "24 hours",
+                "30 days",
+                "365.25 days",
+                "12 hours"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "This timeframe defines one calendar year.",
+            "explanation": "Earth takes approximately 365.25 days to orbit the Sun once."
+        },
+        {
+            "id": 4,
+            "text": "Which planet is known as the 'Red Planet'?",
+            "options": [
+                "Venus",
+                "Mars",
+                "Jupiter",
+                "Saturn"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "It is named after the Roman god of war.",
+            "explanation": "Mars appears red because of iron oxide (rust) on its surface."
+        },
+        {
+            "id": 5,
+            "text": "What is the largest planet in our solar system?",
+            "options": [
+                "Neptune",
+                "Earth",
+                "Saturn",
+                "Jupiter"
+            ],
+            "correctIndices": [
+                3
+            ],
+            "hint": "It is a gas giant with a Great Red Spot.",
+            "explanation": "Jupiter is the largest planet, more than twice as massive as all other planets combined."
+        },
+        {
+            "id": 6,
+            "text": "Which phase occurs when the Moon is between the Earth and the Sun?",
+            "options": [
+                "Full Moon",
+                "New Moon",
+                "First Quarter",
+                "Third Quarter"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "The Moon's side facing Earth is completely dark.",
+            "explanation": "During a New Moon, the Moon is positioned between the Earth and Sun, making it invisible from Earth."
+        },
+        {
+            "id": 7,
+            "text": "What happens during a solar eclipse?",
+            "options": [
+                "The Earth passes between the Sun and Moon",
+                "The Moon passes between the Sun and Earth",
+                "The Sun passes between the Earth and Moon",
+                "The Moon turns red"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "The Moon casts a shadow on the Earth.",
+            "explanation": "A solar eclipse occurs when the Moon moves between the Sun and Earth, blocking sunlight."
+        },
+        {
+            "id": 8,
+            "text": "Which of these is a natural satellite of Earth?",
+            "options": [
+                "The Sun",
+                "The Moon",
+                "International Space Station",
+                "Hubble Telescope"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "It orbits our planet and changes shape in the sky.",
+            "explanation": "The Moon is Earth's only natural satellite."
+        },
+        {
+            "id": 9,
+            "text": "Which planet is famous for its bright, prominent rings?",
+            "options": [
+                "Mars",
+                "Saturn",
+                "Mercury",
+                "Venus"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "It is the second-largest planet.",
+            "explanation": "While other planets have rings, Saturn's rings are the most extensive and visible."
+        },
+        {
+            "id": 10,
+            "text": "What do we call the path a planet takes around the Sun?",
+            "options": [
+                "Rotation",
+                "Spin",
+                "Orbit",
+                "Axis"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "It's a curved path through space.",
+            "explanation": "An orbit is the gravitationally curved trajectory of an object around a point in space."
+        },
+        {
+            "id": 11,
+            "text": "Which of the following is NOT a use of artificial satellites?",
+            "options": [
+                "GPS navigation",
+                "Weather forecasting",
+                "Television broadcasting",
+                "Mining gold on the Moon"
+            ],
+            "correctIndices": [
+                3
+            ],
+            "hint": "Think about what machines in space can actually do.",
+            "explanation": "Artificial satellites are used for communication and monitoring, not for physical mining on other bodies yet."
+        },
+        {
+            "id": 12,
+            "text": "How many planets are in our solar system?",
+            "options": [
+                "7",
+                "8",
+                "9",
+                "10"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Pluto is now considered a dwarf planet.",
+            "explanation": "There are eight officially recognized planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune."
+        },
+        {
+            "id": 13,
+            "text": "What is the closest planet to the Sun?",
+            "options": [
+                "Venus",
+                "Earth",
+                "Mercury",
+                "Mars"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "It is the smallest planet.",
+            "explanation": "Mercury is the innermost planet and orbits the Sun faster than any other planet."
+        },
+        {
+            "id": 14,
+            "text": "Which phase of the moon looks like a full circle?",
+            "options": [
+                "New Moon",
+                "Full Moon",
+                "Half Moon",
+                "Crescent Moon"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "The entire side facing Earth is illuminated.",
+            "explanation": "A Full Moon occurs when the Earth is between the Sun and the Moon."
+        },
+        {
+            "id": 15,
+            "text": "What is the imaginary line that runs through Earth's center from North to South?",
+            "options": [
+                "Equator",
+                "Orbit",
+                "Axis",
+                "Belt"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Earth rotates around this.",
+            "explanation": "The axis is the imaginary line about which a body rotates."
+        },
+        {
+            "id": 16,
+            "text": "A lunar eclipse occurs when which object is in the middle?",
+            "options": [
+                "The Sun",
+                "The Moon",
+                "The Earth",
+                "Mars"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Earth blocks the sunlight from reaching the Moon.",
+            "explanation": "In a lunar eclipse, Earth's shadow falls on the Moon."
+        },
+        {
+            "id": 17,
+            "text": "Which planet is known as Earth's 'sister planet' because of its size?",
+            "options": [
+                "Mars",
+                "Venus",
+                "Neptune",
+                "Mercury"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "It is the hottest planet in the solar system.",
+            "explanation": "Venus is similar in size and mass to Earth, though its atmosphere is very different."
+        },
+        {
+            "id": 18,
+            "text": "What are the four 'Gas Giants' in our solar system?",
+            "options": [
+                "Mercury, Venus, Earth, Mars",
+                "Jupiter, Saturn, Uranus, Neptune",
+                "Earth, Mars, Jupiter, Saturn",
+                "Venus, Earth, Saturn, Neptune"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "These are the large outer planets.",
+            "explanation": "The outer planets (Jupiter, Saturn, Uranus, Neptune) are primarily composed of gases and ice."
+        },
+        {
+            "id": 19,
+            "text": "What do we call a small body of ice and dust that develops a tail when near the Sun?",
+            "options": [
+                "Asteroid",
+                "Meteor",
+                "Comet",
+                "Planet"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Think of 'dirty snowballs' in space.",
+            "explanation": "Comets release gas and dust as they heat up, creating a glowing 'coma' and a tail."
+        },
+        {
+            "id": 20,
+            "text": "Which phase of the moon shows less than half of the moon illuminated?",
+            "options": [
+                "Gibbous",
+                "Crescent",
+                "Full",
+                "Quarter"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "It looks like a sliver or a banana.",
+            "explanation": "A crescent moon occurs when less than half of the visible side of the moon is lit."
+        },
+        {
+            "id": 21,
+            "text": "Which planet is tilted so far on its side that it orbits the Sun like a rolling ball?",
+            "options": [
+                "Jupiter",
+                "Uranus",
+                "Neptune",
+                "Saturn"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "It is an 'Ice Giant' with a very high tilt.",
+            "explanation": "Uranus has an axial tilt of about 98 degrees."
+        },
+        {
+            "id": 22,
+            "text": "What is the force that keeps planets in orbit around the Sun?",
+            "options": [
+                "Magnetism",
+                "Gravity",
+                "Friction",
+                "Inertia"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "The same force that makes things fall to the ground.",
+            "explanation": "The Sun's massive gravity pulls the planets toward it, keeping them in their orbits."
+        },
+        {
+            "id": 23,
+            "text": "What do we call rocky objects that orbit the Sun, mostly found between Mars and Jupiter?",
+            "options": [
+                "Comets",
+                "Stars",
+                "Asteroids",
+                "Galaxies"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "They are located in the 'Belt'.",
+            "explanation": "Asteroids are rocky remnants from the early solar system located primarily in the Asteroid Belt."
+        },
+        {
+            "id": 24,
+            "text": "About how many days does it take for the Moon to go through all its phases?",
+            "options": [
+                "7 days",
+                "14 days",
+                "29.5 days",
+                "365 days"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "It's roughly one month.",
+            "explanation": "The lunar cycle from New Moon to New Moon takes about 29.5 days."
+        },
+        {
+            "id": 25,
+            "text": "Which planet is the farthest from the Sun?",
+            "options": [
+                "Uranus",
+                "Neptune",
+                "Saturn",
+                "Pluto"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "It is a blue planet named after the god of the sea.",
+            "explanation": "Neptune is the eighth and outermost planet of our solar system."
+        },
+        {
+            "id": 26,
+            "text": "Which of these is used for weather monitoring from space?",
+            "options": [
+                "The Moon",
+                "Natural Satellites",
+                "Artificial Satellites",
+                "Asteroids"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Man-made objects in orbit.",
+            "explanation": "Artificial satellites like GOES are specifically designed to monitor Earth's weather patterns."
+        },
+        {
+            "id": 27,
+            "text": "When the Moon appears to be growing in size, it is called...",
+            "options": [
+                "Waning",
+                "Waxing",
+                "Eclipsing",
+                "Rotating"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "It means 'to increase'.",
+            "explanation": "Waxing phases occur between the New Moon and Full Moon when the visible portion increases."
+        },
+        {
+            "id": 28,
+            "text": "When the Moon appears to be shrinking in size, it is called...",
+            "options": [
+                "Waxing",
+                "Waning",
+                "Orbiting",
+                "Shrinking"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "It means 'to decrease'.",
+            "explanation": "Waning phases occur between the Full Moon and New Moon when the visible portion decreases."
+        },
+        {
+            "id": 29,
+            "text": "Which planet is the hottest in our solar system?",
+            "options": [
+                "Mercury",
+                "Venus",
+                "Mars",
+                "Jupiter"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Its thick atmosphere traps heat.",
+            "explanation": "Even though Mercury is closer to the Sun, Venus is hotter due to its thick greenhouse-gas atmosphere."
+        },
+        {
+            "id": 30,
+            "text": "A 'shooting star' is actually a...",
+            "options": [
+                "Real star falling",
+                "Meteor burning up in the atmosphere",
+                "Comet tail",
+                "Planet moving fast"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "It's a piece of space rock hitting Earth's air.",
+            "explanation": "Meteors are streaks of light caused by space debris burning up as they enter Earth's atmosphere."
+        },
+        {
+            "id": 31,
+            "text": "How much of the Moon is always lit by the Sun?",
+            "options": [
+                "None",
+                "One quarter",
+                "Half",
+                "All of it"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "The Sun can only shine on the side facing it.",
+            "explanation": "Exactly half of the Moon is always illuminated by the Sun, even if we can't see the whole lit part from Earth."
+        },
+        {
+            "id": 32,
+            "text": "Why does the Moon appear to change shape?",
+            "options": [
+                "The Moon actually grows and shrinks",
+                "Clouds cover parts of the Moon",
+                "We see different amounts of the lit side as it orbits Earth",
+                "The Earth casts a shadow on it every night"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "It relates to the Moon's position relative to Earth and Sun.",
+            "explanation": "Moon phases are caused by the Moon's revolution around Earth, changing our view of its lit half."
+        },
+        {
+            "id": 33,
+            "text": "Which planet has the most moons?",
+            "options": [
+                "Earth",
+                "Mars",
+                "Saturn",
+                "Mercury"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Recent discoveries confirmed this gas giant has over 140 moons.",
+            "explanation": "Saturn currently holds the record for the highest number of discovered moons."
+        },
+        {
+            "id": 34,
+            "text": "The Moon does not make its own light. Where does its light come from?",
+            "options": [
+                "Reflected sunlight",
+                "Glowing rocks",
+                "Earth's lights",
+                "Star light"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "It acts like a giant mirror.",
+            "explanation": "Moonlight is actually sunlight reflecting off the Moon's surface."
+        },
+        {
+            "id": 35,
+            "text": "What is the name of the first artificial satellite sent into space?",
+            "options": [
+                "Apollo 11",
+                "Sputnik 1",
+                "Voyager",
+                "Explorer 1"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "It was launched by the Soviet Union in 1957.",
+            "explanation": "Sputnik 1 was the first man-made object to orbit the Earth."
+        },
+        {
+            "id": 36,
+            "text": "Which planet is known for having a 'Great Red Spot'?",
+            "options": [
+                "Mars",
+                "Jupiter",
+                "Venus",
+                "Neptune"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "The spot is actually a giant storm.",
+            "explanation": "The Great Red Spot is a persistent high-pressure storm on Jupiter."
+        },
+        {
+            "id": 37,
+            "text": "What are the four 'Terrestrial' planets?",
+            "options": [
+                "Jupiter, Saturn, Uranus, Neptune",
+                "Mercury, Venus, Earth, Mars",
+                "Earth, Mars, Jupiter, Venus",
+                "Moon, Sun, Earth, Mars"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "These planets are made mostly of rock and metal.",
+            "explanation": "The inner planets (Mercury, Venus, Earth, Mars) are called terrestrial because they have solid, rocky surfaces."
+        },
+        {
+            "id": 38,
+            "text": "Which phase comes immediately after the New Moon?",
+            "options": [
+                "Full Moon",
+                "Waxing Crescent",
+                "Waning Gibbous",
+                "Last Quarter"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "The 'lit' part is just starting to show.",
+            "explanation": "As the Moon begins to move in its orbit after New Moon, we see a tiny sliver of the lit side (Waxing Crescent)."
+        },
+        {
+            "id": 39,
+            "text": "How many times does the Earth rotate on its axis in one year?",
+            "options": [
+                "1 time",
+                "12 times",
+                "365 times",
+                "30 times"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Each rotation equals one day.",
+            "explanation": "Earth rotates once every 24 hours, meaning it rotates about 365 times during its yearly orbit."
+        },
+        {
+            "id": 40,
+            "text": "In which direction does the Sun appear to rise?",
+            "options": [
+                "West",
+                "North",
+                "South",
+                "East"
+            ],
+            "correctIndices": [
+                3
+            ],
+            "hint": "It's the opposite of where it sets.",
+            "explanation": "Due to Earth's counter-clockwise rotation, the Sun appears to rise in the East."
+        },
+        {
+            "id": 41,
+            "text": "What do we call the study of the stars, planets, and space?",
+            "options": [
+                "Biology",
+                "Astronomy",
+                "Geology",
+                "Chemistry"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "It starts with an 'A'.",
+            "explanation": "Astronomy is the branch of science that deals with celestial objects and the universe."
+        },
+        {
+            "id": 42,
+            "text": "Which of these planets is an 'Ice Giant'?",
+            "options": [
+                "Mars",
+                "Jupiter",
+                "Neptune",
+                "Venus"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "It is one of the two farthest planets.",
+            "explanation": "Uranus and Neptune are classified as ice giants because they are composed mostly of elements heavier than hydrogen and helium."
+        },
+        {
+            "id": 43,
+            "text": "What does 'GPS' stand for?",
+            "options": [
+                "General Positioning System",
+                "Global Positioning System",
+                "Galactic Pointing Satellite",
+                "Global Placement System"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "It's a system of satellites used for maps.",
+            "explanation": "Global Positioning System uses satellite signals to determine a receiver's location on Earth."
+        },
+        {
+            "id": 44,
+            "text": "Which celestial body is actually a dwarf planet?",
+            "options": [
+                "Mercury",
+                "The Moon",
+                "Pluto",
+                "Mars"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "It used to be the 9th planet.",
+            "explanation": "Pluto was reclassified as a dwarf planet in 2006 by the IAU."
+        },
+        {
+            "id": 45,
+            "text": "The Moon's gravity is responsible for what on Earth?",
+            "options": [
+                "Earthquakes",
+                "Tides in the ocean",
+                "The wind",
+                "Volcanic eruptions"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "The rising and falling of sea levels.",
+            "explanation": "The gravitational pull of the Moon (and Sun) creates the tides in our oceans."
+        },
+        {
+            "id": 46,
+            "text": "Which phase of the moon comes between the First Quarter and the Full Moon?",
+            "options": [
+                "Waxing Crescent",
+                "Waxing Gibbous",
+                "Waning Gibbous",
+                "New Moon"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "The Moon is more than half full but not yet a circle.",
+            "explanation": "Waxing Gibbous is the phase where the illuminated part is increasing and is larger than a semicircle."
+        },
+        {
+            "id": 47,
+            "text": "True or False: The Sun is a planet.",
+            "options": [
+                "True",
+                "False"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Planets orbit it.",
+            "explanation": "The Sun is a star, not a planet."
+        },
+        {
+            "id": 48,
+            "text": "Which of these planets has no moons?",
+            "options": [
+                "Venus",
+                "Earth",
+                "Mars",
+                "Jupiter"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Both Mercury and this planet have zero moons.",
+            "explanation": "Venus and Mercury are the only two planets in our solar system with no natural satellites."
+        },
+        {
+            "id": 49,
+            "text": "What is the primary gas that makes up the Sun?",
+            "options": [
+                "Oxygen",
+                "Nitrogen",
+                "Hydrogen",
+                "Carbon Dioxide"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "It's the lightest element.",
+            "explanation": "The Sun is composed of about 73% hydrogen and 25% helium."
+        },
+        {
+            "id": 50,
+            "text": "What is the 'atmosphere'?",
+            "options": [
+                "The rocky surface of a planet",
+                "The layer of gases surrounding a planet",
+                "The path a planet takes",
+                "The core of a star"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Earth's atmosphere contains the air we breathe.",
+            "explanation": "An atmosphere is the envelope of gases surrounding a planet or other material body."
+        },
+        {
+            "id": 51,
+            "text": "What is a 'Half Moon' officially called in astronomy?",
+            "options": [
+                "Crescent",
+                "Quarter Moon",
+                "Gibbous",
+                "Full Moon"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "It represents one-fourth of the lunar cycle.",
+            "explanation": "When we see half of the Moon lit, it is called either the First Quarter or the Third Quarter phase."
+        },
+        {
+            "id": 52,
+            "text": "Which planet has the strongest winds in the solar system?",
+            "options": [
+                "Earth",
+                "Mars",
+                "Neptune",
+                "Venus"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "It's the blue planet farthest from the Sun.",
+            "explanation": "Neptune has the fastest recorded winds in the solar system, reaching over 2,000 km/h."
+        },
+        {
+            "id": 53,
+            "text": "Artificial satellites stay in orbit because of a balance between...",
+            "options": [
+                "Speed and Gravity",
+                "Fuel and Air",
+                "Magnets and Electricity",
+                "Wind and Solar Power"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "They have to move fast enough to not fall back to Earth.",
+            "explanation": "Satellites must travel at a specific speed so that their forward motion balances the pull of gravity."
+        },
+        {
+            "id": 54,
+            "text": "What is the name of our galaxy?",
+            "options": [
+                "Andromeda",
+                "The Milky Way",
+                "The Solar System",
+                "Orion"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "It looks like a 'spilled milk' path in the night sky.",
+            "explanation": "The Milky Way is the spiral galaxy that contains our Solar System."
+        },
+        {
+            "id": 55,
+            "text": "Which planet is the brightest object in the sky after the Sun and Moon?",
+            "options": [
+                "Mars",
+                "Jupiter",
+                "Venus",
+                "Saturn"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Often called the Morning or Evening Star.",
+            "explanation": "Venus reflects a lot of sunlight because of its thick, shiny clouds."
+        },
+        {
+            "id": 56,
+            "text": "What happens when a meteoroid survives the trip through the atmosphere and hits the ground?",
+            "options": [
+                "It becomes a comet",
+                "It becomes a meteorite",
+                "It becomes a star",
+                "It disappears"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "The name changes slightly when it hits the ground.",
+            "explanation": "A meteorite is the part of a meteoroid that survives its passage through the atmosphere and strikes the surface."
+        },
+        {
+            "id": 57,
+            "text": "Why is the Moon's surface covered in craters?",
+            "options": [
+                "Because of old volcanoes",
+                "Because it has no atmosphere to protect it from space rocks",
+                "Because humans dug holes",
+                "Because it is made of cheese"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Earth has an atmosphere that burns up most small rocks; the Moon doesn't.",
+            "explanation": "The Moon lacks an atmosphere, so even small space rocks can hit its surface and create craters."
+        },
+        {
+            "id": 58,
+            "text": "Which season is it in the Northern Hemisphere when that part of Earth is tilted toward the Sun?",
+            "options": [
+                "Winter",
+                "Summer",
+                "Spring",
+                "Autumn"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Direct sunlight brings more heat.",
+            "explanation": "When a hemisphere is tilted toward the Sun, it receives more direct sunlight, resulting in Summer."
+        },
+        {
+            "id": 59,
+            "text": "How much smaller is the Moon than the Earth?",
+            "options": [
+                "The same size",
+                "Half the size",
+                "About 1/4th the size",
+                "1/100th the size"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Earth's diameter is roughly 4 times larger.",
+            "explanation": "The Moon's diameter is about 27% of Earth's diameter, or approximately one-quarter."
+        },
+        {
+            "id": 60,
+            "text": "Which is the correct order of the planets starting from the Sun?",
+            "options": [
+                "Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune",
+                "Earth, Venus, Mars, Mercury, Jupiter, Saturn, Uranus, Neptune",
+                "Mercury, Earth, Venus, Mars, Jupiter, Saturn, Uranus, Neptune",
+                "Venus, Mercury, Earth, Mars, Saturn, Jupiter, Uranus, Neptune"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "My Very Educated Mother Just Served Us Noodles.",
+            "explanation": "The order is Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune."
+        }
+    ]
+}
