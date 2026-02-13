@@ -3,1014 +3,933 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APT MCQ Engine</title>
-
-    <!-- React & ReactDOM -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-
-    <!-- Babel for JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Milestones: The 10th Birthday</title>
     <style>
-        /* Custom scrollbar for better UI */
-        ::-webkit-scrollbar {
-            width: 8px;
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #2c3e50;
+            font-family: 'Nunito', sans-serif;
+            touch-action: none;
+            /* Prevent pull-to-refresh on mobile */
         }
 
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+        #gameCanvas {
+            display: block;
+            width: 100%;
+            height: 100vh;
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
+        #ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+        /* HUD */
+        #hud {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            color: white;
+            text-shadow: 2px 2px 0 #000;
+            font-family: 'Fredoka One', cursive;
+            font-size: 24px;
+            pointer-events: none;
         }
 
-        .fade-in {
-            animation: fadeIn 0.3s ease-in-out;
+        /* Screens (Start, Game Over, etc) */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            pointer-events: auto;
+            z-index: 10;
+            /* Replaced transition/opacity with display:none for robust focus handling */
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
+        .hidden {
+            display: none !important;
+        }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 48px;
+            margin-bottom: 10px;
+            color: #FFD700;
+            text-shadow: 3px 3px 0 #d35400;
+            text-align: center;
+        }
+
+        p {
+            font-size: 18px;
+            max-width: 600px;
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 24px;
+            font-family: 'Fredoka One', cursive;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #c0392b;
+            transition: transform 0.1s;
+        }
+
+        .btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #c0392b;
+        }
+
+        /* Mobile Controls */
+        #controls {
+            display: none;
+            /* Shown via JS on touch devices */
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            justify-content: space-between;
+            pointer-events: auto;
+            padding-bottom: 40px;
+        }
+
+        .control-btn {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            user-select: none;
+            backdrop-filter: blur(4px);
+        }
+
+        .control-btn:active {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .d-pad {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Final Message styling */
+        #final-message {
+            position: absolute;
+            top: 20%;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-family: 'Fredoka One', cursive;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 2s;
         }
     </style>
 </head>
 
-<body class="bg-slate-50 text-slate-900 font-sans min-h-screen">
-    <div id="root"></div>
+<body>
 
-    <script type="text/babel">
-        const { useState, useEffect, useMemo, useRef, useCallback } = React;
+    <canvas id="gameCanvas"></canvas>
 
-        // --- CONFIGURATION ---
-        const REGISTRY_URL = "https://api.npoint.io/bc41e105b68599aaea13";
+    <div id="ui-layer">
+        <div id="hud">
+            <div id="level-display">Age: 1</div>
+            <div id="score-display">Memories: 0/3</div>
+        </div>
 
-        // --- 0. UTILS & ICONS ---
-        const ICONS = {
-            'clock': (<g><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></g>),
-            'check': (<polyline points="20 6 9 17 4 12" />),
-            'check-circle': (<g><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></g>),
-            'x-circle': (<g><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></g>),
-            'alert-circle': (<g><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></g>),
-            'book-open': (<g><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></g>),
-            'chevron-left': (<polyline points="15 18 9 12 15 6" />),
-            'chevron-right': (<polyline points="9 18 15 12 9 6" />),
-            'upload': (<g><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></g>),
-            'play': (<polygon points="5 3 19 12 5 21 5 3" />),
-            'info': (<g><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></g>),
-            'search': (<g><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></g>),
-            'history': (<g><path d="M3 3v5h5" /><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8" /><path d="M12 7v5l4 2" /></g>),
-            'file-text': (<g><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></g>),
-            'settings': (<g><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></g>)
+        <div id="final-message">
+            <h1 style="color: #fff; font-size: 40px;">Happy 10th Birthday!</h1>
+            <p style="font-size: 24px; color: #ffeaa7;">"We will always be there for your every milestone."</p>
+        </div>
+
+        <div id="controls">
+            <div class="d-pad">
+                <div class="control-btn" id="btn-left">←</div>
+                <div class="control-btn" id="btn-right">→</div>
+            </div>
+            <div class="control-btn" id="btn-flap" style="width: 100px; border-radius: 30px;">FLAP</div>
+        </div>
+    </div>
+
+    <!-- START SCREEN -->
+    <div id="start-screen" class="screen">
+        <h1>MILESTONES</h1>
+        <p>Help her fly through the years. Collect memories (stars) to grow up.<br>Tap FLAP to fly. Avoid the obstacles!
+        </p>
+        <button class="btn" id="start-btn">Start Journey</button>
+    </div>
+
+    <!-- LEVEL COMPLETE SCREEN -->
+    <div id="level-screen" class="screen hidden">
+        <h1 id="level-title">Age 1 Complete!</h1>
+        <p>Ready for the next year?</p>
+        <button class="btn" id="next-level-btn">Grow Up</button>
+    </div>
+
+    <!-- GAME OVER SCREEN -->
+    <div id="game-over-screen" class="screen hidden">
+        <h1>Ouch!</h1>
+        <p>Don't worry, we can always try again.</p>
+        <button class="btn" id="retry-btn">Try Again</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Screens & UI
+        const startScreen = document.getElementById('start-screen');
+        const levelScreen = document.getElementById('level-screen');
+        const gameOverScreen = document.getElementById('game-over-screen');
+        const levelTitle = document.getElementById('level-title');
+        const hudLevel = document.getElementById('level-display');
+        const hudScore = document.getElementById('score-display');
+        const controls = document.getElementById('controls');
+        const finalMessage = document.getElementById('final-message');
+
+        // Game State
+        let gameState = 'START'; // START, PLAYING, LEVEL_END, GAMEOVER, CUTSCENE, ENDED
+        let level = 1;
+        let maxLevels = 10;
+        let frames = 0;
+        let animationFrameId;
+
+        // Time management for consistent physics
+        let lastTime = 0;
+
+        // Physics Constants (Normalized for 60FPS)
+        // Delta time will scale these
+        const GRAVITY = 0.28; // Increased slightly for better feel
+        const FLAP_FORCE = -8.0; // Increased flap strength
+        const MOVE_SPEED = 0.4;
+        const MAX_H_SPEED = 6;
+        const FRICTION = 0.96;
+
+        // Input
+        const keys = {
+            ArrowLeft: false,
+            ArrowRight: false,
+            Space: false,
+            ArrowUp: false
         };
 
-        const Icon = ({ name, className = "" }) => {
-            const content = ICONS[name];
-            if (!content) return null;
-            return (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    {content}
-                </svg>
-            );
-        };
+        // Entities
+        let player;
+        let obstacles = [];
+        let collectibles = [];
+        let particles = [];
+        let portal;
+        let parents = [];
+        let cake;
 
-        const calculateStats = (paper, userAnswers) => {
-            let correct = 0, wrong = 0, unattempted = 0, attempted = 0;
-            paper.questions.forEach(q => {
-                const uAns = userAnswers[q.id] || [];
-                if (uAns.length === 0) {
-                    unattempted++;
-                } else {
-                    attempted++;
-                    const sortedU = [...uAns].sort();
-                    const sortedC = [...q.correctIndices].sort();
-                    if (JSON.stringify(sortedU) === JSON.stringify(sortedC)) correct++;
-                    else wrong++;
-                }
-            });
-            const percentage = Math.round((correct / paper.questions.length) * 100);
-            return { correct, wrong, unattempted, attempted, total: paper.questions.length, percentage };
-        };
-
-        // --- 1. SAMPLE DATA ---
-        const MOCK_DB = [
-            {
-                id: "react-basics-101",
-                title: "React Core Concepts",
-                description: "Test your knowledge on JSX, Components, and Props.",
-                durationMinutes: 5,
-                questions: [
-                    {
-                        id: 1,
-                        text: "What is the primary purpose of `useState` in React?",
-                        options: [
-                            "To handle side effects like API calls",
-                            "To manage local state within a functional component",
-                            "To optimize performance by caching values",
-                            "To share state across the entire application"
-                        ],
-                        correctIndices: [1],
-                        hint: "Think about 'variables' that trigger re-renders.",
-                        explanation: "`useState` is a Hook that lets you add React state to function components. Changes to this state trigger a re-render."
-                    },
-                    {
-                        id: 2,
-                        text: "Which of the following are valid React Hooks? (Select all that apply)",
-                        options: ["useReact", "useEffect", "useContext", "useRouter"],
-                        correctIndices: [1, 2],
-                        hint: "Standard hooks usually start with 'use' and are built into the library.",
-                        explanation: "`useEffect` and `useContext` are built-in React hooks. `useRouter` is common in Next.js but not core React."
-                    },
-                    {
-                        id: 3,
-                        text: "React uses a virtual DOM to optimize rendering.",
-                        options: ["True", "False"],
-                        correctIndices: [0],
-                        hint: "This is one of React's main performance features.",
-                        explanation: "True. React creates a lightweight copy of the DOM (Virtual DOM), compares it with the previous version (diffing), and only updates the real DOM where necessary."
-                    },
-                    {
-                        id: 4,
-                        text: "How do you pass data from a parent to a child component?",
-                        options: ["State", "Props", "Context", "Redux"],
-                        correctIndices: [1],
-                        hint: "It stands for properties.",
-                        explanation: "Props (properties) are the mechanism to pass data down the component tree from parent to child."
-                    }
-                ]
-            }
+        // Colors
+        const levelColors = [
+            '#87CEEB', '#AED581', '#4DB6AC', '#FFF176', '#FFB74D',
+            '#F06292', '#BA68C8', '#7986CB', '#4FC3F7', '#2c3e50'
         ];
 
-        // --- 2. INDEXEDDB UTILS ---
-        const DB_CONFIG = {
-            name: 'QuizMasterDB',
-            version: 4,
-            stores: {
-                papers: 'papers',
-                attempts: 'attempts'
+        // Resize handling
+        function resize() {
+            if (Math.abs(canvas.width - window.innerWidth) > 10 || Math.abs(canvas.height - window.innerHeight) > 10) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+                    controls.style.display = 'flex';
+                }
+                if (gameState !== 'START') draw();
             }
-        };
+        }
+        window.addEventListener('resize', resize);
+        resize();
 
-        const SimpleDB = {
-            async getDB() {
-                return new Promise((resolve, reject) => {
-                    const request = indexedDB.open(DB_CONFIG.name, DB_CONFIG.version);
+        // ------------------ CLASSES ------------------
 
-                    request.onupgradeneeded = (event) => {
-                        const db = event.target.result;
-                        const txn = event.target.transaction;
-
-                        console.log("Upgrading Database to version " + DB_CONFIG.version);
-
-                        if (!db.objectStoreNames.contains('papers')) {
-                            db.createObjectStore('papers', { keyPath: 'id' });
-                        }
-
-                        let attemptsStore;
-                        if (!db.objectStoreNames.contains('attempts')) {
-                            attemptsStore = db.createObjectStore('attempts', { keyPath: 'id', autoIncrement: true });
-                        } else {
-                            attemptsStore = txn.objectStore('attempts');
-                        }
-
-                        if (!attemptsStore.indexNames.contains('paperId')) {
-                            attemptsStore.createIndex('paperId', 'paperId', { unique: false });
-                        }
-                    };
-
-                    request.onsuccess = () => resolve(request.result);
-                    request.onerror = (e) => reject(e);
-                });
-            },
-
-            async getAll(storeName) {
-                const db = await this.getDB();
-                return new Promise((resolve, reject) => {
-                    const tx = db.transaction(storeName, 'readonly');
-                    const request = tx.objectStore(storeName).getAll();
-                    request.onsuccess = () => resolve(request.result);
-                    request.onerror = () => reject(request.error);
-                });
-            },
-
-            async put(storeName, item) {
-                const db = await this.getDB();
-                return new Promise((resolve, reject) => {
-                    const tx = db.transaction(storeName, 'readwrite');
-                    const request = tx.objectStore(storeName).put(item);
-                    request.onsuccess = () => resolve(request.result);
-                    request.onerror = () => reject(request.error);
-                });
-            },
-
-            async get(storeName, id) {
-                const db = await this.getDB();
-                return new Promise((resolve, reject) => {
-                    const tx = db.transaction(storeName, 'readonly');
-                    const request = tx.objectStore(storeName).get(id);
-                    request.onsuccess = () => resolve(request.result);
-                    request.onerror = () => reject(request.error);
-                });
-            },
-
-            async getAllFromIndex(storeName, indexName, value) {
-                const db = await this.getDB();
-                return new Promise((resolve, reject) => {
-                    const tx = db.transaction(storeName, 'readonly');
-                    const index = tx.objectStore(storeName).index(indexName);
-                    const request = index.getAll(value);
-                    request.onsuccess = () => resolve(request.result);
-                    request.onerror = () => reject(request.error);
-                });
+        class Player {
+            constructor() {
+                this.x = 100;
+                this.y = canvas.height - 150;
+                this.vx = 0;
+                this.vy = 0;
+                this.radius = 15;
+                this.width = 30;
+                this.height = 40;
+                this.facingRight = true;
+                this.balloons = 2;
+                this.flapCooldown = 0;
             }
-        };
 
-        // --- 3. SERVICE ---
-        const QuizService = {
-            async init() {
-                const existing = await SimpleDB.getAll('papers');
-                if (existing.length === 0) {
-                    for (const p of MOCK_DB) {
-                        await SimpleDB.put('papers', p);
-                    }
-                }
-            },
-
-            async getAvailablePapers() {
-                await this.init();
-                return await SimpleDB.getAll('papers');
-            },
-
-            async getPaperById(id) {
-                const paper = await SimpleDB.get('papers', id);
-                if (!paper) throw new Error("Paper not found");
-                return paper;
-            },
-
-            async addPaper(jsonContent) {
-                try {
-                    const paper = typeof jsonContent === 'string' ? JSON.parse(jsonContent) : jsonContent;
-
-                    if (!paper.id || !paper.questions || !Array.isArray(paper.questions)) {
-                        throw new Error("Invalid JSON structure: Missing 'id' or 'questions' array.");
-                    }
-
-                    await SimpleDB.put('papers', paper);
-                    return { success: true };
-                } catch (e) {
-                    console.error("Upload failed", e);
-                    return { success: false, message: e.message };
-                }
-            },
-
-            async syncRegistry() {
-                try {
-                    console.log("Fetching registry from:", REGISTRY_URL);
-                    const response = await fetch(REGISTRY_URL, { cache: "no-store" });
-                    if (!response.ok) throw new Error(`Network error: ${response.status}`);
-                    const data = await response.json();
-
-                    const list = Array.isArray(data) ? data : (data.papers || [data]);
-
-                    let addedCount = 0;
-
-                    for (const item of list) {
-                        if (item.id && item.questions && Array.isArray(item.questions)) {
-                            await SimpleDB.put('papers', item);
-                            addedCount++;
-                        }
-                        else if (item.url) {
-                            try {
-                                const pRes = await fetch(item.url, { cache: "no-store" });
-                                if (pRes.ok) {
-                                    const paper = await pRes.json();
-                                    if (paper.id && paper.questions && Array.isArray(paper.questions)) {
-                                        await SimpleDB.put('papers', paper);
-                                        addedCount++;
-                                    }
-                                }
-                            } catch (err) {
-                                console.warn(`Failed to fetch paper from ${item.url}`, err);
-                            }
-                        }
-                    }
-                    console.log(`Synced ${addedCount} papers from registry.`);
-                    return { success: true, count: addedCount };
-                } catch (e) {
-                    console.error("Sync failed", e);
-                    return { success: false, message: e.message };
-                }
-            },
-
-            async saveAttempt(attemptData) {
-                if (!attemptData.paperId) {
-                    console.error("Cannot save attempt: missing paperId");
-                    return { error: "Missing ID" };
-                }
-                try {
-                    const result = await SimpleDB.put('attempts', attemptData);
-                    return result;
-                } catch (e) {
-                    console.error("DB Save Failed", e);
-                    alert("Failed to save attempt to history. " + e.message);
-                    return null;
-                }
-            },
-
-            async getAttemptsByPaper(paperId) {
-                return await SimpleDB.getAllFromIndex('attempts', 'paperId', paperId);
-            },
-
-            // Added for Dashboard Filtering
-            async getAllAttempts() {
-                return await SimpleDB.getAll('attempts');
-            }
-        };
-
-        // --- 4. COMPONENTS ---
-
-        const Timer = ({ duration, onTimeUp, isActive }) => {
-            const [timeLeft, setTimeLeft] = useState(duration);
-            const savedCallback = useRef(onTimeUp);
-
-            useEffect(() => { savedCallback.current = onTimeUp; }, [onTimeUp]);
-
-            useEffect(() => {
-                if (!isActive) return;
-                const interval = setInterval(() => {
-                    setTimeLeft(t => {
-                        if (t <= 1) {
-                            clearInterval(interval);
-                            savedCallback.current();
-                            return 0;
-                        }
-                        return t - 1;
-                    });
-                }, 1000);
-                return () => clearInterval(interval);
-            }, [isActive]);
-
-            const mins = Math.floor(timeLeft / 60);
-            const secs = timeLeft % 60;
-            const isUrgent = timeLeft < 60;
-
-            return (
-                <div className={`flex items-center gap-2 font-mono text-lg md:text-xl font-bold px-2 py-1 md:px-4 md:py-2 rounded-lg border ${isUrgent ? 'bg-red-50 text-red-600 border-red-200 animate-pulse' : 'bg-blue-50 text-blue-700 border-blue-200'}`}>
-                    <Icon name="clock" className="w-4 h-4 md:w-5 md:h-5" />
-                    {mins.toString().padStart(2, '0')}:{secs.toString().padStart(2, '0')}
-                </div>
-            );
-        };
-
-        const AdminView = ({ onBack, onUpload }) => {
-            const [jsonText, setJsonText] = useState("");
-            const [error, setError] = useState("");
-            const [successMsg, setSuccessMsg] = useState("");
-
-            const handleImport = async () => {
-                if (!jsonText.trim()) {
-                    setError("Please paste some JSON content.");
+            update(dt) {
+                if (gameState === 'CUTSCENE' || gameState === 'ENDED') {
+                    this.cutsceneBehavior(dt);
                     return;
                 }
 
-                const result = await onUpload(jsonText);
+                // Physics with Delta Time
+                this.vy += GRAVITY * dt;
+                this.vx *= Math.pow(FRICTION, dt);
+                this.x += this.vx * dt;
+                this.y += this.vy * dt;
 
-                if (result.success) {
-                    setJsonText("");
-                    setError("");
-                    setSuccessMsg("Paper uploaded successfully to local storage!");
-                    setTimeout(() => setSuccessMsg(""), 3000);
+                // Inputs
+                if (keys.ArrowRight) {
+                    this.vx += MOVE_SPEED * dt;
+                    this.facingRight = true;
+                }
+                if (keys.ArrowLeft) {
+                    this.vx -= MOVE_SPEED * dt;
+                    this.facingRight = false;
+                }
+
+                // Cap speed
+                if (this.vx > MAX_H_SPEED) this.vx = MAX_H_SPEED;
+                if (this.vx < -MAX_H_SPEED) this.vx = -MAX_H_SPEED;
+
+                // Floor collision
+                if (this.y + this.height / 2 > canvas.height - 20) {
+                    this.y = canvas.height - 20 - this.height / 2;
+                    this.vy = 0;
+                }
+
+                // Ceiling
+                if (this.y < 0) {
+                    this.y = 0;
+                    this.vy = 0;
+                }
+
+                // Walls
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+
+                if (this.flapCooldown > 0) this.flapCooldown -= 1 * dt;
+            }
+
+            flap() {
+                // Instant velocity set for snappy control
+                this.vy = FLAP_FORCE;
+                createParticles(this.x, this.y + 20, 3, '#fff');
+            }
+
+            cutsceneBehavior(dt) {
+                this.vy += GRAVITY * dt;
+                this.vx *= 0.8;
+                this.y += this.vy * dt;
+                this.x += this.vx * dt;
+
+                if (this.y + this.height / 2 > canvas.height - 50) {
+                    this.y = canvas.height - 50 - this.height / 2;
+                    this.vy = 0;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+
+                // Balloons
+                if (this.balloons > 0) {
+                    ctx.strokeStyle = '#fff';
+                    ctx.beginPath();
+                    ctx.moveTo(0, -20);
+                    ctx.lineTo(-10, -50);
+                    ctx.moveTo(0, -20);
+                    ctx.lineTo(10, -50);
+                    ctx.stroke();
+
+                    // Balloon 1
+                    ctx.fillStyle = '#e74c3c';
+                    ctx.beginPath();
+                    ctx.ellipse(-10, -55, 12, 15, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Highlight
+                    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+                    ctx.beginPath();
+                    ctx.ellipse(-13, -58, 3, 5, 0, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Balloon 2
+                    ctx.fillStyle = '#3498db';
+                    ctx.beginPath();
+                    ctx.ellipse(10, -55, 12, 15, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Highlight
+                    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+                    ctx.beginPath();
+                    ctx.ellipse(7, -58, 3, 5, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Girl
+                ctx.fillStyle = '#9b59b6';
+                ctx.beginPath();
+                ctx.moveTo(0, -10);
+                ctx.lineTo(-10, 20);
+                ctx.lineTo(10, 20);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffe0b2';
+                ctx.beginPath();
+                ctx.arc(0, -15, 10, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#3e2723';
+                ctx.beginPath();
+                ctx.arc(0, -17, 11, Math.PI, 0);
+                ctx.lineTo(10, -5);
+                ctx.lineTo(-10, -5);
+                ctx.fill();
+
+                ctx.fillStyle = '#000';
+                if (this.facingRight) {
+                    ctx.fillRect(2, -18, 2, 2);
+                    ctx.fillRect(6, -18, 2, 2);
                 } else {
-                    setError(result.message || "Invalid JSON structure.");
-                    setSuccessMsg("");
+                    ctx.fillRect(-4, -18, 2, 2);
+                    ctx.fillRect(-8, -18, 2, 2);
                 }
-            };
 
-            return (
-                <div className="max-w-4xl mx-auto p-4 md:p-6 fade-in min-h-screen flex flex-col">
-                    <header className="flex justify-between items-center mb-6 border-b border-slate-200 pb-4">
-                        <div className="flex items-center gap-3">
-                            <Icon name="settings" className="w-6 h-6 md:w-8 md:h-8 text-slate-700" />
-                            <h1 className="text-xl md:text-2xl font-bold text-slate-800">Admin Dashboard</h1>
-                        </div>
-                        <button onClick={onBack} className="text-slate-600 hover:text-slate-900 font-medium flex items-center gap-2 text-sm md:text-base">
-                            <Icon name="chevron-left" className="w-4 h-4" /> Back to Home
-                        </button>
-                    </header>
+                ctx.restore();
+            }
+        }
 
-                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col overflow-hidden">
-                        <div className="p-4 md:p-6 border-b border-slate-100 bg-slate-50">
-                            <h2 className="text-base md:text-lg font-bold text-slate-800 mb-1">Import Local Paper</h2>
-                            <p className="text-xs md:text-sm text-slate-500">Paste your quiz JSON below to add it to your browser's local storage.</p>
-                        </div>
+        class Obstacle {
+            constructor(x, y, type) {
+                this.x = x;
+                this.y = y;
+                this.startX = x;
+                this.startY = y;
+                this.type = type;
+                this.size = 20;
+                this.speed = Math.random() * 2 + 1;
+                this.dir = 1;
+                this.angle = 0;
+            }
 
-                        <div className="p-4 md:p-6 flex-1 flex flex-col">
-                            <label className="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-2">
-                                <Icon name="file-text" className="w-4 h-4" /> JSON Content:
-                            </label>
-                            <textarea
-                                className="w-full flex-1 border border-slate-300 rounded-lg p-4 font-mono text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none bg-slate-50 text-slate-700 min-h-[300px] md:min-h-[400px]"
-                                placeholder='{ "id": "my-quiz-01", "title": "My Quiz", ... }'
-                                value={jsonText}
-                                onChange={e => { setJsonText(e.target.value); setError(""); setSuccessMsg(""); }}
-                                spellCheck="false"
-                            />
-
-                            {error && (
-                                <div className="mt-4 bg-red-50 text-red-700 px-4 py-3 rounded-lg text-sm flex items-start gap-2 border border-red-200">
-                                    <Icon name="alert-circle" className="w-5 h-5 flex-shrink-0 mt-0.5" />
-                                    <span>{error}</span>
-                                </div>
-                            )}
-
-                            {successMsg && (
-                                <div className="mt-4 bg-emerald-50 text-emerald-700 px-4 py-3 rounded-lg text-sm flex items-start gap-2 border border-emerald-200">
-                                    <Icon name="check-circle" className="w-5 h-5 flex-shrink-0 mt-0.5" />
-                                    <span>{successMsg}</span>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="p-4 md:p-6 border-t border-slate-100 flex justify-end gap-3 bg-slate-50">
-                            <button onClick={handleImport} className="px-6 py-2.5 bg-blue-600 text-white hover:bg-blue-700 rounded-lg font-bold shadow-sm transition flex items-center gap-2 text-sm md:text-base">
-                                Save to Local Library <Icon name="check" className="w-4 h-4" />
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            );
-        };
-
-        const AttemptsView = ({ paperId, onBack, onNewAttempt }) => {
-            const [attempts, setAttempts] = useState([]);
-            const [loading, setLoading] = useState(true);
-            const [paperTitle, setPaperTitle] = useState("");
-
-            useEffect(() => {
-                const loadData = async () => {
-                    try {
-                        const paper = await QuizService.getPaperById(paperId);
-                        setPaperTitle(paper.title);
-                        const history = await QuizService.getAttemptsByPaper(paperId);
-                        history.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-                        setAttempts(history);
-                    } catch (e) {
-                        console.error(e);
-                    } finally {
-                        setLoading(false);
-                    }
-                };
-                loadData();
-            }, [paperId]);
-
-            if (loading) return <div className="flex items-center justify-center h-screen text-slate-500">Loading history...</div>;
-
-            return (
-                <div className="max-w-4xl mx-auto p-4 md:p-6 fade-in">
-                    <header className="flex justify-between items-center mb-6 md:mb-8">
-                        <div>
-                            <h1 className="text-xl md:text-2xl font-bold text-slate-800">Attempt History</h1>
-                            <p className="text-sm md:text-base text-slate-500">{paperTitle}</p>
-                        </div>
-                        <button onClick={onBack} className="text-slate-600 hover:text-slate-900 font-medium flex items-center gap-2 text-sm md:text-base">
-                            <Icon name="chevron-left" className="w-4 h-4" /> Back to Dashboard
-                        </button>
-                    </header>
-
-                    {attempts.length === 0 ? (
-                        <div className="text-center py-12 bg-white rounded-xl border border-slate-200 shadow-sm">
-                            <div className="bg-slate-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <Icon name="history" className="w-8 h-8 text-slate-400" />
-                            </div>
-                            <h3 className="text-lg font-medium text-slate-800 mb-2">No attempts yet</h3>
-                            <p className="text-slate-500 mb-6 px-4">You haven't attempted this quiz yet.</p>
-                            <button onClick={onNewAttempt} className="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition">
-                                Start First Attempt
-                            </button>
-                        </div>
-                    ) : (
-                        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-                            <div className="grid grid-cols-4 bg-slate-50 p-4 border-b border-slate-200 font-semibold text-xs md:text-sm text-slate-600 uppercase tracking-wider">
-                                <div className="col-span-2">Date & Time</div>
-                                <div className="text-center">Score</div>
-                                <div className="text-center">Outcome</div>
-                            </div>
-                            <div className="divide-y divide-slate-100">
-                                {attempts.map((attempt) => (
-                                    <div key={attempt.id} className="grid grid-cols-4 p-4 hover:bg-slate-50 transition items-center">
-                                        <div className="col-span-2">
-                                            <div className="font-medium text-slate-800 text-sm md:text-base">
-                                                {new Date(attempt.timestamp).toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })}
-                                            </div>
-                                            <div className="text-xs text-slate-500">
-                                                {new Date(attempt.timestamp).toLocaleTimeString()}
-                                            </div>
-                                        </div>
-                                        <div className="text-center">
-                                            <div className="text-lg md:text-xl font-bold text-slate-800">{attempt.stats.percentage}%</div>
-                                            <div className="text-xs text-slate-500 hidden md:block">{attempt.stats.correct}/{attempt.stats.total} Correct</div>
-                                            <div className="text-xs text-slate-500 md:hidden">{attempt.stats.correct}/{attempt.stats.total}</div>
-                                        </div>
-                                        <div className="text-center flex justify-center">
-                                            {attempt.stats.percentage >= 70 ? (
-                                                <span className="px-2 py-1 md:px-3 bg-emerald-100 text-emerald-800 rounded-full text-xs font-bold">Passed</span>
-                                            ) : (
-                                                <span className="px-2 py-1 md:px-3 bg-red-100 text-red-800 rounded-full text-xs font-bold">Failed</span>
-                                            )}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="p-4 bg-slate-50 border-t border-slate-200 text-right">
-                                <button onClick={onNewAttempt} className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition flex items-center gap-2 ml-auto text-sm md:text-base">
-                                    <Icon name="play" className="w-4 h-4" /> New Attempt
-                                </button>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            );
-        };
-
-        const HomeView = ({ onSelectPaper, onViewAttempts, onAdmin }) => {
-            const [papers, setPapers] = useState([]);
-            const [loading, setLoading] = useState(true);
-            const [searchTerm, setSearchTerm] = useState("");
-            const [activeTab, setActiveTab] = useState("new"); // 'new' | 'attempted'
-            const [stats, setStats] = useState({ newCount: 0, attemptedCount: 0 });
-
-            const loadData = useCallback(async () => {
-                setLoading(true);
-                try {
-                    // Fetch Papers AND All Attempts to calculate status
-                    const [allPapers, allAttempts] = await Promise.all([
-                        QuizService.getAvailablePapers(),
-                        QuizService.getAllAttempts()
-                    ]);
-
-                    // Calculate attempt counts per paper
-                    const attemptCounts = {};
-                    allAttempts.forEach(a => {
-                        attemptCounts[a.paperId] = (attemptCounts[a.paperId] || 0) + 1;
-                    });
-
-                    // Merge attempt count into paper objects
-                    const enhancedPapers = allPapers.map(p => ({
-                        ...p,
-                        attemptCount: attemptCounts[p.id] || 0
-                    }));
-
-                    setPapers(enhancedPapers);
-
-                    // Update Tab Statistics
-                    const newCount = enhancedPapers.filter(p => p.attemptCount === 0).length;
-                    const attemptedCount = enhancedPapers.filter(p => p.attemptCount > 0).length;
-                    setStats({ newCount, attemptedCount });
-
-                } catch (e) {
-                    console.error("Failed to load data", e);
-                } finally {
-                    setLoading(false);
+            update(dt) {
+                if (this.type === 'horizontal') {
+                    this.x += (this.speed * this.dir) * dt;
+                    if (this.x > canvas.width + 50) this.x = -50;
+                    if (this.x < -50) this.x = canvas.width + 50;
+                } else if (this.type === 'vertical') {
+                    // Use time-based sine wave instead of frame-based
+                    this.y = this.startY + Math.sin(Date.now() * 0.002) * 50;
+                } else if (this.type === 'circle') {
+                    this.angle += 0.05 * dt;
+                    this.x = this.startX + Math.cos(this.angle) * 50;
+                    this.y = this.startY + Math.sin(this.angle) * 50;
                 }
-            }, []);
+            }
 
-            useEffect(() => {
-                // Initial Load
-                loadData();
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
 
-                // Silent Sync from Registry
-                QuizService.syncRegistry().then(result => {
-                    if (result.success && result.count > 0) {
-                        console.log("Registry sync complete, reloading papers...");
-                        loadData();
-                    }
-                });
-            }, [loadData]);
+                ctx.fillStyle = '#546e7a';
+                ctx.beginPath();
+                ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                ctx.fill();
 
-            // Filter Logic based on Search AND Active Tab
-            const filteredPapers = papers.filter(p => {
-                const matchesSearch = (
-                    (p.title && p.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                    (p.id && p.id.toLowerCase().includes(searchTerm.toLowerCase()))
-                );
+                ctx.strokeStyle = '#37474f';
+                ctx.lineWidth = 2;
+                for (let i = 0; i < 8; i++) {
+                    let a = (Math.PI * 2 / 8) * i + frames * 0.05;
+                    let sx = Math.cos(a) * (this.size + 5);
+                    let sy = Math.sin(a) * (this.size + 5);
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(sx, sy);
+                    ctx.stroke();
+                }
 
-                const matchesTab = activeTab === 'new' ? p.attemptCount === 0 : p.attemptCount > 0;
+                ctx.restore();
+            }
+        }
 
-                return matchesSearch && matchesTab;
+        class Collectible {
+            constructor(x, y) {
+                this.x = x;
+                this.baseY = y; // Store base Y for stable floating
+                this.y = y;
+                this.size = 15;
+                this.collected = false;
+                this.floatOffset = Math.random() * Math.PI * 2;
+            }
+
+            update(dt) {
+                // Stable floating logic using base Y
+                // Use Date.now() for smooth animation regardless of framerate
+                this.y = this.baseY + Math.sin(Date.now() * 0.003 + this.floatOffset) * 10;
+            }
+
+            draw() {
+                if (this.collected) return;
+                ctx.save();
+                ctx.translate(this.x, this.y);
+
+                ctx.fillStyle = '#f1c40f';
+                ctx.beginPath();
+                for (let i = 0; i < 5; i++) {
+                    ctx.lineTo(Math.cos((18 + i * 72) * 0.0174533) * this.size,
+                        -Math.sin((18 + i * 72) * 0.0174533) * this.size);
+                    ctx.lineTo(Math.cos((54 + i * 72) * 0.0174533) * (this.size / 2),
+                        -Math.sin((54 + i * 72) * 0.0174533) * (this.size / 2));
+                }
+                ctx.closePath();
+                ctx.fill();
+                ctx.strokeStyle = '#f39c12';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ctx.restore();
+            }
+        }
+
+        class Portal {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.active = false;
+                this.radius = 0;
+            }
+
+            update(dt) {
+                if (this.active && this.radius < 40) {
+                    this.radius += 2 * dt;
+                }
+            }
+
+            draw() {
+                if (!this.active) return;
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(frames * 0.05);
+
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 3;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+                ctx.stroke();
+
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+                ctx.fill();
+
+                ctx.restore();
+
+                if (this.active) {
+                    ctx.fillStyle = '#fff';
+                    ctx.font = '16px Fredoka One';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Next Year', this.x, this.y - 50);
+                }
+            }
+        }
+
+        class Particle {
+            constructor(x, y, color, type = 'normal') {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.size = Math.random() * 5 + 2;
+                this.vx = (Math.random() - 0.5) * 6;
+                this.vy = (Math.random() - 0.5) * 6;
+                this.life = 100;
+                this.type = type;
+            }
+            update(dt) {
+                this.x += this.vx * dt;
+                this.y += this.vy * dt;
+                if (this.type === 'firework') {
+                    this.vy += 0.05 * dt;
+                }
+                this.life -= 2 * dt;
+                this.size *= 0.95;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = Math.max(0, this.life / 100);
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        // ------------------ GAME LOGIC ------------------
+
+        function initLevel(lvl) {
+            level = lvl;
+            player = new Player();
+            particles = [];
+            obstacles = [];
+            collectibles = [];
+            parents = [];
+
+            hudLevel.innerText = `Age: ${level}`;
+            hudScore.innerText = `Memories: 0/3`;
+            finalMessage.style.opacity = 0;
+
+            if (level === 10) {
+                initBirthdayLevel();
+            } else {
+                initStandardLevel(lvl);
+            }
+
+            gameState = 'PLAYING';
+        }
+
+        function initStandardLevel(lvl) {
+            portal = new Portal(canvas.width - 100, canvas.height - 100);
+
+            const count = 3;
+            for (let i = 0; i < count; i++) {
+                let cx = 200 + Math.random() * (canvas.width - 300);
+                let cy = 50 + Math.random() * (canvas.height - 150);
+                collectibles.push(new Collectible(cx, cy));
+            }
+
+            let obsCount = (lvl - 1) * 2;
+            if (obsCount > 15) obsCount = 15;
+
+            for (let i = 0; i < obsCount; i++) {
+                let ox = 300 + Math.random() * (canvas.width - 400);
+                let oy = Math.random() * (canvas.height - 100);
+                let type = 'static';
+
+                if (lvl > 3) type = Math.random() > 0.5 ? 'horizontal' : 'static';
+                if (lvl > 6) type = Math.random() > 0.5 ? 'vertical' : 'horizontal';
+                if (lvl > 8) type = 'circle';
+
+                obstacles.push(new Obstacle(ox, oy, type));
+            }
+        }
+
+        function initBirthdayLevel() {
+            collectibles = [];
+            obstacles = [];
+            portal = null;
+            cake = { x: canvas.width / 2, y: canvas.height - 60, w: 100, h: 60 };
+            parents.push({ x: canvas.width / 2 - 80, y: canvas.height - 110, role: 'dad' });
+            parents.push({ x: canvas.width / 2 + 80, y: canvas.height - 110, role: 'mom' });
+            hudScore.innerText = "";
+        }
+
+        function update(dt) {
+            if (gameState !== 'PLAYING' && gameState !== 'CUTSCENE' && gameState !== 'ENDED') return;
+
+            frames++;
+            player.update(dt);
+
+            obstacles.forEach(o => o.update(dt));
+            collectibles.forEach(c => c.update(dt));
+
+            for (let i = particles.length - 1; i >= 0; i--) {
+                let p = particles[i];
+                p.update(dt);
+                if (p.life <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+
+            if (portal) portal.update(dt);
+
+            if (gameState === 'PLAYING') {
+                checkCollisions();
+            }
+
+            if (level === 10 && gameState === 'PLAYING') {
+                let dx = player.x - cake.x;
+                let dy = player.y - (canvas.height - 50);
+                if (Math.abs(dx) < 150 && player.y > canvas.height - 150) {
+                    startEndingCutscene();
+                }
+            }
+        }
+
+        function checkCollisions() {
+            let collectedCount = 0;
+            collectibles.forEach(c => {
+                let dx = player.x - c.x;
+                let dy = player.y - c.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < player.radius + c.size && !c.collected) {
+                    c.collected = true;
+                    createParticles(c.x, c.y, 10, '#f1c40f');
+                }
+                if (c.collected) collectedCount++;
             });
 
-            if (loading) return <div className="flex items-center justify-center h-screen text-slate-500">Loading library...</div>;
+            hudScore.innerText = `Memories: ${collectedCount}/3`;
 
-            return (
-                <div className="max-w-4xl mx-auto p-6 fade-in">
-                    <header className="mb-6 text-center relative">
-                        <button
-                            onClick={onAdmin}
-                            className="absolute right-0 top-0 text-slate-400 hover:text-slate-700 transition"
-                            title="Admin Dashboard"
-                        >
-                            <Icon name="settings" className="w-6 h-6" />
-                        </button>
-                        <h1 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-2">Quiz Master</h1>
-                        <p className="text-slate-500 text-sm md:text-base">Select a paper to begin.</p>
-                    </header>
+            if (portal && collectedCount === 3 && !portal.active) {
+                portal.active = true;
+                createParticles(portal.x, portal.y, 20, '#fff');
+            }
 
-                    {/* Search Bar */}
-                    <div className="mb-6 relative max-w-md mx-auto">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                            <Icon name="search" className="w-5 h-5" />
-                        </div>
-                        <input
-                            type="text"
-                            placeholder="Search papers..."
-                            className="block w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out shadow-sm"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                    </div>
+            if (portal && portal.active) {
+                let dx = player.x - portal.x;
+                let dy = player.y - portal.y;
+                if (Math.sqrt(dx * dx + dy * dy) < 40) {
+                    completeLevel();
+                }
+            }
 
-                    {/* Tabs Navigation */}
-                    <div className="flex justify-center mb-6">
-                        <div className="bg-slate-100 p-1 rounded-full flex gap-1">
-                            <button
-                                onClick={() => setActiveTab('new')}
-                                className={`px-6 py-1.5 rounded-full text-sm font-bold transition flex items-center gap-2 ${activeTab === 'new' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
-                            >
-                                New <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${activeTab === 'new' ? 'bg-blue-100 text-blue-600' : 'bg-slate-200 text-slate-500'}`}>{stats.newCount}</span>
-                            </button>
-                            <button
-                                onClick={() => setActiveTab('attempted')}
-                                className={`px-6 py-1.5 rounded-full text-sm font-bold transition flex items-center gap-2 ${activeTab === 'attempted' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
-                            >
-                                Attempted <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${activeTab === 'attempted' ? 'bg-blue-100 text-blue-600' : 'bg-slate-200 text-slate-500'}`}>{stats.attemptedCount}</span>
-                            </button>
-                        </div>
-                    </div>
+            obstacles.forEach(o => {
+                let dx = player.x - o.x;
+                let dy = player.y - o.y;
+                if (Math.sqrt(dx * dx + dy * dy) < player.radius + o.size - 5) {
+                    gameOver();
+                }
+            });
+        }
 
-                    {/* Grid */}
-                    <div className="grid md:grid-cols-2 gap-6">
-                        {filteredPapers.map(paper => (
-                            <div key={paper.id} className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition flex flex-col justify-between">
-                                <div>
-                                    <div className="flex justify-between items-start mb-2">
-                                        <h3 className="text-xl font-bold text-slate-800">{paper.title}</h3>
-                                        {paper.attemptCount > 0 && (
-                                            <span className="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-1 rounded-full">
-                                                {paper.attemptCount}x
-                                            </span>
-                                        )}
-                                    </div>
-                                    <p className="text-sm text-slate-500 mb-4">{paper.description || "No description provided."}</p>
-                                    <div className="flex items-center gap-4 text-xs font-medium text-slate-400 mb-6">
-                                        <span className="flex items-center gap-1"><Icon name="clock" className="w-3 h-3" /> {paper.durationMinutes} mins</span>
-                                        <span className="flex items-center gap-1"><Icon name="book-open" className="w-3 h-3" /> {paper.questions.length} Qs</span>
-                                    </div>
-                                </div>
-                                <div className={`grid gap-3 ${paper.attemptCount > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
-                                    {paper.attemptCount > 0 && (
-                                        <button onClick={() => onViewAttempts(paper.id)} className="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium text-sm flex items-center justify-center gap-2 transition">
-                                            <Icon name="history" className="w-4 h-4" />
-                                            {`Attempts (${paper.attemptCount})`}
-                                        </button>
-                                    )}
-                                    <button onClick={() => onSelectPaper(paper.id)} className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium text-sm flex items-center justify-center gap-2 transition">
-                                        <Icon name="play" className="w-4 h-4" />
-                                        {paper.attemptCount > 0 ? 'Retake' : 'Start'}
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
+        function createParticles(x, y, count, color, type) {
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle(x, y, color, type));
+            }
+        }
 
-                        {filteredPapers.length === 0 && (
-                            <div className="col-span-2 text-center py-12 text-slate-400">
-                                <div className="bg-slate-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <Icon name={activeTab === 'new' ? 'check-circle' : 'history'} className="w-8 h-8 text-slate-300" />
-                                </div>
-                                {activeTab === 'new'
-                                    ? "All caught up! You've attempted all available quizzes."
-                                    : "You haven't attempted any quizzes yet."}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            );
+        function draw() {
+            let bgIndex = level - 1;
+            if (bgIndex >= levelColors.length) bgIndex = levelColors.length - 1;
+            ctx.fillStyle = levelColors[bgIndex];
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#2c3e50';
+            ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
+
+            ctx.fillStyle = 'rgba(255,255,255,0.3)';
+            ctx.beginPath();
+            ctx.arc(100 + Math.sin(frames * 0.01) * 50, 100, 40, 0, Math.PI * 2);
+            ctx.arc(150 + Math.sin(frames * 0.01) * 50, 90, 50, 0, Math.PI * 2);
+            ctx.arc(200 + Math.sin(frames * 0.01) * 50, 100, 40, 0, Math.PI * 2);
+            ctx.fill();
+
+            if (portal) portal.draw();
+            obstacles.forEach(o => o.draw());
+            collectibles.forEach(c => c.draw());
+
+            if (level === 10) {
+                drawBirthdayScene();
+            }
+
+            player.draw();
+            particles.forEach(p => p.draw());
+        }
+
+        function drawBirthdayScene() {
+            parents.forEach(p => {
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.fillStyle = p.role === 'dad' ? '#34495e' : '#e91e63';
+                ctx.fillRect(-15, 0, 30, 90);
+                ctx.fillStyle = '#ffe0b2';
+                ctx.beginPath();
+                ctx.arc(0, -15, 20, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#000';
+                ctx.fillRect(-8, -20, 4, 4);
+                ctx.fillRect(4, -20, 4, 4);
+                ctx.beginPath();
+                ctx.arc(0, -10, 10, 0, Math.PI, false);
+                ctx.stroke();
+                ctx.restore();
+            });
+
+            ctx.save();
+            ctx.translate(cake.x, cake.y);
+            ctx.fillStyle = '#8e44ad';
+            ctx.fillRect(-60, 40, 120, 10);
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(-50, 0, 100, 40);
+            ctx.fillStyle = '#ffc0cb';
+            ctx.fillRect(-50, 0, 100, 10);
+
+            for (let i = 0; i < 10; i++) {
+                let cx = -40 + i * 9;
+                ctx.fillStyle = '#f1c40f';
+                ctx.fillRect(cx, -15, 4, 15);
+                if (frames % 10 < 5) {
+                    ctx.fillStyle = '#e67e22';
+                    ctx.beginPath();
+                    ctx.arc(cx + 2, -18, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+            ctx.restore();
+        }
+
+        function gameOver() {
+            gameState = 'GAMEOVER';
+            gameOverScreen.classList.remove('hidden');
+        }
+
+        function completeLevel() {
+            gameState = 'LEVEL_END';
+            if (level < maxLevels) {
+                levelTitle.innerText = `Age ${level} Complete!`;
+                levelScreen.classList.remove('hidden');
+            }
+        }
+
+        function nextLevel() {
+            level++;
+            levelScreen.classList.add('hidden');
+            initLevel(level);
+        }
+
+        function startEndingCutscene() {
+            gameState = 'CUTSCENE';
+            keys.ArrowLeft = false;
+            keys.ArrowRight = false;
+            keys.Space = false;
+
+            let interval = setInterval(() => {
+                if (gameState === 'ENDED') {
+                    clearInterval(interval);
+                    return;
+                }
+
+                let dx = player.x - cake.x;
+                if (Math.abs(dx) > 10) {
+                    player.x -= Math.sign(dx) * 1;
+                    player.facingRight = dx < 0;
+                    if (frames % 20 === 0 && player.y > canvas.height - 40) player.vy = -3;
+                } else {
+                    clearInterval(interval);
+                    triggerFinale();
+                }
+            }, 16);
+        }
+
+        function triggerFinale() {
+            gameState = 'ENDED';
+            player.vx = 0;
+            player.vy = 0;
+            player.y = canvas.height - 20 - player.height / 2;
+
+            parents[0].x = player.x - 40;
+            parents[1].x = player.x + 40;
+
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    createParticles(Math.random() * canvas.width, Math.random() * canvas.height / 2, 20, getRandomColor(), 'firework');
+                }, i * 100);
+            }
+
+            finalMessage.style.opacity = 1;
+
+            setInterval(() => {
+                createParticles(Math.random() * canvas.width, Math.random() * canvas.height / 2, 10, getRandomColor(), 'firework');
+            }, 500);
+        }
+
+        function getRandomColor() {
+            const colors = ['#e74c3c', '#e67e22', '#f1c40f', '#2ecc71', '#3498db', '#9b59b6'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        window.addEventListener('keydown', e => {
+            if (e.code === 'ArrowLeft') keys.ArrowLeft = true;
+            if (e.code === 'ArrowRight') keys.ArrowRight = true;
+            if (e.code === 'Space' || e.code === 'ArrowUp') {
+                e.preventDefault(); // Prevent scrolling/button clicking
+                if (!keys.Space) player.flap();
+                keys.Space = true;
+            }
+        });
+
+        window.addEventListener('keyup', e => {
+            if (e.code === 'ArrowLeft') keys.ArrowLeft = false;
+            if (e.code === 'ArrowRight') keys.ArrowRight = false;
+            if (e.code === 'Space' || e.code === 'ArrowUp') keys.Space = false;
+        });
+
+        const btnLeft = document.getElementById('btn-left');
+        const btnRight = document.getElementById('btn-right');
+        const btnFlap = document.getElementById('btn-flap');
+
+        const addTouch = (elem, code) => {
+            elem.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                if (code === 'Space') player.flap();
+                keys[code] = true;
+            }, { passive: false });
+            elem.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                keys[code] = false;
+            }, { passive: false });
         };
 
-        const QuizTaker = ({ paper, onSubmit }) => {
-            const [answers, setAnswers] = useState({});
-            const [currentQIndex, setCurrentQIndex] = useState(0);
-            const [showConfirm, setShowConfirm] = useState(false);
+        addTouch(btnLeft, 'ArrowLeft');
+        addTouch(btnRight, 'ArrowRight');
+        addTouch(btnFlap, 'Space');
 
-            const currentQ = paper.questions[currentQIndex];
-            const isLastQuestion = currentQIndex === paper.questions.length - 1;
+        document.getElementById('start-btn').addEventListener('click', (e) => {
+            e.target.blur(); // Remove focus
+            startScreen.classList.add('hidden');
+            initLevel(1);
 
-            const handleOptionToggle = (qId, optionIdx, isMulti) => {
-                setAnswers(prev => {
-                    const currentSelection = prev[qId] || [];
-                    if (isMulti) {
-                        return currentSelection.includes(optionIdx)
-                            ? { ...prev, [qId]: currentSelection.filter(i => i !== optionIdx) }
-                            : { ...prev, [qId]: [...currentSelection, optionIdx] };
-                    }
-                    return { ...prev, [qId]: [optionIdx] };
-                });
-            };
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            lastTime = performance.now();
+            loop(lastTime);
+        });
 
-            const isAnswered = (idx) => {
-                const q = paper.questions[idx];
-                return answers[q.id] && answers[q.id].length > 0;
-            };
+        document.getElementById('next-level-btn').addEventListener('click', (e) => {
+            e.target.blur();
+            nextLevel();
+        });
 
-            const handleSubmitClick = () => {
-                setShowConfirm(true);
-            };
+        document.getElementById('retry-btn').addEventListener('click', (e) => {
+            e.target.blur();
+            gameOverScreen.classList.add('hidden');
+            initLevel(level);
+        });
 
-            return (
-                <div className="max-w-5xl mx-auto p-2 md:p-6 h-screen flex flex-col fade-in relative">
-                    {showConfirm && (
-                        <div className="absolute inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center rounded-xl">
-                            <div className="bg-white p-6 rounded-xl shadow-2xl max-w-sm w-full text-center m-4">
-                                <h3 className="text-xl font-bold mb-2">Submit Quiz?</h3>
-                                <p className="text-slate-500 mb-6">You have answered {Object.keys(answers).length} out of {paper.questions.length} questions.</p>
-                                <div className="flex gap-3 justify-center">
-                                    <button onClick={() => setShowConfirm(false)} className="px-4 py-2 border rounded-lg hover:bg-slate-50 font-medium">Cancel</button>
-                                    <button onClick={() => onSubmit(answers)} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium">Yes, Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
+        function loop(timestamp) {
+            // Calculate delta time (dt)
+            // Divide by 16.666 to normalize to ~60FPS
+            // (16.66ms is one frame at 60FPS)
+            const dt = (timestamp - lastTime) / 16.666;
+            lastTime = timestamp;
 
-                    {/* Compact Header for Mobile */}
-                    <header className="flex justify-between items-center mb-3 md:mb-6 bg-white p-2 md:p-4 rounded-xl shadow-sm border border-slate-200 shrink-0">
-                        <div className="min-w-0 pr-2">
-                            <h2 className="text-sm md:text-lg font-bold text-slate-800 truncate">{paper.title}</h2>
-                            <span className="text-xs md:text-sm text-slate-500">Q {currentQIndex + 1} of {paper.questions.length}</span>
-                        </div>
-                        <div className="flex items-center gap-2 md:gap-4 shrink-0">
-                            <Timer duration={paper.durationMinutes * 60} isActive={true} onTimeUp={() => onSubmit(answers)} />
-                            <button onClick={handleSubmitClick} className="bg-slate-900 hover:bg-slate-800 text-white px-3 py-1 md:px-5 md:py-2 text-sm md:text-base rounded-lg font-medium transition">
-                                Submit
-                            </button>
-                        </div>
-                    </header>
+            // Cap dt to prevent huge jumps if tab is inactive
+            // If dt is too high (e.g. > 4), pretend it's just 1 frame
+            const safeDt = Math.min(dt, 4);
 
-                    <div className="flex-1 flex gap-6 overflow-hidden min-h-0">
-                        <main className="flex-1 overflow-y-auto bg-white rounded-xl shadow-sm border border-slate-200 p-4 md:p-8 flex flex-col">
-                            <div className="mb-4 md:mb-6">
-                                <h3 className="text-lg md:text-2xl font-semibold text-slate-900 leading-snug md:leading-relaxed">{currentQ.text}</h3>
-                                {currentQ.correctIndices.length > 1 && (
-                                    <span className="inline-block mt-2 text-[10px] md:text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-1 rounded">Multiple Selection</span>
-                                )}
-                            </div>
+            update(safeDt);
+            draw();
+            animationFrameId = requestAnimationFrame(loop);
+        }
 
-                            <div className="space-y-2 md:space-y-3 flex-1 overflow-y-auto">
-                                {currentQ.options.map((opt, idx) => {
-                                    const isSelected = answers[currentQ.id]?.includes(idx);
-                                    return (
-                                        <label key={idx} className={`flex items-start p-3 md:p-4 rounded-lg border-2 cursor-pointer transition select-none ${isSelected ? 'border-blue-500 bg-blue-50' : 'border-slate-100 hover:border-slate-300 hover:bg-slate-50'}`}>
-                                            <div className={`w-5 h-5 md:w-6 md:h-6 flex-shrink-0 mt-0.5 rounded flex items-center justify-center border transition ${isSelected ? 'bg-blue-500 border-blue-500 text-white' : 'bg-white border-slate-300'} ${currentQ.correctIndices.length === 1 && 'rounded-full'}`}>
-                                                {isSelected && <Icon name="check" className="w-3 h-3 md:w-4 md:h-4" />}
-                                            </div>
-                                            <input type={currentQ.correctIndices.length > 1 ? "checkbox" : "radio"} name={`q-${currentQ.id}`} className="hidden" checked={isSelected || false} onChange={() => handleOptionToggle(currentQ.id, idx, currentQ.correctIndices.length > 1)} />
-                                            <span className={`ml-3 md:ml-4 text-sm md:text-lg leading-snug ${isSelected ? 'text-blue-900 font-medium' : 'text-slate-700'}`}>{opt}</span>
-                                        </label>
-                                    );
-                                })}
-                            </div>
-
-                            {/* Compact Footer Action Bar */}
-                            <div className="mt-4 md:mt-10 pt-4 md:pt-6 border-t border-slate-100 flex justify-between items-center shrink-0">
-                                <button disabled={currentQIndex === 0} onClick={() => setCurrentQIndex(i => i - 1)} className="px-3 py-2 md:px-4 md:py-2 text-sm md:text-base text-slate-600 disabled:opacity-30 hover:bg-slate-100 rounded-lg flex items-center gap-2">
-                                    <Icon name="chevron-left" className="w-4 h-4 md:w-5 md:h-5" /> Prev
-                                </button>
-
-                                {isLastQuestion ? (
-                                    <button onClick={handleSubmitClick} className="px-4 py-2 md:px-6 md:py-2 bg-green-600 text-white hover:bg-green-700 rounded-lg flex items-center gap-2 font-bold shadow-md transform hover:scale-105 transition text-sm md:text-base">
-                                        Submit Quiz <Icon name="check" className="w-4 h-4 md:w-5 md:h-5" />
-                                    </button>
-                                ) : (
-                                    <button onClick={() => setCurrentQIndex(i => i + 1)} className="px-3 py-2 md:px-4 md:py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-lg flex items-center gap-2 shadow-sm text-sm md:text-base">
-                                        Next <Icon name="chevron-right" className="w-4 h-4 md:w-5 md:h-5" />
-                                    </button>
-                                )}
-                            </div>
-                        </main>
-
-                        <aside className="w-64 hidden md:flex flex-col bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-                            <h4 className="font-bold text-slate-700 mb-4 text-sm uppercase tracking-wider">Question Map</h4>
-                            <div className="grid grid-cols-4 gap-2 content-start overflow-y-auto">
-                                {paper.questions.map((q, idx) => (
-                                    <button key={q.id} onClick={() => setCurrentQIndex(idx)} className={`h-10 rounded-lg font-medium text-sm transition ${currentQIndex === idx ? 'ring-2 ring-blue-500 ring-offset-2 bg-blue-100 text-blue-700' : isAnswered(idx) ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
-                                        {idx + 1}
-                                    </button>
-                                ))}
-                            </div>
-                            <div className="mt-auto pt-4 text-xs text-slate-400 flex flex-col gap-2">
-                                <div className="flex items-center gap-2"><div className="w-3 h-3 bg-blue-600 rounded"></div> Answered</div>
-                                <div className="flex items-center gap-2"><div className="w-3 h-3 bg-slate-100 rounded"></div> Pending</div>
-                                <div className="flex items-center gap-2"><div className="w-3 h-3 bg-blue-100 border border-blue-500 rounded"></div> Current</div>
-                            </div>
-                        </aside>
-                    </div>
-                </div>
-            );
-        };
-
-        const ResultView = ({ paper, userAnswers, onHome }) => {
-            const [activeQIndex, setActiveQIndex] = useState(0);
-
-            const stats = useMemo(() => calculateStats(paper, userAnswers), [paper, userAnswers]);
-
-            const getQuestionStatus = (q) => {
-                const uAns = userAnswers[q.id] || [];
-                if (uAns.length === 0) return 'skipped';
-                const sortedU = [...uAns].sort();
-                const sortedC = [...q.correctIndices].sort();
-                return JSON.stringify(sortedU) === JSON.stringify(sortedC) ? 'correct' : 'wrong';
-            };
-
-            const activeQ = paper.questions[activeQIndex];
-            const activeStatus = getQuestionStatus(activeQ);
-
-            const correctAnswerText = activeQ.correctIndices.map(i => activeQ.options[i]).join(", ");
-
-            return (
-                <div className="max-w-6xl mx-auto p-4 md:p-8 fade-in min-h-screen flex flex-col">
-                    <div className="flex justify-between items-center mb-6 md:mb-8">
-                        <h1 className="text-xl md:text-2xl font-bold text-slate-800">Results: {paper.title}</h1>
-                        <button onClick={onHome} className="text-slate-600 hover:text-slate-900 font-medium flex items-center gap-2 text-sm md:text-base">
-                            <Icon name="chevron-left" className="w-4 h-4" /> Back to Home
-                        </button>
-                    </div>
-
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 mb-6 md:mb-8">
-                        <div className="bg-white p-3 md:p-4 rounded-xl shadow-sm border border-slate-200">
-                            <div className="text-slate-500 text-xs md:text-sm font-medium mb-1">Score</div>
-                            <div className="text-2xl md:text-3xl font-bold text-slate-800">{stats.percentage}%</div>
-                        </div>
-                        <div className="bg-blue-50 p-3 md:p-4 rounded-xl border border-blue-100">
-                            <div className="text-blue-600 text-xs md:text-sm font-medium mb-1">Attempted</div>
-                            <div className="text-2xl md:text-3xl font-bold text-blue-700">{stats.attempted}</div>
-                        </div>
-                        <div className="bg-emerald-50 p-3 md:p-4 rounded-xl border border-emerald-100">
-                            <div className="text-emerald-600 text-xs md:text-sm font-medium mb-1">Correct</div>
-                            <div className="text-2xl md:text-3xl font-bold text-emerald-700">{stats.correct}</div>
-                        </div>
-                        <div className="bg-red-50 p-3 md:p-4 rounded-xl border border-red-100">
-                            <div className="text-red-600 text-xs md:text-sm font-medium mb-1">Wrong</div>
-                            <div className="text-2xl md:text-3xl font-bold text-red-700">{stats.wrong}</div>
-                        </div>
-                        <div className="bg-slate-100 p-3 md:p-4 rounded-xl border border-slate-200">
-                            <div className="text-slate-500 text-xs md:text-sm font-medium mb-1">Unattempted</div>
-                            <div className="text-2xl md:text-3xl font-bold text-slate-600">{stats.unattempted}</div>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col md:flex-row gap-6 flex-1 min-h-0">
-                        <div className="flex-1 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col min-h-[400px]">
-                            <div className={`p-4 md:p-6 border-b flex items-center gap-3 ${activeStatus === 'correct' ? 'bg-emerald-50 border-emerald-100' : activeStatus === 'wrong' ? 'bg-red-50 border-red-100' : 'bg-slate-50 border-slate-100'}`}>
-                                {activeStatus === 'correct' && <Icon name="check-circle" className="w-5 h-5 md:w-6 md:h-6 text-emerald-600" />}
-                                {activeStatus === 'wrong' && <Icon name="x-circle" className="w-5 h-5 md:w-6 md:h-6 text-red-600" />}
-                                {activeStatus === 'skipped' && <Icon name="alert-circle" className="w-5 h-5 md:w-6 md:h-6 text-slate-400" />}
-                                <span className="font-bold text-base md:text-lg capitalize text-slate-800">
-                                    Question {activeQIndex + 1}: {activeStatus === 'skipped' ? 'Unattempted' : activeStatus}
-                                </span>
-                            </div>
-
-                            <div className="p-4 md:p-8 overflow-y-auto flex-1">
-                                <h3 className="text-lg md:text-xl font-semibold text-slate-900 mb-4 md:mb-6">{activeQ.text}</h3>
-                                <div className="space-y-2 md:space-y-3 mb-6 md:mb-8">
-                                    {activeQ.options.map((opt, idx) => {
-                                        const isSelected = userAnswers[activeQ.id]?.includes(idx);
-                                        const isCorrect = activeQ.correctIndices.includes(idx);
-                                        let baseClass = "p-3 md:p-4 rounded-lg border flex justify-between items-center text-sm md:text-base ";
-                                        if (isCorrect) baseClass += "bg-emerald-50 border-emerald-500 text-emerald-900 font-medium";
-                                        else if (isSelected && !isCorrect) baseClass += "bg-red-50 border-red-400 text-red-900";
-                                        else baseClass += "bg-white border-slate-200 text-slate-500 opacity-70";
-                                        return (
-                                            <div key={idx} className={baseClass}>
-                                                <span>{opt}</span>
-                                                {isCorrect && <span className="text-[10px] md:text-xs bg-emerald-200 text-emerald-800 px-2 py-1 rounded font-bold ml-2">CORRECT</span>}
-                                                {isSelected && !isCorrect && <span className="text-[10px] md:text-xs bg-red-200 text-red-800 px-2 py-1 rounded font-bold ml-2">YOURS</span>}
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-
-                                <div className="bg-blue-50 rounded-lg p-4 md:p-6 border border-blue-100 text-sm md:text-base">
-                                    <h4 className="flex items-center gap-2 font-bold text-blue-800 mb-2">
-                                        <Icon name="book-open" className="w-4 h-4" /> Explanation
-                                    </h4>
-                                    {activeStatus !== 'correct' && (
-                                        <div className="mb-3 pb-3 border-b border-blue-200">
-                                            <p className="text-xs md:text-sm font-bold text-blue-700 uppercase tracking-wide mb-1">Correct Answer</p>
-                                            <p className="text-blue-900 font-medium">{correctAnswerText}</p>
-                                        </div>
-                                    )}
-                                    <p className="text-blue-900 mb-4">{activeQ.explanation}</p>
-                                    <div className="text-xs md:text-sm text-blue-600 pt-4 border-t border-blue-200"><strong>Hint provided:</strong> {activeQ.hint}</div>
-                                </div>
-                            </div>
-
-                            <div className="p-3 md:p-4 bg-slate-50 border-t border-slate-200 flex justify-between">
-                                <button disabled={activeQIndex === 0} onClick={() => setActiveQIndex(i => i - 1)} className="px-3 py-2 md:px-4 md:py-2 text-slate-600 disabled:opacity-30 hover:bg-white rounded-lg flex items-center gap-2 text-sm md:text-base">
-                                    <Icon name="chevron-left" className="w-4 h-4" /> Prev
-                                </button>
-                                <button disabled={activeQIndex === paper.questions.length - 1} onClick={() => setActiveQIndex(i => i + 1)} className="px-3 py-2 md:px-4 md:py-2 bg-slate-800 text-white hover:bg-slate-700 rounded-lg flex items-center gap-2 disabled:opacity-50 text-sm md:text-base">
-                                    Next <Icon name="chevron-right" className="w-4 h-4" />
-                                </button>
-                            </div>
-                        </div>
-
-                        <div className="w-full md:w-72 bg-white rounded-xl shadow-sm border border-slate-200 p-4 h-fit">
-                            <h4 className="font-bold text-slate-700 mb-4 text-sm uppercase tracking-wider">Question Map</h4>
-                            <div className="grid grid-cols-5 md:grid-cols-5 gap-2">
-                                {paper.questions.map((q, idx) => {
-                                    const status = getQuestionStatus(q);
-                                    let colorClass = "";
-                                    if (status === 'correct') colorClass = "bg-emerald-100 text-emerald-700 hover:bg-emerald-200 border-emerald-300";
-                                    else if (status === 'wrong') colorClass = "bg-red-100 text-red-700 hover:bg-red-200 border-red-300";
-                                    else colorClass = "bg-slate-100 text-slate-500 hover:bg-slate-200 border-slate-200";
-                                    if (activeQIndex === idx) colorClass += " ring-2 ring-blue-500 ring-offset-1";
-                                    return (
-                                        <button key={q.id} onClick={() => setActiveQIndex(idx)} className={`h-8 md:h-10 rounded font-bold text-xs md:text-sm border transition ${colorClass}`}>
-                                            {idx + 1}
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                            <div className="mt-6 space-y-3 text-xs font-medium text-slate-500 border-t pt-4">
-                                <div className="flex items-center gap-2"><div className="w-3 h-3 bg-emerald-200 border border-emerald-400 rounded"></div> Correct</div>
-                                <div className="flex items-center gap-2"><div className="w-3 h-3 bg-red-200 border border-red-400 rounded"></div> Wrong</div>
-                                <div className="flex items-center gap-2"><div className="w-3 h-3 bg-slate-100 border border-slate-300 rounded"></div> Unattempted</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        };
-
-        const App = () => {
-            const [view, setView] = useState('home'); // home | quiz | results | attempts | admin
-            const [currentPaper, setCurrentPaper] = useState(null);
-            const [finalAnswers, setFinalAnswers] = useState(null);
-            const [viewAttemptsId, setViewAttemptsId] = useState(null);
-
-            const startQuiz = async (paperId) => {
-                const paper = await QuizService.getPaperById(paperId);
-                setCurrentPaper(paper);
-                setView('quiz');
-            };
-
-            const viewAttempts = (paperId) => {
-                setViewAttemptsId(paperId);
-                setView('attempts');
-            };
-
-            const submitQuiz = async (answers) => {
-                setFinalAnswers(answers);
-                const stats = calculateStats(currentPaper, answers);
-                const attemptData = {
-                    paperId: currentPaper.id,
-                    timestamp: new Date().toISOString(),
-                    stats: stats
-                };
-                await QuizService.saveAttempt(attemptData);
-                setView('results');
-            };
-
-            const handleUpload = (jsonString) => QuizService.addPaper(jsonString);
-
-            return (
-                <div>
-                    {view === 'home' && <HomeView onSelectPaper={startQuiz} onViewAttempts={viewAttempts} onAdmin={() => setView('admin')} />}
-                    {view === 'admin' && <AdminView onBack={() => setView('home')} onUpload={handleUpload} />}
-                    {view === 'quiz' && <QuizTaker paper={currentPaper} onSubmit={submitQuiz} />}
-                    {view === 'results' && <ResultView paper={currentPaper} userAnswers={finalAnswers} onHome={() => setView('home')} />}
-                    {view === 'attempts' && <AttemptsView paperId={viewAttemptsId} onBack={() => setView('home')} onNewAttempt={() => startQuiz(viewAttemptsId)} />}
-                </div>
-            );
-        };
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
     </script>
 </body>
 
