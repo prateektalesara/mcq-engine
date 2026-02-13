@@ -62,7 +62,6 @@
             color: white;
             pointer-events: auto;
             z-index: 10;
-            /* Replaced transition/opacity with display:none for robust focus handling */
         }
 
         .hidden {
@@ -76,6 +75,8 @@
             color: #FFD700;
             text-shadow: 3px 3px 0 #d35400;
             text-align: center;
+            width: 100%;
+            /* Ensure it spans full width for centering */
         }
 
         p {
@@ -84,6 +85,9 @@
             text-align: center;
             line-height: 1.6;
             margin-bottom: 30px;
+            /* Auto margins to ensure block centering if flex fails, though flex is primary */
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .btn {
@@ -140,14 +144,21 @@
             gap: 20px;
         }
 
-        /* Final Message styling */
+        /* Final Message styling - UPGRADED for Robust Centering */
         #final-message {
             position: absolute;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            /* Perfect Center */
+            left: 0;
             width: 100%;
+            transform: translateY(-50%);
+            /* Vertical centering */
+
+            /* Flexbox ensures children (h1, p) are centered regardless of their width */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
             text-align: center;
             color: white;
             font-family: 'Fredoka One', cursive;
@@ -155,6 +166,7 @@
             pointer-events: none;
             opacity: 0;
             transition: opacity 2s;
+            z-index: 20;
         }
     </style>
 </head>
@@ -170,7 +182,7 @@
         </div>
 
         <div id="final-message">
-            <h1 style="color: #fff; font-size: 40px;">Happy 10th Birthday!</h1>
+            <h1 style="color: #fff; font-size: 40px;">Happy 10th Birthday Sakina !!!</h1>
             <p style="font-size: 24px; color: #ffeaa7;">"We will always be there for your every milestone."</p>
         </div>
 
@@ -211,7 +223,6 @@
 
         // --- CUSTOM PHOTOS CONFIGURATION ---
         // REPLACE these URLs with your own image links!
-        // You can use a URL to an image hosted online, or a Data URI.
         const girlImg = new Image();
         girlImg.src = 'https://placehold.co/50x50/ff99cc/white?text=Girl&font=roboto';
 
@@ -239,10 +250,10 @@
         let frames = 0;
         let animationFrameId;
 
-        // Time management for consistent physics
+        // Time management
         let lastTime = 0;
 
-        // Physics Constants (Normalized for 60FPS)
+        // Physics
         const GRAVITY = 0.28;
         const FLAP_FORCE = -8.0;
         const MOVE_SPEED = 0.4;
@@ -272,7 +283,7 @@
             '#F06292', '#BA68C8', '#7986CB', '#4FC3F7', '#2c3e50'
         ];
 
-        // Resize handling
+        // Resize
         function resize() {
             if (Math.abs(canvas.width - window.innerWidth) > 10 || Math.abs(canvas.height - window.innerHeight) > 10) {
                 canvas.width = window.innerWidth;
@@ -308,7 +319,7 @@
                     return;
                 }
 
-                // Physics with Delta Time
+                // Physics
                 this.vy += GRAVITY * dt;
                 this.vx *= Math.pow(FRICTION, dt);
                 this.x += this.vx * dt;
@@ -324,23 +335,17 @@
                     this.facingRight = false;
                 }
 
-                // Cap speed
                 if (this.vx > MAX_H_SPEED) this.vx = MAX_H_SPEED;
                 if (this.vx < -MAX_H_SPEED) this.vx = -MAX_H_SPEED;
 
-                // Floor collision
                 if (this.y + this.height / 2 > canvas.height - 20) {
                     this.y = canvas.height - 20 - this.height / 2;
                     this.vy = 0;
                 }
-
-                // Ceiling
                 if (this.y < 0) {
                     this.y = 0;
                     this.vy = 0;
                 }
-
-                // Walls
                 if (this.x > canvas.width) this.x = 0;
                 if (this.x < 0) this.x = canvas.width;
 
@@ -383,7 +388,6 @@
                     ctx.beginPath();
                     ctx.ellipse(-10, -55, 12, 15, 0, 0, Math.PI * 2);
                     ctx.fill();
-                    // Highlight
                     ctx.fillStyle = 'rgba(255,255,255,0.3)';
                     ctx.beginPath();
                     ctx.ellipse(-13, -58, 3, 5, 0, 0, Math.PI * 2);
@@ -394,7 +398,6 @@
                     ctx.beginPath();
                     ctx.ellipse(10, -55, 12, 15, 0, 0, Math.PI * 2);
                     ctx.fill();
-                    // Highlight
                     ctx.fillStyle = 'rgba(255,255,255,0.3)';
                     ctx.beginPath();
                     ctx.ellipse(7, -58, 3, 5, 0, 0, Math.PI * 2);
@@ -411,32 +414,26 @@
 
                 // Draw Custom Face (Girl)
                 try {
-                    const size = 25; // Head size
+                    const size = 25;
                     ctx.save();
-                    ctx.translate(0, -15); // Head position
+                    ctx.translate(0, -15);
 
-                    // Skin background (prevents transparency issues)
                     ctx.fillStyle = '#ffe0b2';
                     ctx.beginPath();
                     ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
                     ctx.fill();
 
-                    // Circular Clip for Avatar
                     ctx.beginPath();
                     ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
                     ctx.closePath();
                     ctx.clip();
 
-                    // Flip image if facing left
                     if (!this.facingRight) {
                         ctx.scale(-1, 1);
                     }
-
                     ctx.drawImage(girlImg, -size / 2, -size / 2, size, size);
-
                     ctx.restore();
 
-                    // Avatar Border
                     ctx.strokeStyle = '#fff';
                     ctx.lineWidth = 2;
                     ctx.beginPath();
@@ -444,13 +441,11 @@
                     ctx.stroke();
 
                 } catch (e) {
-                    // Fallback Head
                     ctx.fillStyle = '#ffe0b2';
                     ctx.beginPath();
                     ctx.arc(0, -15, 10, 0, Math.PI * 2);
                     ctx.fill();
                 }
-
                 ctx.restore();
             }
         }
@@ -474,7 +469,6 @@
                     if (this.x > canvas.width + 50) this.x = -50;
                     if (this.x < -50) this.x = canvas.width + 50;
                 } else if (this.type === 'vertical') {
-                    // Use time-based sine wave instead of frame-based
                     this.y = this.startY + Math.sin(Date.now() * 0.002) * 50;
                 } else if (this.type === 'circle') {
                     this.angle += 0.05 * dt;
@@ -486,12 +480,10 @@
             draw() {
                 ctx.save();
                 ctx.translate(this.x, this.y);
-
                 ctx.fillStyle = '#546e7a';
                 ctx.beginPath();
                 ctx.arc(0, 0, this.size, 0, Math.PI * 2);
                 ctx.fill();
-
                 ctx.strokeStyle = '#37474f';
                 ctx.lineWidth = 2;
                 for (let i = 0; i < 8; i++) {
@@ -503,7 +495,6 @@
                     ctx.lineTo(sx, sy);
                     ctx.stroke();
                 }
-
                 ctx.restore();
             }
         }
@@ -511,7 +502,7 @@
         class Collectible {
             constructor(x, y) {
                 this.x = x;
-                this.baseY = y; // Store base Y for stable floating
+                this.baseY = y;
                 this.y = y;
                 this.size = 15;
                 this.collected = false;
@@ -519,8 +510,6 @@
             }
 
             update(dt) {
-                // Stable floating logic using base Y
-                // Use Date.now() for smooth animation regardless of framerate
                 this.y = this.baseY + Math.sin(Date.now() * 0.003 + this.floatOffset) * 10;
             }
 
@@ -528,7 +517,6 @@
                 if (this.collected) return;
                 ctx.save();
                 ctx.translate(this.x, this.y);
-
                 ctx.fillStyle = '#f1c40f';
                 ctx.beginPath();
                 for (let i = 0; i < 5; i++) {
@@ -542,7 +530,6 @@
                 ctx.strokeStyle = '#f39c12';
                 ctx.lineWidth = 2;
                 ctx.stroke();
-
                 ctx.restore();
             }
         }
@@ -566,17 +553,14 @@
                 ctx.save();
                 ctx.translate(this.x, this.y);
                 ctx.rotate(frames * 0.05);
-
                 ctx.strokeStyle = '#fff';
                 ctx.lineWidth = 3;
                 ctx.setLineDash([5, 5]);
                 ctx.beginPath();
                 ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
                 ctx.stroke();
-
                 ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
                 ctx.fill();
-
                 ctx.restore();
 
                 if (this.active) {
@@ -619,6 +603,12 @@
         }
 
         // ------------------ GAME LOGIC ------------------
+
+        function getOrdinal(n) {
+            var s = ["th", "st", "nd", "rd"];
+            var v = n % 100;
+            return n + (s[(v - 20) % 10] || s[v] || s[0]);
+        }
 
         function initLevel(lvl) {
             level = lvl;
@@ -676,10 +666,10 @@
             parents.push({ x: canvas.width / 2 + 80, y: canvas.height - 110, role: 'mom' });
             hudScore.innerText = "";
 
-            // Update the birthday text to match the maxLevels (e.g., 2nd or 10th)
+            // Fix grammar: 1st, 2nd, 3rd, 10th
             const finalMsgH1 = document.querySelector('#final-message h1');
             if (finalMsgH1) {
-                finalMsgH1.innerText = `Happy ${maxLevels}th Birthday!`;
+                finalMsgH1.innerText = `Happy ${getOrdinal(maxLevels)} Birthday Sakina !!!`;
             }
         }
 
@@ -801,13 +791,11 @@
                     ctx.save();
                     ctx.translate(0, -15); // Position head above body
 
-                    // Skin background
                     ctx.fillStyle = '#ffe0b2';
                     ctx.beginPath();
                     ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
                     ctx.fill();
 
-                    // Circular Clip
                     ctx.beginPath();
                     ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
                     ctx.closePath();
@@ -819,14 +807,12 @@
                         ctx.drawImage(momImg, -size / 2, -size / 2, size, size);
                     }
 
-                    // Border
                     ctx.strokeStyle = '#fff';
                     ctx.lineWidth = 2;
                     ctx.stroke();
 
                     ctx.restore();
                 } catch (e) {
-                    // Fallback
                     ctx.fillStyle = p.role === 'dad' ? '#34495e' : '#e91e63';
                     ctx.fillRect(-15, 0, 30, 90);
                     ctx.fillStyle = '#ffe0b2';
@@ -834,7 +820,6 @@
                     ctx.arc(0, -15, 20, 0, Math.PI * 2);
                     ctx.fill();
                 }
-
                 ctx.restore();
             });
 
