@@ -143,7 +143,10 @@
         /* Final Message styling */
         #final-message {
             position: absolute;
-            top: 20%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* Perfect Center */
             width: 100%;
             text-align: center;
             color: white;
@@ -206,6 +209,19 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
+        // --- CUSTOM PHOTOS CONFIGURATION ---
+        // REPLACE these URLs with your own image links!
+        // You can use a URL to an image hosted online, or a Data URI.
+        const girlImg = new Image();
+        girlImg.src = 'https://placehold.co/50x50/ff99cc/white?text=Girl&font=roboto';
+
+        const momImg = new Image();
+        momImg.src = 'https://placehold.co/60x80/e91e63/white?text=Mom&font=roboto';
+
+        const dadImg = new Image();
+        dadImg.src = 'https://placehold.co/60x80/34495e/white?text=Dad&font=roboto';
+        // ------------------------------------
+
         // Screens & UI
         const startScreen = document.getElementById('start-screen');
         const levelScreen = document.getElementById('level-screen');
@@ -227,9 +243,8 @@
         let lastTime = 0;
 
         // Physics Constants (Normalized for 60FPS)
-        // Delta time will scale these
-        const GRAVITY = 0.28; // Increased slightly for better feel
-        const FLAP_FORCE = -8.0; // Increased flap strength
+        const GRAVITY = 0.28;
+        const FLAP_FORCE = -8.0;
         const MOVE_SPEED = 0.4;
         const MAX_H_SPEED = 6;
         const FRICTION = 0.96;
@@ -333,7 +348,6 @@
             }
 
             flap() {
-                // Instant velocity set for snappy control
                 this.vy = FLAP_FORCE;
                 createParticles(this.x, this.y + 20, 3, '#fff');
             }
@@ -387,33 +401,23 @@
                     ctx.fill();
                 }
 
-                // Girl
-                ctx.fillStyle = '#9b59b6';
-                ctx.beginPath();
-                ctx.moveTo(0, -10);
-                ctx.lineTo(-10, 20);
-                ctx.lineTo(10, 20);
-                ctx.fill();
-
-                ctx.fillStyle = '#ffe0b2';
-                ctx.beginPath();
-                ctx.arc(0, -15, 10, 0, Math.PI * 2);
-                ctx.fill();
-
-                ctx.fillStyle = '#3e2723';
-                ctx.beginPath();
-                ctx.arc(0, -17, 11, Math.PI, 0);
-                ctx.lineTo(10, -5);
-                ctx.lineTo(-10, -5);
-                ctx.fill();
-
-                ctx.fillStyle = '#000';
-                if (this.facingRight) {
-                    ctx.fillRect(2, -18, 2, 2);
-                    ctx.fillRect(6, -18, 2, 2);
-                } else {
-                    ctx.fillRect(-4, -18, 2, 2);
-                    ctx.fillRect(-8, -18, 2, 2);
+                // Draw Custom Face (Girl)
+                try {
+                    // Draw image centered
+                    const size = 50;
+                    ctx.save();
+                    // Flip image if facing left
+                    if (!this.facingRight) {
+                        ctx.scale(-1, 1);
+                    }
+                    ctx.drawImage(girlImg, -size / 2, -size / 2, size, size);
+                    ctx.restore();
+                } catch (e) {
+                    // Fallback if image fails (Basic shape)
+                    ctx.fillStyle = '#9b59b6';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 20, 0, Math.PI * 2);
+                    ctx.fill();
                 }
 
                 ctx.restore();
@@ -749,18 +753,26 @@
             parents.forEach(p => {
                 ctx.save();
                 ctx.translate(p.x, p.y);
-                ctx.fillStyle = p.role === 'dad' ? '#34495e' : '#e91e63';
-                ctx.fillRect(-15, 0, 30, 90);
-                ctx.fillStyle = '#ffe0b2';
-                ctx.beginPath();
-                ctx.arc(0, -15, 20, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.fillStyle = '#000';
-                ctx.fillRect(-8, -20, 4, 4);
-                ctx.fillRect(4, -20, 4, 4);
-                ctx.beginPath();
-                ctx.arc(0, -10, 10, 0, Math.PI, false);
-                ctx.stroke();
+
+                try {
+                    // Draw Parent Image
+                    const w = 60;
+                    const h = 80;
+                    if (p.role === 'dad') {
+                        ctx.drawImage(dadImg, -w / 2, -h, w, h);
+                    } else {
+                        ctx.drawImage(momImg, -w / 2, -h, w, h);
+                    }
+                } catch (e) {
+                    // Fallback
+                    ctx.fillStyle = p.role === 'dad' ? '#34495e' : '#e91e63';
+                    ctx.fillRect(-15, 0, 30, 90);
+                    ctx.fillStyle = '#ffe0b2';
+                    ctx.beginPath();
+                    ctx.arc(0, -15, 20, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
                 ctx.restore();
             });
 
