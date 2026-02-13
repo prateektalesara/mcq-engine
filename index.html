@@ -1,198 +1,221 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Birthday Rescue Mission</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Great Birthday Rescue!</title>
     <style>
         body {
             margin: 0;
-            background: black;
             overflow: hidden;
+            background: #1a1a2e;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         canvas {
             display: block;
-            margin: auto;
-            background: linear-gradient(#001122, #003366);
+            margin: 0 auto;
+            background: linear-gradient(#1e3c72, #2a5298);
+        }
+
+        #ui {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-shadow: 2px 2px #000;
+            font-size: 24px;
+            pointer-events: none;
         }
     </style>
 </head>
 
 <body>
-
-    <canvas id="game" width="800" height="450"></canvas>
+    <div id="ui">Quest: Rescue Mom & Dad!</div>
+    <canvas id="gameCanvas"></canvas>
 
     <script>
-        const canvas = document.getElementById("game");
-        const ctx = canvas.getContext("2d");
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
 
-        let state = "start";
+        // --- CUSTOMIZE HERE ---
+        const HERO_NAME = "Hero"; // Your daughter's name
+        const DAD_NAME = "Dad";
+        const MOM_NAME = "Mom";
+        // ----------------------
 
-        let hero = { x: 50, y: 200, size: 20, speed: 4 };
-        let shadow = { x: 600, y: 200, size: 30, dir: 1 };
-        let parents = { x: 700, y: 200 };
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-        let crystals = [
-            { x: 200, y: 100, collected: false },
-            { x: 400, y: 300, collected: false },
-            { x: 600, y: 150, collected: false }
+        let gameActive = true;
+        let gameWon = false;
+
+        const player = {
+            x: 50, y: 0, w: 40, h: 60,
+            color: '#ff4d6d', dy: 0, speed: 7,
+            jumpForce: 15, grounded: false
+        };
+
+        const gravity = 0.8;
+        const keys = {};
+        const platforms = [
+            { x: 0, y: canvas.height - 50, w: 400, h: 50 },
+            { x: 500, y: canvas.height - 150, w: 300, h: 40 },
+            { x: 200, y: canvas.height - 300, w: 250, h: 40 },
+            { x: 600, y: canvas.height - 450, w: 200, h: 40 },
+            { x: 900, y: canvas.height - 250, w: 400, h: 50 }, // Goal Platform
         ];
 
-        let keys = {};
-        let gamepadIndex = null;
-        let collectedCount = 0;
+        // The "Evil" obstacles (Work Clouds)
+        const obstacles = [
+            { x: 550, y: canvas.height - 190, w: 60, h: 40, msg: "OFFICE WORK" },
+            { x: 250, y: canvas.height - 340, w: 80, h: 40, msg: "HOUSE CHORES" }
+        ];
 
-        window.addEventListener("keydown", e => keys[e.key] = true);
-        window.addEventListener("keyup", e => keys[e.key] = false);
+        const goal = { x: 1100, y: canvas.height - 350, w: 100, h: 100 };
 
-        window.addEventListener("gamepadconnected", e => {
-            gamepadIndex = e.gamepad.index;
-        });
-
-        function getInput() {
-            let dx = 0, dy = 0, action = false;
-
-            if (keys["ArrowLeft"]) dx = -1;
-            if (keys["ArrowRight"]) dx = 1;
-            if (keys["ArrowUp"]) dy = -1;
-            if (keys["ArrowDown"]) dy = 1;
-            if (keys["Enter"]) action = true;
-
-            if (gamepadIndex != null) {
-                let gp = navigator.getGamepads()[gamepadIndex];
-                if (gp) {
-                    dx = gp.axes[0];
-                    dy = gp.axes[1];
-                    action = gp.buttons[0].pressed;
-                }
-            }
-
-            return { dx, dy, action };
-        }
-
-        function drawHero() {
-            ctx.fillStyle = "pink";
-            ctx.beginPath();
-            ctx.arc(hero.x, hero.y, hero.size, 0, Math.PI * 2);
-            ctx.fill();
-
+        function drawPlayer() {
+            // Body
+            ctx.fillStyle = player.color;
+            ctx.fillRect(player.x, player.y, player.w, player.h);
+            // Eyes
             ctx.fillStyle = "white";
-            ctx.fillText("YOU", hero.x - 10, hero.y - 30);
+            ctx.fillRect(player.x + 25, player.y + 10, 8, 8);
+            // Cape (to make it look "heroic")
+            ctx.fillStyle = "#7209b7";
+            ctx.fillRect(player.x - 10, player.y + 10, 10, 40);
         }
 
-        function drawShadow() {
-            ctx.fillStyle = "black";
-            ctx.beginPath();
-            ctx.arc(shadow.x, shadow.y, shadow.size, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = "red";
-            ctx.fillText("EVIL", shadow.x - 15, shadow.y - 40);
-        }
-
-        function drawParents() {
-            ctx.fillStyle = "lightblue";
-            ctx.fillRect(parents.x, parents.y, 30, 30);
-            ctx.fillText("Mom & Dad", parents.x - 20, parents.y - 10);
-        }
-
-        function drawCrystals() {
-            crystals.forEach(c => {
-                if (!c.collected) {
-                    ctx.fillStyle = "yellow";
-                    ctx.fillRect(c.x, c.y, 15, 15);
-                }
+        function drawPlatforms() {
+            ctx.fillStyle = "#4cc9f0";
+            platforms.forEach(p => {
+                ctx.fillRect(p.x, p.y, p.w, p.h);
+                ctx.strokeStyle = "white";
+                ctx.strokeRect(p.x, p.y, p.w, p.h);
             });
         }
 
-        function updateGame() {
+        function drawObstacles() {
+            ctx.fillStyle = "#555";
+            obstacles.forEach(o => {
+                ctx.beginPath();
+                ctx.arc(o.x, o.y, 30, 0, Math.PI * 2);
+                ctx.arc(o.x + 30, o.y, 25, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = "white";
+                ctx.font = "12px Arial";
+                ctx.fillText(o.msg, o.x - 20, o.y);
+                ctx.fillStyle = "#555";
+            });
+        }
 
-            let input = getInput();
+        function drawGoal() {
+            // Draw a Birthday Cake
+            ctx.fillStyle = "#f72585";
+            ctx.fillRect(goal.x, goal.y + 40, 80, 40); // Base
+            ctx.fillStyle = "#4cc9f0";
+            ctx.fillRect(goal.x + 10, goal.y, 60, 40); // Top layer
+            ctx.fillStyle = "yellow";
+            ctx.fillRect(goal.x + 35, goal.y - 20, 10, 20); // Candle
+        }
 
-            hero.x += input.dx * hero.speed;
-            hero.y += input.dy * hero.speed;
+        function update() {
+            if (!gameActive) return;
 
-            shadow.y += shadow.dir * 2;
-            if (shadow.y < 50 || shadow.y > 400) shadow.dir *= -1;
+            // Controller Support
+            const gamepads = navigator.getGamepads();
+            let moveLeft = keys['ArrowLeft'];
+            let moveRight = keys['ArrowRight'];
+            let doJump = keys['ArrowUp'] || keys[' '];
 
-            crystals.forEach(c => {
-                if (!c.collected && dist(hero, c) < 20) {
-                    c.collected = true;
-                    collectedCount++;
+            if (gamepads[0]) {
+                const gp = gamepads[0];
+                if (gp.axes[0] < -0.5) moveLeft = true;
+                if (gp.axes[0] > 0.5) moveRight = true;
+                if (gp.buttons[0].pressed) doJump = true; // 'A' or 'Cross' button
+            }
+
+            if (moveLeft) player.x -= player.speed;
+            if (moveRight) player.x += player.speed;
+
+            player.dy += gravity;
+            player.y += player.dy;
+            player.grounded = false;
+
+            // Platform Collision
+            platforms.forEach(p => {
+                if (player.x < p.x + p.w && player.x + player.w > p.x &&
+                    player.y + player.h > p.y && player.y + player.h < p.y + p.h + player.dy) {
+                    player.grounded = true;
+                    player.dy = 0;
+                    player.y = p.y - player.h;
                 }
             });
 
-            if (dist(hero, shadow) < 30) {
-                hero.x = 50;
-                hero.y = 200;
+            if (doJump && player.grounded) {
+                player.dy = -player.jumpForce;
+                player.grounded = false;
             }
 
-            if (collectedCount == 3 && dist(hero, parents) < 40) {
-                state = "win";
+            // Fall off screen reset
+            if (player.y > canvas.height) {
+                player.x = 50; player.y = 0;
             }
-        }
 
-        function dist(a, b) {
-            return Math.hypot(a.x - b.x, a.y - b.y);
-        }
-
-        function drawStart() {
-            ctx.fillStyle = "white";
-            ctx.font = "30px Arial";
-            ctx.fillText("RESCUE MISSION", 260, 150);
-
-            ctx.font = "20px Arial";
-            ctx.fillText("Collect Love Crystals", 290, 200);
-            ctx.fillText("Save Mom & Dad", 320, 230);
-            ctx.fillText("Press Enter / A to Start", 280, 300);
-
-            if (getInput().action) {
-                state = "game";
+            // Check Win
+            if (player.x < goal.x + goal.w && player.x + player.w > goal.x &&
+                player.y < goal.y + goal.h && player.y + player.h > goal.y) {
+                gameWon = true;
+                gameActive = false;
             }
+
+            // Constrain player to screen
+            if (player.x < 0) player.x = 0;
+            if (player.x > canvas.width - player.w) player.x = canvas.width - player.w;
         }
 
-        function drawGame() {
-            drawCrystals();
-            drawParents();
-            drawShadow();
-            drawHero();
+        function drawWinScreen() {
+            ctx.fillStyle = "rgba(0,0,0,0.8)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#fff";
+            ctx.textAlign = "center";
+            ctx.font = "bold 60px Arial";
+            ctx.fillText("MISSION ACCOMPLISHED!", canvas.width / 2, canvas.height / 2 - 100);
 
-            ctx.fillStyle = "white";
-            ctx.fillText("Crystals: " + collectedCount + "/3", 10, 20);
-        }
-
-        function drawWin() {
-
-            ctx.fillStyle = "white";
-            ctx.font = "28px Arial";
-            ctx.fillText("YOU SAVED MOM & DAD!", 220, 140);
+            ctx.font = "40px Arial";
+            ctx.fillStyle = "#ff4d6d";
+            ctx.fillText(`Happy Birthday! You rescued ${DAD_NAME} and ${MOM_NAME}!`, canvas.width / 2, canvas.height / 2);
 
             ctx.font = "24px Arial";
-            ctx.fillText("HAPPY BIRTHDAY!", 300, 200);
+            ctx.fillStyle = "#4cc9f0";
+            ctx.fillText("We wish you all the happiness in the world.", canvas.width / 2, canvas.height / 2 + 60);
+            ctx.fillText("May all your dreams come true!", canvas.width / 2, canvas.height / 2 + 100);
 
-            ctx.font = "18px Arial";
-            ctx.fillText("We love you forever.", 300, 240);
-            ctx.fillText("May all your dreams come true.", 250, 270);
-            ctx.fillText("You are our hero.", 310, 300);
+            ctx.font = "20px Arial";
+            ctx.fillStyle = "white";
+            ctx.fillText("We love you so much!", canvas.width / 2, canvas.height / 2 + 160);
         }
 
         function loop() {
-
-            ctx.clearRect(0, 0, 800, 450);
-
-            if (state == "start") drawStart();
-            if (state == "game") { updateGame(); drawGame(); }
-            if (state == "win") drawWin();
-
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (gameWon) {
+                drawWinScreen();
+            } else {
+                drawPlatforms();
+                drawObstacles();
+                drawGoal();
+                drawPlayer();
+                update();
+            }
             requestAnimationFrame(loop);
         }
 
-        ctx.font = "16px Arial";
+        window.addEventListener('keydown', e => keys[e.key] = true);
+        window.addEventListener('keyup', e => keys[e.key] = false);
+
         loop();
-
     </script>
-
 </body>
 
 </html>
