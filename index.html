@@ -235,7 +235,7 @@
         // Game State
         let gameState = 'START'; // START, PLAYING, LEVEL_END, GAMEOVER, CUTSCENE, ENDED
         let level = 1;
-        let maxLevels = 10;
+        let maxLevels = 1; // Change this to 2 to test the ending!
         let frames = 0;
         let animationFrameId;
 
@@ -632,7 +632,7 @@
             hudScore.innerText = `Memories: 0/3`;
             finalMessage.style.opacity = 0;
 
-            if (level === 10) {
+            if (level === maxLevels) {
                 initBirthdayLevel();
             } else {
                 initStandardLevel(lvl);
@@ -675,6 +675,12 @@
             parents.push({ x: canvas.width / 2 - 80, y: canvas.height - 110, role: 'dad' });
             parents.push({ x: canvas.width / 2 + 80, y: canvas.height - 110, role: 'mom' });
             hudScore.innerText = "";
+
+            // Update the birthday text to match the maxLevels (e.g., 2nd or 10th)
+            const finalMsgH1 = document.querySelector('#final-message h1');
+            if (finalMsgH1) {
+                finalMsgH1.innerText = `Happy ${maxLevels}th Birthday!`;
+            }
         }
 
         function update(dt) {
@@ -700,7 +706,7 @@
                 checkCollisions();
             }
 
-            if (level === 10 && gameState === 'PLAYING') {
+            if (level === maxLevels && gameState === 'PLAYING') {
                 let dx = player.x - cake.x;
                 let dy = player.y - (canvas.height - 50);
                 if (Math.abs(dx) < 150 && player.y > canvas.height - 150) {
@@ -772,7 +778,7 @@
             obstacles.forEach(o => o.draw());
             collectibles.forEach(c => c.draw());
 
-            if (level === 10) {
+            if (level === maxLevels) {
                 drawBirthdayScene();
             }
 
