@@ -401,22 +401,53 @@
                     ctx.fill();
                 }
 
+                // Draw Girl Body (Vector)
+                ctx.fillStyle = '#9b59b6';
+                ctx.beginPath();
+                ctx.moveTo(0, -10);
+                ctx.lineTo(-10, 20);
+                ctx.lineTo(10, 20);
+                ctx.fill();
+
                 // Draw Custom Face (Girl)
                 try {
-                    // Draw image centered
-                    const size = 50;
+                    const size = 25; // Head size
                     ctx.save();
+                    ctx.translate(0, -15); // Head position
+
+                    // Skin background (prevents transparency issues)
+                    ctx.fillStyle = '#ffe0b2';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Circular Clip for Avatar
+                    ctx.beginPath();
+                    ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
+                    ctx.closePath();
+                    ctx.clip();
+
                     // Flip image if facing left
                     if (!this.facingRight) {
                         ctx.scale(-1, 1);
                     }
+
                     ctx.drawImage(girlImg, -size / 2, -size / 2, size, size);
+
                     ctx.restore();
-                } catch (e) {
-                    // Fallback if image fails (Basic shape)
-                    ctx.fillStyle = '#9b59b6';
+
+                    // Avatar Border
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 2;
                     ctx.beginPath();
-                    ctx.arc(0, 0, 20, 0, Math.PI * 2);
+                    ctx.arc(0, -15, size / 2, 0, Math.PI * 2);
+                    ctx.stroke();
+
+                } catch (e) {
+                    // Fallback Head
+                    ctx.fillStyle = '#ffe0b2';
+                    ctx.beginPath();
+                    ctx.arc(0, -15, 10, 0, Math.PI * 2);
                     ctx.fill();
                 }
 
@@ -755,14 +786,39 @@
                 ctx.translate(p.x, p.y);
 
                 try {
-                    // Draw Parent Image
-                    const w = 60;
-                    const h = 80;
+                    // Draw Body (Restored)
+                    ctx.fillStyle = p.role === 'dad' ? '#34495e' : '#e91e63';
+                    ctx.fillRect(-15, 0, 30, 90);
+
+                    // Draw Avatar Head
+                    const size = 40;
+                    ctx.save();
+                    ctx.translate(0, -15); // Position head above body
+
+                    // Skin background
+                    ctx.fillStyle = '#ffe0b2';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Circular Clip
+                    ctx.beginPath();
+                    ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
+                    ctx.closePath();
+                    ctx.clip();
+
                     if (p.role === 'dad') {
-                        ctx.drawImage(dadImg, -w / 2, -h, w, h);
+                        ctx.drawImage(dadImg, -size / 2, -size / 2, size, size);
                     } else {
-                        ctx.drawImage(momImg, -w / 2, -h, w, h);
+                        ctx.drawImage(momImg, -size / 2, -size / 2, size, size);
                     }
+
+                    // Border
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+
+                    ctx.restore();
                 } catch (e) {
                     // Fallback
                     ctx.fillStyle = p.role === 'dad' ? '#34495e' : '#e91e63';
