@@ -1,260 +1,936 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Birthday Rescue Maze</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Milestones: The 10th Birthday</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap');
+
         body {
             margin: 0;
-            background: black;
+            overflow: hidden;
+            background-color: #2c3e50;
+            font-family: 'Nunito', sans-serif;
+            touch-action: none;
+            /* Prevent pull-to-refresh on mobile */
         }
 
-        canvas {
+        #gameCanvas {
             display: block;
-            margin: auto;
-            background: black;
+            width: 100%;
+            height: 100vh;
+        }
+
+        #ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* HUD */
+        #hud {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            color: white;
+            text-shadow: 2px 2px 0 #000;
+            font-family: 'Fredoka One', cursive;
+            font-size: 24px;
+            pointer-events: none;
+        }
+
+        /* Screens (Start, Game Over, etc) */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            pointer-events: auto;
+            z-index: 10;
+            /* Replaced transition/opacity with display:none for robust focus handling */
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 48px;
+            margin-bottom: 10px;
+            color: #FFD700;
+            text-shadow: 3px 3px 0 #d35400;
+            text-align: center;
+        }
+
+        p {
+            font-size: 18px;
+            max-width: 600px;
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 24px;
+            font-family: 'Fredoka One', cursive;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #c0392b;
+            transition: transform 0.1s;
+        }
+
+        .btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #c0392b;
+        }
+
+        /* Mobile Controls */
+        #controls {
+            display: none;
+            /* Shown via JS on touch devices */
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            justify-content: space-between;
+            pointer-events: auto;
+            padding-bottom: 40px;
+        }
+
+        .control-btn {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            user-select: none;
+            backdrop-filter: blur(4px);
+        }
+
+        .control-btn:active {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .d-pad {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Final Message styling */
+        #final-message {
+            position: absolute;
+            top: 20%;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-family: 'Fredoka One', cursive;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 2s;
         }
     </style>
 </head>
 
 <body>
 
-    <canvas id="game" width="640" height="480"></canvas>
+    <canvas id="gameCanvas"></canvas>
+
+    <div id="ui-layer">
+        <div id="hud">
+            <div id="level-display">Age: 1</div>
+            <div id="score-display">Memories: 0/3</div>
+        </div>
+
+        <div id="final-message">
+            <h1 style="color: #fff; font-size: 40px;">Happy 10th Birthday!</h1>
+            <p style="font-size: 24px; color: #ffeaa7;">"We will always be there for your every milestone."</p>
+        </div>
+
+        <div id="controls">
+            <div class="d-pad">
+                <div class="control-btn" id="btn-left">←</div>
+                <div class="control-btn" id="btn-right">→</div>
+            </div>
+            <div class="control-btn" id="btn-flap" style="width: 100px; border-radius: 30px;">FLAP</div>
+        </div>
+    </div>
+
+    <!-- START SCREEN -->
+    <div id="start-screen" class="screen">
+        <h1>MILESTONES</h1>
+        <p>Help her fly through the years. Collect memories (stars) to grow up.<br>Tap FLAP to fly. Avoid the obstacles!
+        </p>
+        <button class="btn" id="start-btn">Start Journey</button>
+    </div>
+
+    <!-- LEVEL COMPLETE SCREEN -->
+    <div id="level-screen" class="screen hidden">
+        <h1 id="level-title">Age 1 Complete!</h1>
+        <p>Ready for the next year?</p>
+        <button class="btn" id="next-level-btn">Grow Up</button>
+    </div>
+
+    <!-- GAME OVER SCREEN -->
+    <div id="game-over-screen" class="screen hidden">
+        <h1>Ouch!</h1>
+        <p>Don't worry, we can always try again.</p>
+        <button class="btn" id="retry-btn">Try Again</button>
+    </div>
 
     <script>
-        const canvas = document.getElementById("game");
-        const ctx = canvas.getContext("2d");
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
 
-        const TILE = 32;
-        const ROWS = 15;
-        const COLS = 20;
+        // Screens & UI
+        const startScreen = document.getElementById('start-screen');
+        const levelScreen = document.getElementById('level-screen');
+        const gameOverScreen = document.getElementById('game-over-screen');
+        const levelTitle = document.getElementById('level-title');
+        const hudLevel = document.getElementById('level-display');
+        const hudScore = document.getElementById('score-display');
+        const controls = document.getElementById('controls');
+        const finalMessage = document.getElementById('final-message');
 
-        let state = "start";
-        let score = 0;
-        let powerTimer = 0;
+        // Game State
+        let gameState = 'START'; // START, PLAYING, LEVEL_END, GAMEOVER, CUTSCENE, ENDED
+        let level = 1;
+        let maxLevels = 10;
+        let frames = 0;
+        let animationFrameId;
 
-        const maze = [
-            "####################",
-            "#........#.........#",
-            "#.####...#...####..#",
-            "#.................##",
-            "#..###..#####..#...#",
-            "#.................##",
-            "#.####..#..####....#",
-            "#........#.........#",
-            "#..######..####....#",
-            "#..................#",
-            "#.####..#..####..#.#",
-            "#.................##",
-            "#..####..#..####...#",
-            "#........#.........#",
-            "####################"
+        // Time management for consistent physics
+        let lastTime = 0;
+
+        // Physics Constants (Normalized for 60FPS)
+        // Delta time will scale these
+        const GRAVITY = 0.28; // Increased slightly for better feel
+        const FLAP_FORCE = -8.0; // Increased flap strength
+        const MOVE_SPEED = 0.4;
+        const MAX_H_SPEED = 6;
+        const FRICTION = 0.96;
+
+        // Input
+        const keys = {
+            ArrowLeft: false,
+            ArrowRight: false,
+            Space: false,
+            ArrowUp: false
+        };
+
+        // Entities
+        let player;
+        let obstacles = [];
+        let collectibles = [];
+        let particles = [];
+        let portal;
+        let parents = [];
+        let cake;
+
+        // Colors
+        const levelColors = [
+            '#87CEEB', '#AED581', '#4DB6AC', '#FFF176', '#FFB74D',
+            '#F06292', '#BA68C8', '#7986CB', '#4FC3F7', '#2c3e50'
         ];
 
-        let hero = { x: 1, y: 1 };
-        let parents = { x: 18, y: 13 };
-
-        let enemies = [
-            { x: 10, y: 7 },
-            { x: 15, y: 5 },
-            { x: 5, y: 10 }
-        ];
-
-        let hearts = [];
-        for (let r = 0; r < ROWS; r++) {
-            for (let c = 0; c < COLS; c++) {
-                if (maze[r][c] == '.') {
-                    hearts.push({ x: c, y: r, collected: false });
+        // Resize handling
+        function resize() {
+            if (Math.abs(canvas.width - window.innerWidth) > 10 || Math.abs(canvas.height - window.innerHeight) > 10) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+                    controls.style.display = 'flex';
                 }
+                if (gameState !== 'START') draw();
             }
         }
+        window.addEventListener('resize', resize);
+        resize();
 
-        let keys = {};
-        let gamepadIndex = null;
+        // ------------------ CLASSES ------------------
 
-        window.addEventListener("keydown", e => keys[e.key] = true);
-        window.addEventListener("keyup", e => keys[e.key] = false);
+        class Player {
+            constructor() {
+                this.x = 100;
+                this.y = canvas.height - 150;
+                this.vx = 0;
+                this.vy = 0;
+                this.radius = 15;
+                this.width = 30;
+                this.height = 40;
+                this.facingRight = true;
+                this.balloons = 2;
+                this.flapCooldown = 0;
+            }
 
-        window.addEventListener("gamepadconnected", e => {
-            gamepadIndex = e.gamepad.index;
-        });
+            update(dt) {
+                if (gameState === 'CUTSCENE' || gameState === 'ENDED') {
+                    this.cutsceneBehavior(dt);
+                    return;
+                }
 
-        function input() {
+                // Physics with Delta Time
+                this.vy += GRAVITY * dt;
+                this.vx *= Math.pow(FRICTION, dt);
+                this.x += this.vx * dt;
+                this.y += this.vy * dt;
 
-            let dx = 0, dy = 0, action = false;
+                // Inputs
+                if (keys.ArrowRight) {
+                    this.vx += MOVE_SPEED * dt;
+                    this.facingRight = true;
+                }
+                if (keys.ArrowLeft) {
+                    this.vx -= MOVE_SPEED * dt;
+                    this.facingRight = false;
+                }
 
-            if (keys["ArrowLeft"]) dx = -1;
-            if (keys["ArrowRight"]) dx = 1;
-            if (keys["ArrowUp"]) dy = -1;
-            if (keys["ArrowDown"]) dy = 1;
-            if (keys["Enter"]) action = true;
+                // Cap speed
+                if (this.vx > MAX_H_SPEED) this.vx = MAX_H_SPEED;
+                if (this.vx < -MAX_H_SPEED) this.vx = -MAX_H_SPEED;
 
-            if (gamepadIndex != null) {
-                let gp = navigator.getGamepads()[gamepadIndex];
-                if (gp) {
-                    dx = gp.axes[0];
-                    dy = gp.axes[1];
-                    action = gp.buttons[0].pressed;
+                // Floor collision
+                if (this.y + this.height / 2 > canvas.height - 20) {
+                    this.y = canvas.height - 20 - this.height / 2;
+                    this.vy = 0;
+                }
+
+                // Ceiling
+                if (this.y < 0) {
+                    this.y = 0;
+                    this.vy = 0;
+                }
+
+                // Walls
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+
+                if (this.flapCooldown > 0) this.flapCooldown -= 1 * dt;
+            }
+
+            flap() {
+                // Instant velocity set for snappy control
+                this.vy = FLAP_FORCE;
+                createParticles(this.x, this.y + 20, 3, '#fff');
+            }
+
+            cutsceneBehavior(dt) {
+                this.vy += GRAVITY * dt;
+                this.vx *= 0.8;
+                this.y += this.vy * dt;
+                this.x += this.vx * dt;
+
+                if (this.y + this.height / 2 > canvas.height - 50) {
+                    this.y = canvas.height - 50 - this.height / 2;
+                    this.vy = 0;
                 }
             }
 
-            return { dx, dy, action };
-        }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
 
-        function drawMaze() {
-            for (let r = 0; r < ROWS; r++) {
-                for (let c = 0; c < COLS; c++) {
-                    if (maze[r][c] == '#') {
-                        ctx.fillStyle = "#003366";
-                        ctx.fillRect(c * TILE, r * TILE, TILE, TILE);
-                    }
-                }
-            }
-        }
-
-        function drawHearts() {
-            ctx.fillStyle = "pink";
-            hearts.forEach(h => {
-                if (!h.collected) {
+                // Balloons
+                if (this.balloons > 0) {
+                    ctx.strokeStyle = '#fff';
                     ctx.beginPath();
-                    ctx.arc(h.x * TILE + 16, h.y * TILE + 16, 5, 0, 6.28);
+                    ctx.moveTo(0, -20);
+                    ctx.lineTo(-10, -50);
+                    ctx.moveTo(0, -20);
+                    ctx.lineTo(10, -50);
+                    ctx.stroke();
+
+                    // Balloon 1
+                    ctx.fillStyle = '#e74c3c';
+                    ctx.beginPath();
+                    ctx.ellipse(-10, -55, 12, 15, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Highlight
+                    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+                    ctx.beginPath();
+                    ctx.ellipse(-13, -58, 3, 5, 0, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Balloon 2
+                    ctx.fillStyle = '#3498db';
+                    ctx.beginPath();
+                    ctx.ellipse(10, -55, 12, 15, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Highlight
+                    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+                    ctx.beginPath();
+                    ctx.ellipse(7, -58, 3, 5, 0, 0, Math.PI * 2);
                     ctx.fill();
                 }
-            });
-        }
 
-        function drawHero() {
-            ctx.fillStyle = powerTimer > 0 ? "yellow" : "cyan";
-            ctx.beginPath();
-            ctx.arc(hero.x * TILE + 16, hero.y * TILE + 16, 12, 0, 6.28);
-            ctx.fill();
-        }
-
-        function drawEnemies() {
-            enemies.forEach(e => {
-                ctx.fillStyle = "red";
+                // Girl
+                ctx.fillStyle = '#9b59b6';
                 ctx.beginPath();
-                ctx.arc(e.x * TILE + 16, e.y * TILE + 16, 12, 0, 6.28);
+                ctx.moveTo(0, -10);
+                ctx.lineTo(-10, 20);
+                ctx.lineTo(10, 20);
                 ctx.fill();
-            });
-        }
 
-        function drawParents() {
-            ctx.fillStyle = "white";
-            ctx.fillRect(parents.x * TILE + 5, parents.y * TILE + 5, 22, 22);
-        }
+                ctx.fillStyle = '#ffe0b2';
+                ctx.beginPath();
+                ctx.arc(0, -15, 10, 0, Math.PI * 2);
+                ctx.fill();
 
-        function moveHero() {
+                ctx.fillStyle = '#3e2723';
+                ctx.beginPath();
+                ctx.arc(0, -17, 11, Math.PI, 0);
+                ctx.lineTo(10, -5);
+                ctx.lineTo(-10, -5);
+                ctx.fill();
 
-            let i = input();
-
-            let nx = hero.x + Math.round(i.dx);
-            let ny = hero.y + Math.round(i.dy);
-
-            if (maze[ny] && maze[ny][nx] != '#') {
-                hero.x = nx;
-                hero.y = ny;
-            }
-
-            hearts.forEach(h => {
-                if (!h.collected && h.x == hero.x && h.y == hero.y) {
-                    h.collected = true;
-                    score++;
-                    if (score % 10 == 0) powerTimer = 100;
-                }
-            });
-
-            if (score > 40 && hero.x == parents.x && hero.y == parents.y) {
-                state = "win";
-            }
-        }
-
-        function moveEnemies() {
-
-            enemies.forEach(e => {
-
-                let dx = hero.x - e.x;
-                let dy = hero.y - e.y;
-
-                if (powerTimer > 0) {
-                    dx *= -1;
-                    dy *= -1;
-                }
-
-                let mx = Math.sign(dx);
-                let my = Math.sign(dy);
-
-                if (Math.random() < 0.5) {
-                    if (maze[e.y][e.x + mx] != '#') e.x += mx;
+                ctx.fillStyle = '#000';
+                if (this.facingRight) {
+                    ctx.fillRect(2, -18, 2, 2);
+                    ctx.fillRect(6, -18, 2, 2);
                 } else {
-                    if (maze[e.y + my][e.x] != '#') e.y += my;
+                    ctx.fillRect(-4, -18, 2, 2);
+                    ctx.fillRect(-8, -18, 2, 2);
                 }
 
-                if (e.x == hero.x && e.y == hero.y) {
-                    if (powerTimer > 0) {
-                        e.x = 10;
-                        e.y = 7;
-                    } else {
-                        hero.x = 1;
-                        hero.y = 1;
-                    }
+                ctx.restore();
+            }
+        }
+
+        class Obstacle {
+            constructor(x, y, type) {
+                this.x = x;
+                this.y = y;
+                this.startX = x;
+                this.startY = y;
+                this.type = type;
+                this.size = 20;
+                this.speed = Math.random() * 2 + 1;
+                this.dir = 1;
+                this.angle = 0;
+            }
+
+            update(dt) {
+                if (this.type === 'horizontal') {
+                    this.x += (this.speed * this.dir) * dt;
+                    if (this.x > canvas.width + 50) this.x = -50;
+                    if (this.x < -50) this.x = canvas.width + 50;
+                } else if (this.type === 'vertical') {
+                    // Use time-based sine wave instead of frame-based
+                    this.y = this.startY + Math.sin(Date.now() * 0.002) * 50;
+                } else if (this.type === 'circle') {
+                    this.angle += 0.05 * dt;
+                    this.x = this.startX + Math.cos(this.angle) * 50;
+                    this.y = this.startY + Math.sin(this.angle) * 50;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+
+                ctx.fillStyle = '#546e7a';
+                ctx.beginPath();
+                ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.strokeStyle = '#37474f';
+                ctx.lineWidth = 2;
+                for (let i = 0; i < 8; i++) {
+                    let a = (Math.PI * 2 / 8) * i + frames * 0.05;
+                    let sx = Math.cos(a) * (this.size + 5);
+                    let sy = Math.sin(a) * (this.size + 5);
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(sx, sy);
+                    ctx.stroke();
                 }
 
+                ctx.restore();
+            }
+        }
+
+        class Collectible {
+            constructor(x, y) {
+                this.x = x;
+                this.baseY = y; // Store base Y for stable floating
+                this.y = y;
+                this.size = 15;
+                this.collected = false;
+                this.floatOffset = Math.random() * Math.PI * 2;
+            }
+
+            update(dt) {
+                // Stable floating logic using base Y
+                // Use Date.now() for smooth animation regardless of framerate
+                this.y = this.baseY + Math.sin(Date.now() * 0.003 + this.floatOffset) * 10;
+            }
+
+            draw() {
+                if (this.collected) return;
+                ctx.save();
+                ctx.translate(this.x, this.y);
+
+                ctx.fillStyle = '#f1c40f';
+                ctx.beginPath();
+                for (let i = 0; i < 5; i++) {
+                    ctx.lineTo(Math.cos((18 + i * 72) * 0.0174533) * this.size,
+                        -Math.sin((18 + i * 72) * 0.0174533) * this.size);
+                    ctx.lineTo(Math.cos((54 + i * 72) * 0.0174533) * (this.size / 2),
+                        -Math.sin((54 + i * 72) * 0.0174533) * (this.size / 2));
+                }
+                ctx.closePath();
+                ctx.fill();
+                ctx.strokeStyle = '#f39c12';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ctx.restore();
+            }
+        }
+
+        class Portal {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.active = false;
+                this.radius = 0;
+            }
+
+            update(dt) {
+                if (this.active && this.radius < 40) {
+                    this.radius += 2 * dt;
+                }
+            }
+
+            draw() {
+                if (!this.active) return;
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(frames * 0.05);
+
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 3;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+                ctx.stroke();
+
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+                ctx.fill();
+
+                ctx.restore();
+
+                if (this.active) {
+                    ctx.fillStyle = '#fff';
+                    ctx.font = '16px Fredoka One';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Next Year', this.x, this.y - 50);
+                }
+            }
+        }
+
+        class Particle {
+            constructor(x, y, color, type = 'normal') {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.size = Math.random() * 5 + 2;
+                this.vx = (Math.random() - 0.5) * 6;
+                this.vy = (Math.random() - 0.5) * 6;
+                this.life = 100;
+                this.type = type;
+            }
+            update(dt) {
+                this.x += this.vx * dt;
+                this.y += this.vy * dt;
+                if (this.type === 'firework') {
+                    this.vy += 0.05 * dt;
+                }
+                this.life -= 2 * dt;
+                this.size *= 0.95;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = Math.max(0, this.life / 100);
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        // ------------------ GAME LOGIC ------------------
+
+        function initLevel(lvl) {
+            level = lvl;
+            player = new Player();
+            particles = [];
+            obstacles = [];
+            collectibles = [];
+            parents = [];
+
+            hudLevel.innerText = `Age: ${level}`;
+            hudScore.innerText = `Memories: 0/3`;
+            finalMessage.style.opacity = 0;
+
+            if (level === 10) {
+                initBirthdayLevel();
+            } else {
+                initStandardLevel(lvl);
+            }
+
+            gameState = 'PLAYING';
+        }
+
+        function initStandardLevel(lvl) {
+            portal = new Portal(canvas.width - 100, canvas.height - 100);
+
+            const count = 3;
+            for (let i = 0; i < count; i++) {
+                let cx = 200 + Math.random() * (canvas.width - 300);
+                let cy = 50 + Math.random() * (canvas.height - 150);
+                collectibles.push(new Collectible(cx, cy));
+            }
+
+            let obsCount = (lvl - 1) * 2;
+            if (obsCount > 15) obsCount = 15;
+
+            for (let i = 0; i < obsCount; i++) {
+                let ox = 300 + Math.random() * (canvas.width - 400);
+                let oy = Math.random() * (canvas.height - 100);
+                let type = 'static';
+
+                if (lvl > 3) type = Math.random() > 0.5 ? 'horizontal' : 'static';
+                if (lvl > 6) type = Math.random() > 0.5 ? 'vertical' : 'horizontal';
+                if (lvl > 8) type = 'circle';
+
+                obstacles.push(new Obstacle(ox, oy, type));
+            }
+        }
+
+        function initBirthdayLevel() {
+            collectibles = [];
+            obstacles = [];
+            portal = null;
+            cake = { x: canvas.width / 2, y: canvas.height - 60, w: 100, h: 60 };
+            parents.push({ x: canvas.width / 2 - 80, y: canvas.height - 110, role: 'dad' });
+            parents.push({ x: canvas.width / 2 + 80, y: canvas.height - 110, role: 'mom' });
+            hudScore.innerText = "";
+        }
+
+        function update(dt) {
+            if (gameState !== 'PLAYING' && gameState !== 'CUTSCENE' && gameState !== 'ENDED') return;
+
+            frames++;
+            player.update(dt);
+
+            obstacles.forEach(o => o.update(dt));
+            collectibles.forEach(c => c.update(dt));
+
+            for (let i = particles.length - 1; i >= 0; i--) {
+                let p = particles[i];
+                p.update(dt);
+                if (p.life <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+
+            if (portal) portal.update(dt);
+
+            if (gameState === 'PLAYING') {
+                checkCollisions();
+            }
+
+            if (level === 10 && gameState === 'PLAYING') {
+                let dx = player.x - cake.x;
+                let dy = player.y - (canvas.height - 50);
+                if (Math.abs(dx) < 150 && player.y > canvas.height - 150) {
+                    startEndingCutscene();
+                }
+            }
+        }
+
+        function checkCollisions() {
+            let collectedCount = 0;
+            collectibles.forEach(c => {
+                let dx = player.x - c.x;
+                let dy = player.y - c.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < player.radius + c.size && !c.collected) {
+                    c.collected = true;
+                    createParticles(c.x, c.y, 10, '#f1c40f');
+                }
+                if (c.collected) collectedCount++;
+            });
+
+            hudScore.innerText = `Memories: ${collectedCount}/3`;
+
+            if (portal && collectedCount === 3 && !portal.active) {
+                portal.active = true;
+                createParticles(portal.x, portal.y, 20, '#fff');
+            }
+
+            if (portal && portal.active) {
+                let dx = player.x - portal.x;
+                let dy = player.y - portal.y;
+                if (Math.sqrt(dx * dx + dy * dy) < 40) {
+                    completeLevel();
+                }
+            }
+
+            obstacles.forEach(o => {
+                let dx = player.x - o.x;
+                let dy = player.y - o.y;
+                if (Math.sqrt(dx * dx + dy * dy) < player.radius + o.size - 5) {
+                    gameOver();
+                }
             });
         }
 
-        function drawText(text, y, size = 30) {
-            ctx.fillStyle = "white";
-            ctx.font = size + "px Arial";
-            ctx.fillText(text, 100, y);
+        function createParticles(x, y, count, color, type) {
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle(x, y, color, type));
+            }
         }
 
-        function loop() {
+        function draw() {
+            let bgIndex = level - 1;
+            if (bgIndex >= levelColors.length) bgIndex = levelColors.length - 1;
+            ctx.fillStyle = levelColors[bgIndex];
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.clearRect(0, 0, 640, 480);
+            ctx.fillStyle = '#2c3e50';
+            ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
 
-            if (state == "start") {
+            ctx.fillStyle = 'rgba(255,255,255,0.3)';
+            ctx.beginPath();
+            ctx.arc(100 + Math.sin(frames * 0.01) * 50, 100, 40, 0, Math.PI * 2);
+            ctx.arc(150 + Math.sin(frames * 0.01) * 50, 90, 50, 0, Math.PI * 2);
+            ctx.arc(200 + Math.sin(frames * 0.01) * 50, 100, 40, 0, Math.PI * 2);
+            ctx.fill();
 
-                drawText("BIRTHDAY RESCUE MAZE", 200);
-                drawText("Press Enter / A", 260, 20);
+            if (portal) portal.draw();
+            obstacles.forEach(o => o.draw());
+            collectibles.forEach(c => c.draw());
 
-                if (input().action) state = "game";
-
+            if (level === 10) {
+                drawBirthdayScene();
             }
 
-            else if (state == "game") {
-
-                moveHero();
-                moveEnemies();
-
-                if (powerTimer > 0) powerTimer--;
-
-                drawMaze();
-                drawHearts();
-                drawHero();
-                drawEnemies();
-                drawParents();
-
-                drawText("Hearts: " + score, 470, 20);
-
-            }
-
-            else if (state == "win") {
-
-                drawText("YOU SAVED MOM & DAD!", 180);
-                drawText("HAPPY BIRTHDAY!", 240);
-                drawText("YOU ARE OUR HERO", 290, 20);
-                drawText("WE LOVE YOU FOREVER", 330, 20);
-
-            }
-
-            requestAnimationFrame(loop);
+            player.draw();
+            particles.forEach(p => p.draw());
         }
 
-        loop();
+        function drawBirthdayScene() {
+            parents.forEach(p => {
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.fillStyle = p.role === 'dad' ? '#34495e' : '#e91e63';
+                ctx.fillRect(-15, 0, 30, 90);
+                ctx.fillStyle = '#ffe0b2';
+                ctx.beginPath();
+                ctx.arc(0, -15, 20, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#000';
+                ctx.fillRect(-8, -20, 4, 4);
+                ctx.fillRect(4, -20, 4, 4);
+                ctx.beginPath();
+                ctx.arc(0, -10, 10, 0, Math.PI, false);
+                ctx.stroke();
+                ctx.restore();
+            });
+
+            ctx.save();
+            ctx.translate(cake.x, cake.y);
+            ctx.fillStyle = '#8e44ad';
+            ctx.fillRect(-60, 40, 120, 10);
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(-50, 0, 100, 40);
+            ctx.fillStyle = '#ffc0cb';
+            ctx.fillRect(-50, 0, 100, 10);
+
+            for (let i = 0; i < 10; i++) {
+                let cx = -40 + i * 9;
+                ctx.fillStyle = '#f1c40f';
+                ctx.fillRect(cx, -15, 4, 15);
+                if (frames % 10 < 5) {
+                    ctx.fillStyle = '#e67e22';
+                    ctx.beginPath();
+                    ctx.arc(cx + 2, -18, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+            ctx.restore();
+        }
+
+        function gameOver() {
+            gameState = 'GAMEOVER';
+            gameOverScreen.classList.remove('hidden');
+        }
+
+        function completeLevel() {
+            gameState = 'LEVEL_END';
+            if (level < maxLevels) {
+                levelTitle.innerText = `Age ${level} Complete!`;
+                levelScreen.classList.remove('hidden');
+            }
+        }
+
+        function nextLevel() {
+            level++;
+            levelScreen.classList.add('hidden');
+            initLevel(level);
+        }
+
+        function startEndingCutscene() {
+            gameState = 'CUTSCENE';
+            keys.ArrowLeft = false;
+            keys.ArrowRight = false;
+            keys.Space = false;
+
+            let interval = setInterval(() => {
+                if (gameState === 'ENDED') {
+                    clearInterval(interval);
+                    return;
+                }
+
+                let dx = player.x - cake.x;
+                if (Math.abs(dx) > 10) {
+                    player.x -= Math.sign(dx) * 1;
+                    player.facingRight = dx < 0;
+                    if (frames % 20 === 0 && player.y > canvas.height - 40) player.vy = -3;
+                } else {
+                    clearInterval(interval);
+                    triggerFinale();
+                }
+            }, 16);
+        }
+
+        function triggerFinale() {
+            gameState = 'ENDED';
+            player.vx = 0;
+            player.vy = 0;
+            player.y = canvas.height - 20 - player.height / 2;
+
+            parents[0].x = player.x - 40;
+            parents[1].x = player.x + 40;
+
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    createParticles(Math.random() * canvas.width, Math.random() * canvas.height / 2, 20, getRandomColor(), 'firework');
+                }, i * 100);
+            }
+
+            finalMessage.style.opacity = 1;
+
+            setInterval(() => {
+                createParticles(Math.random() * canvas.width, Math.random() * canvas.height / 2, 10, getRandomColor(), 'firework');
+            }, 500);
+        }
+
+        function getRandomColor() {
+            const colors = ['#e74c3c', '#e67e22', '#f1c40f', '#2ecc71', '#3498db', '#9b59b6'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        window.addEventListener('keydown', e => {
+            if (e.code === 'ArrowLeft') keys.ArrowLeft = true;
+            if (e.code === 'ArrowRight') keys.ArrowRight = true;
+            if (e.code === 'Space' || e.code === 'ArrowUp') {
+                e.preventDefault(); // Prevent scrolling/button clicking
+                if (!keys.Space) player.flap();
+                keys.Space = true;
+            }
+        });
+
+        window.addEventListener('keyup', e => {
+            if (e.code === 'ArrowLeft') keys.ArrowLeft = false;
+            if (e.code === 'ArrowRight') keys.ArrowRight = false;
+            if (e.code === 'Space' || e.code === 'ArrowUp') keys.Space = false;
+        });
+
+        const btnLeft = document.getElementById('btn-left');
+        const btnRight = document.getElementById('btn-right');
+        const btnFlap = document.getElementById('btn-flap');
+
+        const addTouch = (elem, code) => {
+            elem.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                if (code === 'Space') player.flap();
+                keys[code] = true;
+            }, { passive: false });
+            elem.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                keys[code] = false;
+            }, { passive: false });
+        };
+
+        addTouch(btnLeft, 'ArrowLeft');
+        addTouch(btnRight, 'ArrowRight');
+        addTouch(btnFlap, 'Space');
+
+        document.getElementById('start-btn').addEventListener('click', (e) => {
+            e.target.blur(); // Remove focus
+            startScreen.classList.add('hidden');
+            initLevel(1);
+
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            lastTime = performance.now();
+            loop(lastTime);
+        });
+
+        document.getElementById('next-level-btn').addEventListener('click', (e) => {
+            e.target.blur();
+            nextLevel();
+        });
+
+        document.getElementById('retry-btn').addEventListener('click', (e) => {
+            e.target.blur();
+            gameOverScreen.classList.add('hidden');
+            initLevel(level);
+        });
+
+        function loop(timestamp) {
+            // Calculate delta time (dt)
+            // Divide by 16.666 to normalize to ~60FPS
+            // (16.66ms is one frame at 60FPS)
+            const dt = (timestamp - lastTime) / 16.666;
+            lastTime = timestamp;
+
+            // Cap dt to prevent huge jumps if tab is inactive
+            // If dt is too high (e.g. > 4), pretend it's just 1 frame
+            const safeDt = Math.min(dt, 4);
+
+            update(safeDt);
+            draw();
+            animationFrameId = requestAnimationFrame(loop);
+        }
+
     </script>
-
 </body>
 
 </html>
