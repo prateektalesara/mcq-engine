@@ -76,7 +76,6 @@
             text-shadow: 3px 3px 0 #d35400;
             text-align: center;
             width: 100%;
-            /* Ensure it spans full width for centering */
         }
 
         p {
@@ -85,7 +84,6 @@
             text-align: center;
             line-height: 1.6;
             margin-bottom: 30px;
-            /* Auto margins to ensure block centering if flex fails, though flex is primary */
             margin-left: auto;
             margin-right: auto;
         }
@@ -153,7 +151,6 @@
             transform: translateY(-50%);
             /* Vertical centering */
 
-            /* Flexbox ensures children (h1, p) are centered regardless of their width */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -164,9 +161,90 @@
             font-family: 'Fredoka One', cursive;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             pointer-events: none;
+            /* KEY FIX: Don't block clicks on the overlay container */
             opacity: 0;
             transition: opacity 2s;
             z-index: 20;
+        }
+
+        /* Gift Animation */
+        @keyframes bounceGift {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        #gift-container {
+            cursor: pointer;
+            margin: 20px 0;
+            transition: transform 0.2s;
+            pointer-events: auto;
+            /* KEY FIX: Only the gift itself captures clicks */
+        }
+
+        #gift-container:hover {
+            transform: scale(1.05);
+        }
+
+        #gift-box {
+            font-size: 100px;
+            animation: bounceGift 1.5s infinite;
+            filter: drop-shadow(0 0 10px gold);
+        }
+
+        #click-hint {
+            font-size: 24px;
+            color: #ffeaa7;
+            animation: blink 1s infinite alternate;
+        }
+
+        @keyframes blink {
+            from {
+                opacity: 0.5;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        #surprise-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        #surprise-text {
+            color: #FFD700;
+            font-size: 40px;
+            text-shadow: 2px 2px #e91e63;
+            margin: 20px 0;
+            line-height: 1.2;
+        }
+
+        #doll-house-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px #e91e63);
         }
     </style>
 </head>
@@ -182,8 +260,24 @@
         </div>
 
         <div id="final-message">
-            <h1 style="color: #fff; font-size: 40px;">Happy 10th Birthday Sakina !!!</h1>
-            <p style="font-size: 24px; color: #ffeaa7;">"We will always be there for your every milestone."</p>
+            <h1 id="bday-header" style="color: #fff; font-size: 48px; margin-bottom: 10px;">Happy 10th Birthday Sakina
+                !!!</h1>
+
+            <!-- Gift Section -->
+            <div id="gift-container" onclick="openGift()">
+                <div id="gift-box">🎁</div>
+                <div id="click-hint">Click to Open Gift!</div>
+            </div>
+
+            <!-- Surprise Reveal Section (Hidden initially) -->
+            <div id="surprise-container" class="hidden">
+                <div id="doll-house-icon">🏰</div>
+                <div id="surprise-text">Surprise Sakina you unlocked a doll house !!!</div>
+            </div>
+
+            <!-- Family Quote (Hidden initially) -->
+            <p id="family-quote" class="hidden" style="font-size: 24px; color: #ffeaa7; margin-top: 20px;">"We will
+                always be there for your every milestone."</p>
         </div>
 
         <div id="controls">
@@ -198,8 +292,7 @@
     <!-- START SCREEN -->
     <div id="start-screen" class="screen">
         <h1>MILESTONES</h1>
-        <p>Help <b>Sakina</b> fly through the years. Collect memories (stars) to grow up.<br>Tap FLAP to fly. Avoid the
-            obstacles!
+        <p>Help her fly through the years. Collect memories (stars) to grow up.<br>Tap FLAP to fly. Avoid the obstacles!
         </p>
         <button class="btn" id="start-btn">Start Journey</button>
     </div>
@@ -225,12 +318,15 @@
         // --- CUSTOM PHOTOS CONFIGURATION ---
         // REPLACE these URLs with your own image links!
         const girlImg = new Image();
+        girlImg.crossOrigin = "Anonymous"; // Try to enable CORS if needed
         girlImg.src = 'https://raw.githubusercontent.com/prateektalesara/mcq-engine/refs/heads/game/sk-i.png';
 
         const momImg = new Image();
+        momImg.crossOrigin = "Anonymous";
         momImg.src = 'https://raw.githubusercontent.com/prateektalesara/mcq-engine/refs/heads/game/mom-i.png';
 
         const dadImg = new Image();
+        dadImg.crossOrigin = "Anonymous";
         dadImg.src = 'https://raw.githubusercontent.com/prateektalesara/mcq-engine/refs/heads/game/dad-i.png';
         // ------------------------------------
 
@@ -243,6 +339,9 @@
         const hudScore = document.getElementById('score-display');
         const controls = document.getElementById('controls');
         const finalMessage = document.getElementById('final-message');
+        const giftContainer = document.getElementById('gift-container');
+        const surpriseContainer = document.getElementById('surprise-container');
+        const familyQuote = document.getElementById('family-quote');
 
         // Game State
         let gameState = 'START'; // START, PLAYING, LEVEL_END, GAMEOVER, CUTSCENE, ENDED
@@ -416,15 +515,11 @@
 
                 // Draw Custom Face (Girl)
                 try {
-                    const size = 25;
+                    const size = 60; // Increased size to 60 (Double original 30)
                     ctx.save();
-                    ctx.translate(0, -15);
+                    ctx.translate(0, -30); // Adjusted Y translation for larger head
 
-                    ctx.fillStyle = '#ffe0b2';
-                    ctx.beginPath();
-                    ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
-                    ctx.fill();
-
+                    // Clip to Circle
                     ctx.beginPath();
                     ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
                     ctx.closePath();
@@ -433,14 +528,12 @@
                     if (!this.facingRight) {
                         ctx.scale(-1, 1);
                     }
-                    ctx.drawImage(girlImg, -size / 2, -size / 2, size, size);
-                    ctx.restore();
 
-                    ctx.strokeStyle = '#fff';
-                    ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    ctx.arc(0, -15, size / 2, 0, Math.PI * 2);
-                    ctx.stroke();
+                    // Zoom Hack: Draw image 1.5x larger to crop out white borders
+                    const zoom = 1.5;
+                    ctx.drawImage(girlImg, -size * zoom / 2, -size * zoom / 2, size * zoom, size * zoom);
+
+                    ctx.restore();
 
                 } catch (e) {
                     ctx.fillStyle = '#ffe0b2';
@@ -656,6 +749,14 @@
             hudScore.innerText = `Memories: 0/3`;
             finalMessage.style.opacity = 0;
 
+            // Reset Final Message State
+            // KEY FIX: Completely hide giftContainer so it doesn't block play area
+            giftContainer.style.display = 'none';
+
+            giftContainer.classList.remove('hidden'); // Legacy remove (can be ignored)
+            surpriseContainer.classList.add('hidden');
+            familyQuote.classList.add('hidden');
+
             if (level === maxLevels) {
                 initBirthdayLevel();
             } else {
@@ -703,9 +804,9 @@
             hudScore.innerText = "Memories: A lot";
 
             // Fix grammar: 1st, 2nd, 3rd, 10th
-            const finalMsgH1 = document.querySelector('#final-message h1');
-            if (finalMsgH1) {
-                finalMsgH1.innerText = `Happy ${getOrdinal(maxLevels)} Birthday Sakina !!!`;
+            const bdayHeader = document.getElementById('bday-header');
+            if (bdayHeader) {
+                bdayHeader.innerText = `Happy ${getOrdinal(maxLevels)} Birthday Sakina !!!`;
             }
         }
 
@@ -823,29 +924,23 @@
                     ctx.fillRect(-15, 0, 30, 90);
 
                     // Draw Avatar Head
-                    const size = 40;
+                    const size = 100; // Increased size to 100 (Doubled from 50ish range)
                     ctx.save();
-                    ctx.translate(0, -15); // Position head above body
+                    ctx.translate(0, -50); // Adjusted Y translation for significantly larger head
 
-                    ctx.fillStyle = '#ffe0b2';
-                    ctx.beginPath();
-                    ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
-                    ctx.fill();
-
+                    // Clip to Circle
                     ctx.beginPath();
                     ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
                     ctx.closePath();
                     ctx.clip();
 
+                    // Zoom Hack: Draw image 1.5x larger to crop out white borders
+                    const zoom = 1.5;
                     if (p.role === 'dad') {
-                        ctx.drawImage(dadImg, -size / 2, -size / 2, size, size);
+                        ctx.drawImage(dadImg, -size * zoom / 2, -size * zoom / 2, size * zoom, size * zoom);
                     } else {
-                        ctx.drawImage(momImg, -size / 2, -size / 2, size, size);
+                        ctx.drawImage(momImg, -size * zoom / 2, -size * zoom / 2, size * zoom, size * zoom);
                     }
-
-                    ctx.strokeStyle = '#fff';
-                    ctx.lineWidth = 2;
-                    ctx.stroke();
 
                     ctx.restore();
                 } catch (e) {
@@ -943,6 +1038,9 @@
 
             finalMessage.style.opacity = 1;
 
+            // KEY FIX: Make the Gift Visible specifically now
+            giftContainer.style.display = 'block';
+
             // Continuous fireworks loop
             fireworkInterval = setInterval(() => {
                 // Safety Cap: Don't spawn if too many particles are on screen
@@ -954,6 +1052,29 @@
                 // Reduced particles per explosion for performance
                 createParticles(ex, ey, 30, getRandomColor(), 'firework');
             }, 800); // Slightly slower frequency
+        }
+
+        // --- NEW GIFT REVEAL FUNCTION ---
+        function openGift() {
+            const giftBox = document.getElementById('gift-container');
+            const surprise = document.getElementById('surprise-container');
+            const quote = document.getElementById('family-quote');
+
+            // Hide Gift
+            giftBox.style.display = 'none';
+
+            // Explosion Effect at center
+            createParticles(canvas.width / 2, canvas.height / 2, 100, '#FFD700', 'firework');
+            createParticles(canvas.width / 2, canvas.height / 2, 50, '#e91e63', 'firework');
+
+            // Show Surprise
+            surprise.classList.remove('hidden');
+
+            // Fade in Quote after short delay
+            setTimeout(() => {
+                quote.classList.remove('hidden');
+                quote.style.opacity = 1;
+            }, 1000);
         }
 
         function getRandomColor() {
