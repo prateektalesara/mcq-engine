@@ -62,7 +62,6 @@
             color: white;
             pointer-events: auto;
             z-index: 10;
-            /* Replaced transition/opacity with display:none for robust focus handling */
         }
 
         .hidden {
@@ -76,6 +75,8 @@
             color: #FFD700;
             text-shadow: 3px 3px 0 #d35400;
             text-align: center;
+            width: 100%;
+            /* Ensure it spans full width for centering */
         }
 
         p {
@@ -84,6 +85,9 @@
             text-align: center;
             line-height: 1.6;
             margin-bottom: 30px;
+            /* Auto margins to ensure block centering if flex fails, though flex is primary */
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .btn {
@@ -140,11 +144,21 @@
             gap: 20px;
         }
 
-        /* Final Message styling */
+        /* Final Message styling - UPGRADED for Robust Centering */
         #final-message {
             position: absolute;
-            top: 20%;
+            top: 50%;
+            left: 0;
             width: 100%;
+            transform: translateY(-50%);
+            /* Vertical centering */
+
+            /* Flexbox ensures children (h1, p) are centered regardless of their width */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
             text-align: center;
             color: white;
             font-family: 'Fredoka One', cursive;
@@ -152,6 +166,7 @@
             pointer-events: none;
             opacity: 0;
             transition: opacity 2s;
+            z-index: 20;
         }
     </style>
 </head>
@@ -167,7 +182,7 @@
         </div>
 
         <div id="final-message">
-            <h1 style="color: #fff; font-size: 40px;">Happy 10th Birthday!</h1>
+            <h1 style="color: #fff; font-size: 40px;">Happy 10th Birthday Sakina !!!</h1>
             <p style="font-size: 24px; color: #ffeaa7;">"We will always be there for your every milestone."</p>
         </div>
 
@@ -183,7 +198,8 @@
     <!-- START SCREEN -->
     <div id="start-screen" class="screen">
         <h1>MILESTONES</h1>
-        <p>Help her fly through the years. Collect memories (stars) to grow up.<br>Tap FLAP to fly. Avoid the obstacles!
+        <p>Help <b>Sakina</b> fly through the years. Collect memories (stars) to grow up.<br>Tap FLAP to fly. Avoid the
+            obstacles!
         </p>
         <button class="btn" id="start-btn">Start Journey</button>
     </div>
@@ -206,6 +222,18 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
+        // --- CUSTOM PHOTOS CONFIGURATION ---
+        // REPLACE these URLs with your own image links!
+        const girlImg = new Image();
+        girlImg.src = 'https://raw.githubusercontent.com/prateektalesara/mcq-engine/refs/heads/game/sk-i.png';
+
+        const momImg = new Image();
+        momImg.src = 'https://raw.githubusercontent.com/prateektalesara/mcq-engine/refs/heads/game/mom-i.png';
+
+        const dadImg = new Image();
+        dadImg.src = 'https://raw.githubusercontent.com/prateektalesara/mcq-engine/refs/heads/game/dad-i.png';
+        // ------------------------------------
+
         // Screens & UI
         const startScreen = document.getElementById('start-screen');
         const levelScreen = document.getElementById('level-screen');
@@ -219,17 +247,17 @@
         // Game State
         let gameState = 'START'; // START, PLAYING, LEVEL_END, GAMEOVER, CUTSCENE, ENDED
         let level = 1;
-        let maxLevels = 10;
+        let maxLevels = 10; // Change this to 2 to test the ending!
         let frames = 0;
         let animationFrameId;
 
-        // Time management for consistent physics
+        // Time management
         let lastTime = 0;
+        let fireworkInterval = null; // Store interval ID to prevent leaks
 
-        // Physics Constants (Normalized for 60FPS)
-        // Delta time will scale these
-        const GRAVITY = 0.28; // Increased slightly for better feel
-        const FLAP_FORCE = -8.0; // Increased flap strength
+        // Physics
+        const GRAVITY = 0.28;
+        const FLAP_FORCE = -8.0;
         const MOVE_SPEED = 0.4;
         const MAX_H_SPEED = 6;
         const FRICTION = 0.96;
@@ -257,7 +285,7 @@
             '#F06292', '#BA68C8', '#7986CB', '#4FC3F7', '#2c3e50'
         ];
 
-        // Resize handling
+        // Resize
         function resize() {
             if (Math.abs(canvas.width - window.innerWidth) > 10 || Math.abs(canvas.height - window.innerHeight) > 10) {
                 canvas.width = window.innerWidth;
@@ -293,7 +321,7 @@
                     return;
                 }
 
-                // Physics with Delta Time
+                // Physics
                 this.vy += GRAVITY * dt;
                 this.vx *= Math.pow(FRICTION, dt);
                 this.x += this.vx * dt;
@@ -309,23 +337,17 @@
                     this.facingRight = false;
                 }
 
-                // Cap speed
                 if (this.vx > MAX_H_SPEED) this.vx = MAX_H_SPEED;
                 if (this.vx < -MAX_H_SPEED) this.vx = -MAX_H_SPEED;
 
-                // Floor collision
                 if (this.y + this.height / 2 > canvas.height - 20) {
                     this.y = canvas.height - 20 - this.height / 2;
                     this.vy = 0;
                 }
-
-                // Ceiling
                 if (this.y < 0) {
                     this.y = 0;
                     this.vy = 0;
                 }
-
-                // Walls
                 if (this.x > canvas.width) this.x = 0;
                 if (this.x < 0) this.x = canvas.width;
 
@@ -333,7 +355,6 @@
             }
 
             flap() {
-                // Instant velocity set for snappy control
                 this.vy = FLAP_FORCE;
                 createParticles(this.x, this.y + 20, 3, '#fff');
             }
@@ -369,7 +390,6 @@
                     ctx.beginPath();
                     ctx.ellipse(-10, -55, 12, 15, 0, 0, Math.PI * 2);
                     ctx.fill();
-                    // Highlight
                     ctx.fillStyle = 'rgba(255,255,255,0.3)';
                     ctx.beginPath();
                     ctx.ellipse(-13, -58, 3, 5, 0, 0, Math.PI * 2);
@@ -380,14 +400,13 @@
                     ctx.beginPath();
                     ctx.ellipse(10, -55, 12, 15, 0, 0, Math.PI * 2);
                     ctx.fill();
-                    // Highlight
                     ctx.fillStyle = 'rgba(255,255,255,0.3)';
                     ctx.beginPath();
                     ctx.ellipse(7, -58, 3, 5, 0, 0, Math.PI * 2);
                     ctx.fill();
                 }
 
-                // Girl
+                // Draw Girl Body (Vector)
                 ctx.fillStyle = '#9b59b6';
                 ctx.beginPath();
                 ctx.moveTo(0, -10);
@@ -395,27 +414,40 @@
                 ctx.lineTo(10, 20);
                 ctx.fill();
 
-                ctx.fillStyle = '#ffe0b2';
-                ctx.beginPath();
-                ctx.arc(0, -15, 10, 0, Math.PI * 2);
-                ctx.fill();
+                // Draw Custom Face (Girl)
+                try {
+                    const size = 25;
+                    ctx.save();
+                    ctx.translate(0, -15);
 
-                ctx.fillStyle = '#3e2723';
-                ctx.beginPath();
-                ctx.arc(0, -17, 11, Math.PI, 0);
-                ctx.lineTo(10, -5);
-                ctx.lineTo(-10, -5);
-                ctx.fill();
+                    ctx.fillStyle = '#ffe0b2';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
+                    ctx.fill();
 
-                ctx.fillStyle = '#000';
-                if (this.facingRight) {
-                    ctx.fillRect(2, -18, 2, 2);
-                    ctx.fillRect(6, -18, 2, 2);
-                } else {
-                    ctx.fillRect(-4, -18, 2, 2);
-                    ctx.fillRect(-8, -18, 2, 2);
+                    ctx.beginPath();
+                    ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
+                    ctx.closePath();
+                    ctx.clip();
+
+                    if (!this.facingRight) {
+                        ctx.scale(-1, 1);
+                    }
+                    ctx.drawImage(girlImg, -size / 2, -size / 2, size, size);
+                    ctx.restore();
+
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(0, -15, size / 2, 0, Math.PI * 2);
+                    ctx.stroke();
+
+                } catch (e) {
+                    ctx.fillStyle = '#ffe0b2';
+                    ctx.beginPath();
+                    ctx.arc(0, -15, 10, 0, Math.PI * 2);
+                    ctx.fill();
                 }
-
                 ctx.restore();
             }
         }
@@ -439,7 +471,6 @@
                     if (this.x > canvas.width + 50) this.x = -50;
                     if (this.x < -50) this.x = canvas.width + 50;
                 } else if (this.type === 'vertical') {
-                    // Use time-based sine wave instead of frame-based
                     this.y = this.startY + Math.sin(Date.now() * 0.002) * 50;
                 } else if (this.type === 'circle') {
                     this.angle += 0.05 * dt;
@@ -451,12 +482,10 @@
             draw() {
                 ctx.save();
                 ctx.translate(this.x, this.y);
-
                 ctx.fillStyle = '#546e7a';
                 ctx.beginPath();
                 ctx.arc(0, 0, this.size, 0, Math.PI * 2);
                 ctx.fill();
-
                 ctx.strokeStyle = '#37474f';
                 ctx.lineWidth = 2;
                 for (let i = 0; i < 8; i++) {
@@ -468,7 +497,6 @@
                     ctx.lineTo(sx, sy);
                     ctx.stroke();
                 }
-
                 ctx.restore();
             }
         }
@@ -476,7 +504,7 @@
         class Collectible {
             constructor(x, y) {
                 this.x = x;
-                this.baseY = y; // Store base Y for stable floating
+                this.baseY = y;
                 this.y = y;
                 this.size = 15;
                 this.collected = false;
@@ -484,8 +512,6 @@
             }
 
             update(dt) {
-                // Stable floating logic using base Y
-                // Use Date.now() for smooth animation regardless of framerate
                 this.y = this.baseY + Math.sin(Date.now() * 0.003 + this.floatOffset) * 10;
             }
 
@@ -493,7 +519,6 @@
                 if (this.collected) return;
                 ctx.save();
                 ctx.translate(this.x, this.y);
-
                 ctx.fillStyle = '#f1c40f';
                 ctx.beginPath();
                 for (let i = 0; i < 5; i++) {
@@ -507,7 +532,6 @@
                 ctx.strokeStyle = '#f39c12';
                 ctx.lineWidth = 2;
                 ctx.stroke();
-
                 ctx.restore();
             }
         }
@@ -531,17 +555,14 @@
                 ctx.save();
                 ctx.translate(this.x, this.y);
                 ctx.rotate(frames * 0.05);
-
                 ctx.strokeStyle = '#fff';
                 ctx.lineWidth = 3;
                 ctx.setLineDash([5, 5]);
                 ctx.beginPath();
                 ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
                 ctx.stroke();
-
                 ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
                 ctx.fill();
-
                 ctx.restore();
 
                 if (this.active) {
@@ -558,32 +579,64 @@
                 this.x = x;
                 this.y = y;
                 this.color = color;
-                this.size = Math.random() * 5 + 2;
-                this.vx = (Math.random() - 0.5) * 6;
-                this.vy = (Math.random() - 0.5) * 6;
-                this.life = 100;
                 this.type = type;
+                this.life = 100;
+
+                if (type === 'firework') {
+                    // Explode outward in circle
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = Math.random() * 6 + 2;
+                    this.vx = Math.cos(angle) * speed;
+                    this.vy = Math.sin(angle) * speed;
+                    this.size = Math.random() * 3 + 1;
+                    this.decay = Math.random() * 1.5 + 0.5; // Random fade speed
+                } else {
+                    // Standard dust
+                    this.vx = (Math.random() - 0.5) * 6;
+                    this.vy = (Math.random() - 0.5) * 6;
+                    this.size = Math.random() * 5 + 2;
+                    this.decay = 2;
+                }
             }
+
             update(dt) {
                 this.x += this.vx * dt;
                 this.y += this.vy * dt;
+
                 if (this.type === 'firework') {
-                    this.vy += 0.05 * dt;
+                    this.vy += 0.1 * dt; // Add Gravity to sparks
+                    this.vx *= 0.95; // Air resistance
+                    this.vy *= 0.95;
                 }
-                this.life -= 2 * dt;
-                this.size *= 0.95;
+
+                this.life -= this.decay * dt;
             }
+
             draw() {
-                ctx.fillStyle = this.color;
+                ctx.save();
                 ctx.globalAlpha = Math.max(0, this.life / 100);
+
+                if (this.type === 'firework') {
+                    // Performance fix: Use 'lighter' blend but avoid heavy shadowBlur
+                    ctx.globalCompositeOperation = 'lighter';
+                }
+
+                ctx.fillStyle = this.color;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
-                ctx.globalAlpha = 1;
+
+                ctx.restore();
             }
         }
 
         // ------------------ GAME LOGIC ------------------
+
+        function getOrdinal(n) {
+            var s = ["th", "st", "nd", "rd"];
+            var v = n % 100;
+            return n + (s[(v - 20) % 10] || s[v] || s[0]);
+        }
 
         function initLevel(lvl) {
             level = lvl;
@@ -593,11 +646,17 @@
             collectibles = [];
             parents = [];
 
+            // Safety: Clear previous firework interval to prevent stacking/leaks
+            if (fireworkInterval) {
+                clearInterval(fireworkInterval);
+                fireworkInterval = null;
+            }
+
             hudLevel.innerText = `Age: ${level}`;
             hudScore.innerText = `Memories: 0/3`;
             finalMessage.style.opacity = 0;
 
-            if (level === 10) {
+            if (level === maxLevels) {
                 initBirthdayLevel();
             } else {
                 initStandardLevel(lvl);
@@ -639,7 +698,15 @@
             cake = { x: canvas.width / 2, y: canvas.height - 60, w: 100, h: 60 };
             parents.push({ x: canvas.width / 2 - 80, y: canvas.height - 110, role: 'dad' });
             parents.push({ x: canvas.width / 2 + 80, y: canvas.height - 110, role: 'mom' });
-            hudScore.innerText = "";
+
+            // HUD Update: Show "Memories: A lot"
+            hudScore.innerText = "Memories: A lot";
+
+            // Fix grammar: 1st, 2nd, 3rd, 10th
+            const finalMsgH1 = document.querySelector('#final-message h1');
+            if (finalMsgH1) {
+                finalMsgH1.innerText = `Happy ${getOrdinal(maxLevels)} Birthday Sakina !!!`;
+            }
         }
 
         function update(dt) {
@@ -665,7 +732,7 @@
                 checkCollisions();
             }
 
-            if (level === 10 && gameState === 'PLAYING') {
+            if (level === maxLevels && gameState === 'PLAYING') {
                 let dx = player.x - cake.x;
                 let dy = player.y - (canvas.height - 50);
                 if (Math.abs(dx) < 150 && player.y > canvas.height - 150) {
@@ -737,7 +804,7 @@
             obstacles.forEach(o => o.draw());
             collectibles.forEach(c => c.draw());
 
-            if (level === 10) {
+            if (level === maxLevels) {
                 drawBirthdayScene();
             }
 
@@ -749,18 +816,46 @@
             parents.forEach(p => {
                 ctx.save();
                 ctx.translate(p.x, p.y);
-                ctx.fillStyle = p.role === 'dad' ? '#34495e' : '#e91e63';
-                ctx.fillRect(-15, 0, 30, 90);
-                ctx.fillStyle = '#ffe0b2';
-                ctx.beginPath();
-                ctx.arc(0, -15, 20, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.fillStyle = '#000';
-                ctx.fillRect(-8, -20, 4, 4);
-                ctx.fillRect(4, -20, 4, 4);
-                ctx.beginPath();
-                ctx.arc(0, -10, 10, 0, Math.PI, false);
-                ctx.stroke();
+
+                try {
+                    // Draw Body (Restored)
+                    ctx.fillStyle = p.role === 'dad' ? '#34495e' : '#e91e63';
+                    ctx.fillRect(-15, 0, 30, 90);
+
+                    // Draw Avatar Head
+                    const size = 40;
+                    ctx.save();
+                    ctx.translate(0, -15); // Position head above body
+
+                    ctx.fillStyle = '#ffe0b2';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
+                    ctx.closePath();
+                    ctx.clip();
+
+                    if (p.role === 'dad') {
+                        ctx.drawImage(dadImg, -size / 2, -size / 2, size, size);
+                    } else {
+                        ctx.drawImage(momImg, -size / 2, -size / 2, size, size);
+                    }
+
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+
+                    ctx.restore();
+                } catch (e) {
+                    ctx.fillStyle = p.role === 'dad' ? '#34495e' : '#e91e63';
+                    ctx.fillRect(-15, 0, 30, 90);
+                    ctx.fillStyle = '#ffe0b2';
+                    ctx.beginPath();
+                    ctx.arc(0, -15, 20, 0, Math.PI * 2);
+                    ctx.fill();
+                }
                 ctx.restore();
             });
 
@@ -839,17 +934,26 @@
             parents[0].x = player.x - 40;
             parents[1].x = player.x + 40;
 
-            for (let i = 0; i < 50; i++) {
+            // Initial explosion
+            for (let i = 0; i < 60; i++) {
                 setTimeout(() => {
-                    createParticles(Math.random() * canvas.width, Math.random() * canvas.height / 2, 20, getRandomColor(), 'firework');
-                }, i * 100);
+                    createParticles(Math.random() * canvas.width, Math.random() * canvas.height / 2 + 50, 40, getRandomColor(), 'firework');
+                }, i * 50);
             }
 
             finalMessage.style.opacity = 1;
 
-            setInterval(() => {
-                createParticles(Math.random() * canvas.width, Math.random() * canvas.height / 2, 10, getRandomColor(), 'firework');
-            }, 500);
+            // Continuous fireworks loop
+            fireworkInterval = setInterval(() => {
+                // Safety Cap: Don't spawn if too many particles are on screen
+                if (particles.length > 400) return;
+
+                // Random explosion position
+                let ex = Math.random() * (canvas.width * 0.8) + (canvas.width * 0.1);
+                let ey = Math.random() * (canvas.height * 0.4) + 50;
+                // Reduced particles per explosion for performance
+                createParticles(ex, ey, 30, getRandomColor(), 'firework');
+            }, 800); // Slightly slower frequency
         }
 
         function getRandomColor() {
