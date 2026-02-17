@@ -816,26 +816,76 @@
         function initStandardLevel(lvl) {
             portal = new Portal(canvas.width - 100, canvas.height - 100);
 
-            const count = 3;
-            for (let i = 0; i < count; i++) {
-                let cx = 200 + Math.random() * (canvas.width - 300);
+            // Clear existing arrays
+            collectibles = [];
+            obstacles = [];
+
+            // Intelligent Spawning Helper
+            const isSafeLocation = (x, y, radius, itemsToCheck) => {
+                // 1. Check Player Start Zone (safety bubble)
+                // Player starts at (100, canvas.height - 150)
+                const startX = 100;
+                const startY = canvas.height - 150;
+                const distToStart = Math.sqrt((x - startX) ** 2 + (y - startY) ** 2);
+                if (distToStart < 200) return false; // Give player space to breathe
+
+                // 2. Check Portal Zone
+                const distToPortal = Math.sqrt((x - portal.x) ** 2 + (y - portal.y) ** 2);
+                if (distToPortal < 150) return false; // Don't block the exit
+
+                // 3. Check distance from other items
+                for (let item of itemsToCheck) {
+                    const dx = x - item.x;
+                    const dy = y - item.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    // Ensure items aren't overlapping. 
+                    // Add extra buffer (80px) so gaps are navigatable
+                    if (dist < (radius + item.size + 80)) return false;
+                }
+                return true;
+            };
+
+            // 1. Generate Collectibles first (they are the goal)
+            const starCount = 3;
+            let attempts = 0;
+            while (collectibles.length < starCount && attempts < 100) {
+                attempts++;
+                // Keep away from extreme edges
+                let cx = 150 + Math.random() * (canvas.width - 250);
                 let cy = 50 + Math.random() * (canvas.height - 150);
-                collectibles.push(new Collectible(cx, cy));
+
+                if (isSafeLocation(cx, cy, 20, collectibles)) {
+                    collectibles.push(new Collectible(cx, cy));
+                }
             }
 
-            let obsCount = (lvl - 1) * 2;
-            if (obsCount > 15) obsCount = 15;
+            // 2. Generate Obstacles (avoiding collectibles)
+            // Cap obstacles to prevent impossibility on mobile
+            let maxObs = Math.min((lvl - 1) * 2, 10);
+            // On very small screens, reduce obstacles further
+            if (canvas.width < 600) maxObs = Math.min(maxObs, 6);
 
-            for (let i = 0; i < obsCount; i++) {
-                let ox = 300 + Math.random() * (canvas.width - 400);
-                let oy = Math.random() * (canvas.height - 100);
+            attempts = 0;
+            // Create a combined list for collision checking to avoid overlapping stars
+            const allItems = [...collectibles];
+
+            while (obstacles.length < maxObs && attempts < 200) {
+                attempts++;
+                let ox = 200 + Math.random() * (canvas.width - 300);
+                let oy = 50 + Math.random() * (canvas.height - 150);
+
+                // Determine type based on level
                 let type = 'static';
-
                 if (lvl > 3) type = Math.random() > 0.5 ? 'horizontal' : 'static';
                 if (lvl > 6) type = Math.random() > 0.5 ? 'vertical' : 'horizontal';
                 if (lvl > 8) type = 'circle';
 
-                obstacles.push(new Obstacle(ox, oy, type));
+                // For moving obstacles, we need more clearance
+                let clearance = (type === 'static') ? 30 : 80;
+
+                if (isSafeLocation(ox, oy, clearance, [...obstacles, ...collectibles])) {
+                    obstacles.push(new Obstacle(ox, oy, type));
+                }
             }
         }
 
