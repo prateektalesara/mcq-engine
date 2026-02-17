@@ -354,9 +354,10 @@
     <!-- START SCREEN -->
     <div id="start-screen" class="screen">
         <h1>MILESTONES</h1>
-        <p>Help her fly through the years. Collect memories (stars) to grow up.<br>Tap FLAP to fly. Avoid the obstacles!
+        <p>Help Sakina fly through the years. Collect memories (stars) to grow up.<br>Tap FLAP to fly. Avoid the
+            obstacles!
         </p>
-        <button class="btn" id="start-btn">Start Journey</button>
+        <button class="btn" id="start-btn">Sakina, Start Journey</button>
     </div>
 
     <!-- LEVEL COMPLETE SCREEN -->
@@ -407,7 +408,7 @@
         // Game State
         let gameState = 'START';
         let level = 1;
-        let maxLevels = 10; // Default to 10 levels
+        let maxLevels = 10; // Set to 10 for full game progression
         let frames = 0;
         let animationFrameId;
 
@@ -447,16 +448,15 @@
 
         // Resize
         function resize() {
-            // Ensure canvas always matches window dimensions completely
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-                controls.style.display = 'flex';
+            if (Math.abs(canvas.width - window.innerWidth) > 10 || Math.abs(canvas.height - window.innerHeight) > 10) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+                    controls.style.display = 'flex';
+                }
+                if (gameState !== 'START') draw();
             }
-            if (gameState !== 'START') draw();
         }
-
         window.addEventListener('resize', resize);
 
         // Handle Orientation Change robustly
@@ -624,7 +624,9 @@
                 this.startY = y;
                 this.type = type;
                 this.size = 20;
-                this.speed = Math.random() * 2 + 1;
+                // Difficulty: Obstacles get faster each level
+                let levelSpeedBonus = (level || 1) * 0.15;
+                this.speed = (Math.random() * 2 + 1) + levelSpeedBonus;
                 this.dir = 1;
                 this.angle = 0;
             }
@@ -856,8 +858,8 @@
                     const dy = y - item.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
                     // Ensure items aren't overlapping. 
-                    // Reduced extra buffer from 80 to 40 to allow fitting on mobile
-                    if (dist < (radius + item.size + 40)) return false;
+                    // Tighter gap for harder gameplay (radius + size + 20)
+                    if (dist < (radius + item.size + 20)) return false;
                 }
                 return true;
             };
@@ -865,13 +867,11 @@
             // 1. Generate Collectibles first (they are the goal)
             const starCount = 3;
             let attempts = 0;
-            while (collectibles.length < starCount && attempts < 500) { // Increased attempts
+            while (collectibles.length < starCount && attempts < 500) {
                 attempts++;
-                // Keep away from extreme edges - Adjusted margins for better mobile fit
                 let paddingX = 50;
                 let paddingY = 50;
 
-                // Ensure we have a valid range
                 let minX = 100;
                 let maxX = Math.max(minX + 100, canvas.width - 100);
 
@@ -886,7 +886,7 @@
                 }
             }
 
-            // Fallback: If we couldn't place enough stars safely, place them anyway with reduced constraints
+            // Fallback: If we couldn't place enough stars safely, place them anyway
             while (collectibles.length < starCount) {
                 let cx = 150 + Math.random() * (canvas.width - 200);
                 let cy = 50 + Math.random() * (canvas.height - 150);
@@ -894,14 +894,11 @@
             }
 
             // 2. Generate Obstacles (avoiding collectibles)
-            // Cap obstacles to prevent impossibility on mobile
-            let maxObs = Math.min((lvl - 1) * 2, 10);
-            // On very small screens, reduce obstacles further
-            if (canvas.width < 600) maxObs = Math.min(maxObs, 6);
+            // Difficulty: More obstacles (Up to 20)
+            let maxObs = Math.min((lvl * 2) + 2, 20);
+            if (canvas.width < 600) maxObs = Math.min(maxObs, 12);
 
             attempts = 0;
-            // Create a combined list for collision checking to avoid overlapping stars
-            const allItems = [...collectibles];
 
             while (obstacles.length < maxObs && attempts < 200) {
                 attempts++;
@@ -914,8 +911,8 @@
                 if (lvl > 6) type = Math.random() > 0.5 ? 'vertical' : 'horizontal';
                 if (lvl > 8) type = 'circle';
 
-                // For moving obstacles, we need more clearance
-                let clearance = (type === 'static') ? 30 : 80;
+                // Tighter clearance for moving obstacles to make it harder
+                let clearance = (type === 'static') ? 25 : 60;
 
                 if (isSafeLocation(ox, oy, clearance, [...obstacles, ...collectibles])) {
                     obstacles.push(new Obstacle(ox, oy, type));
