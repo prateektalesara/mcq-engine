@@ -1,0 +1,65 @@
+%%{init: {
+  "theme": "dark",
+  "themeVariables": {
+    "primaryColor": "#1f2937",
+    "primaryTextColor": "#ffffff",
+    "primaryBorderColor": "#6366f1",
+    "lineColor": "#9ca3af",
+    "secondaryColor": "#111827",
+    "tertiaryColor": "#0f172a",
+    "fontSize": "14px"
+  }
+}}%%
+
+flowchart TD
+
+    A[Start: Client Requirement Input<br/>Detailed Transcription]
+
+    B[🧠 Requirement Analyst Agent<br/>Extracts, structures & clarifies requirements]
+
+    C[🎨 Solution Designer Agent<br/>Creates system design, flow & architecture]
+
+    D{👤 Architect Approval<br/>Validates design feasibility}
+
+    E[📐 Technical Planner Agent<br/>Breaks design into actionable tasks]
+
+    F[📋 Jira Manager Agent<br/>Creates & organizes Jira tickets]
+
+    G[💻 Development Agent<br/>Implements code for each ticket]
+
+    H[🧪 Code Quality Agent<br/>Runs linting, tests & validations]
+
+    I[📦 PR Manager Agent<br/>Creates structured pull requests]
+
+    J{👤 Manual Code Review<br/>Ensures quality & standards}
+
+    K[🔀 Merge Manager Agent<br/>Handles safe PR merge]
+
+    L[🚀 Deployment Agent - QA<br/>Deploys build to QA environment]
+
+    M{✅ QA Validation<br/>Validates functional correctness}
+
+    N[🏁 Release Manager Agent - Prod<br/>Deploys to production]
+
+    O[End]
+
+    A --> B --> C --> D
+    D -- Rejected --> C
+    D -- Approved --> E --> F --> G --> H --> I --> J
+    J -- Changes --> G
+    J -- Approved --> K --> L --> M
+    M -- Fail --> G
+    M -- Pass --> N --> O
+
+    F -->|Parallel Tickets| G
+
+    %% Styling
+    classDef agent fill:#1e3a8a,stroke:#60a5fa,color:#e0f2fe,stroke-width:2px;
+    classDef human fill:#7c2d12,stroke:#fb923c,color:#fff7ed,stroke-width:2px;
+    classDef decision fill:#064e3b,stroke:#34d399,color:#ecfdf5,stroke-width:2px;
+    classDef terminal fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff,stroke-width:2px;
+
+    class B,C,E,F,G,H,I,K,L,N agent;
+    class D,J human;
+    class M decision;
+    class A,O terminal;
