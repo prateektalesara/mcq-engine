@@ -13,53 +13,49 @@
 
 flowchart TD
 
-    A[Start: Client Requirement Input<br/>Detailed Transcription]
+    A[📞 Client Call Recording<br/>Capture discussion]
 
-    B[🧠 Requirement Analyst Agent<br/>Extracts, structures & clarifies requirements]
+    B[📝 Transcription Agent<br/>Convert call → structured text]
 
-    C[🎨 Solution Designer Agent<br/>Creates system design, flow & architecture]
+    C[🧠 Fatum Analysis Agent<br/>Extract requirements & insights]
 
-    D{👤 Architect Approval<br/>Validates design feasibility}
+    D[📋 Jira Manager Agent<br/>Auto-create & prioritize tickets]
 
-    E[📐 Technical Planner Agent<br/>Breaks design into actionable tasks]
+    E[📐 Technical Planner Agent<br/>Define implementation approach]
 
-    F[📋 Jira Manager Agent<br/>Creates & organizes Jira tickets]
+    F[💻 Development Agent<br/>Generate code per ticket]
 
-    G[💻 Development Agent<br/>Implements code for each ticket]
+    G[🧪 Code Quality Agent<br/>Run validations, tests & checks]
 
-    H[🧪 Code Quality Agent<br/>Runs linting, tests & validations]
+    H[📦 PR Manager Agent<br/>Create & push PR]
 
-    I[📦 PR Manager Agent<br/>Creates structured pull requests]
+    I[🚀 Deployment Agent<br/>Deploy to Salesforce Sandbox]
 
-    J{👤 Manual Code Review<br/>Ensures quality & standards}
+    J{👤 Architect Review<br/>Validate in Sandbox}
 
-    K[🔀 Merge Manager Agent<br/>Handles safe PR merge]
+    K[🔄 Fix Agent Loop<br/>Address feedback & re-implement]
 
-    L[🚀 Deployment Agent - QA<br/>Deploys build to QA environment]
+    L[🔀 Merge Manager Agent<br/>Merge approved changes]
 
-    M{✅ QA Validation<br/>Validates functional correctness}
+    M[🏁 Release Manager Agent<br/>Deploy to Production]
 
-    N[🏁 Release Manager Agent - Prod<br/>Deploys to production]
+    N[End]
 
-    O[End]
+    A --> B --> C --> D --> E --> F --> G --> H --> I --> J
 
-    A --> B --> C --> D
-    D -- Rejected --> C
-    D -- Approved --> E --> F --> G --> H --> I --> J
-    J -- Changes --> G
-    J -- Approved --> K --> L --> M
-    M -- Fail --> G
-    M -- Pass --> N --> O
+    J -- Changes Required --> K --> F
+    J -- Approved --> L --> M --> N
 
-    F -->|Parallel Tickets| G
+    D -->|Parallel Tickets| F
 
-    %% Styling
+    %% Color Styles
     classDef agent fill:#1e3a8a,stroke:#60a5fa,color:#e0f2fe,stroke-width:2px;
     classDef human fill:#7c2d12,stroke:#fb923c,color:#fff7ed,stroke-width:2px;
-    classDef decision fill:#064e3b,stroke:#34d399,color:#ecfdf5,stroke-width:2px;
+    classDef system fill:#065f46,stroke:#34d399,color:#ecfdf5,stroke-width:2px;
     classDef terminal fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff,stroke-width:2px;
 
-    class B,C,E,F,G,H,I,K,L,N agent;
-    class D,J human;
-    class M decision;
-    class A,O terminal;
+    %% Apply classes
+    class B,C,D,E,F,G,H,I,K,L,M agent;
+    class J human;
+    class A system;
+    class N terminal;
