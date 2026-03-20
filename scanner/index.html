@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Parcel Inventory</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Dexie.js (IndexedDB Wrapper) -->
+    <script src="https://unpkg.com/dexie@3.2.4/dist/dexie.js"></script>
+
+    <!-- ZXing Browser (Barcode Scanner) -->
+    <script src="https://unpkg.com/@zxing/library@0.21.2/umd/index.min.js"></script>
+
+    <style>
+        /* Hide scrollbar for cleaner mobile look */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .scanner-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            background: #000;
+        }
+
+        .scanner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-shadow: inset 0 0 0 50px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+        }
+
+        .scan-line {
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: #22c55e;
+            box-shadow: 0 0 10px #22c55e;
+            animation: scan 2s infinite linear alternate;
+        }
+
+        @keyframes scan {
+            0% {
+                transform: translateY(-50px);
+            }
+
+            100% {
+                transform: translateY(50px);
+            }
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 font-sans antialiased pb-20">
+
+    <div x-data="parcelApp()" x-init="initApp()" x-cloak>
+
+        <!-- App Header -->
+        <header class="bg-blue-600 text-white sticky top-0 z-50 shadow-md">
+            <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <button x-show="view !== 'home'" @click="navigate('home')"
+                        class="p-1 rounded hover:bg-blue-700 transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                    </button>
+                    <h1 class="text-xl font-bold" x-text="headerTitle"></h1>
+                </div>
+                <div x-show="view === 'list'" class="text-sm font-medium bg-blue-700 px-2 py-1 rounded-full"
+                    x-text="parcels.length + ' items'"></div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="max-w-md mx-auto p-4">
+
+            <!-- HOME VIEW -->
+            <div x-show="view === 'home'" class="space-y-4 animate-fade-in">
+                <!-- Primary Action -->
+                <button @click="startScanner()"
+                    class="w-full bg-blue-600 active:bg-blue-700 text-white p-6 rounded-xl shadow-lg flex flex-col items-center justify-center gap-3 transition transform active:scale-95">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z">
+                        </path>
+                    </svg>
+                    <span class="text-xl font-bold">Scan Barcode</span>
+                </button>
+
+                <!-- Grid Actions -->
+                <div class="grid grid-cols-2 gap-4">
+                    <button @click="navigate('list')"
+                        class="bg-white p-4 rounded-xl shadow border border-gray-100 flex flex-col items-center justify-center gap-2 active:bg-gray-50">
+                        <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                        </svg>
+                        <span class="font-semibold text-gray-700">View All</span>
+                    </button>
+                    <button @click="manualEntry()"
+                        class="bg-white p-4 rounded-xl shadow border border-gray-100 flex flex-col items-center justify-center gap-2 active:bg-gray-50">
+                        <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4">
+                            </path>
+                        </svg>
+                        <span class="font-semibold text-gray-700">Manual Entry</span>
+                    </button>
+                </div>
+
+                <!-- Database Tools -->
+                <div class="mt-8 pt-6 border-t border-gray-200 space-y-3">
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">Backup & Restore</h3>
+                    <button @click="exportData()"
+                        class="w-full bg-gray-200 text-gray-700 p-3 rounded-lg font-medium flex justify-center items-center gap-2 active:bg-gray-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                        Export JSON Backup
+                    </button>
+                    <input type="file" x-ref="fileInput" @change="importData" class="hidden" accept=".json">
+                    <button @click="$refs.fileInput.click()"
+                        class="w-full bg-gray-200 text-gray-700 p-3 rounded-lg font-medium flex justify-center items-center gap-2 active:bg-gray-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                        </svg>
+                        Import JSON Backup
+                    </button>
+                </div>
+            </div>
+
+            <!-- SCANNER VIEW -->
+            <div x-show="view === 'scanner'" class="flex flex-col h-[70vh]">
+                <div x-show="cameraError" class="bg-red-100 text-red-700 p-4 rounded-lg mb-4 text-sm"
+                    x-text="cameraError"></div>
+
+                <div class="scanner-container flex-grow bg-black shadow-lg">
+                    <video id="scanner-video" class="w-full h-full object-cover"></video>
+                    <div class="scanner-overlay"></div>
+                    <div class="scan-line"></div>
+                </div>
+
+                <button @click="stopScanner(); navigate('home')"
+                    class="mt-6 w-full bg-red-500 text-white p-4 rounded-xl font-bold text-lg active:bg-red-600 shadow">
+                    Cancel Scan
+                </button>
+            </div>
+
+            <!-- FORM VIEW (Create / Edit) -->
+            <div x-show="view === 'form'" class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 space-y-4">
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide">Barcode ID</label>
+                    <input type="text" x-model="currentParcel.barcode" :readonly="isEditing"
+                        class="mt-1 w-full bg-gray-100 border border-gray-300 rounded-lg p-3 text-gray-700 font-mono text-lg outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="e.g. BOX001">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide">Name</label>
+                    <input type="text" x-model="currentParcel.name"
+                        class="mt-1 w-full border border-gray-300 rounded-lg p-3 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="e.g. Winter Clothes">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide">Description</label>
+                    <input type="text" x-model="currentParcel.description"
+                        class="mt-1 w-full border border-gray-300 rounded-lg p-3 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Brief description">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide">Location</label>
+                        <input type="text" x-model="currentParcel.location"
+                            class="mt-1 w-full border border-gray-300 rounded-lg p-3 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="e.g. Attic">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide">Tags (comma
+                            separated)</label>
+                        <input type="text" x-model="currentParcel.tags"
+                            class="mt-1 w-full border border-gray-300 rounded-lg p-3 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="clothes, winter">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide">Notes</label>
+                    <textarea x-model="currentParcel.notes" rows="3"
+                        class="mt-1 w-full border border-gray-300 rounded-lg p-3 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Any additional notes..."></textarea>
+                </div>
+
+                <div class="pt-4 flex flex-col gap-3">
+                    <button @click="saveParcel()"
+                        class="w-full bg-green-600 text-white p-4 rounded-xl font-bold shadow active:bg-green-700 text-lg">
+                        <span x-text="isEditing ? 'Update Parcel' : 'Save New Parcel'"></span>
+                    </button>
+
+                    <button x-show="isEditing" @click="deleteParcel()"
+                        class="w-full bg-red-100 text-red-700 p-4 rounded-xl font-bold active:bg-red-200">
+                        Delete Parcel
+                    </button>
+
+                    <button @click="navigate(previousView || 'home')"
+                        class="w-full bg-gray-100 text-gray-700 p-4 rounded-xl font-bold active:bg-gray-200">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+            <!-- LIST VIEW -->
+            <div x-show="view === 'list'" class="space-y-4">
+
+                <!-- Search and Sort -->
+                <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-200 space-y-3 sticky top-[60px] z-40">
+                    <div class="relative">
+                        <input type="text" x-model="searchQuery" placeholder="Search by name, barcode, location..."
+                            class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500">
+                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-3.5" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="flex gap-2">
+                        <select x-model="sortBy"
+                            class="flex-1 bg-gray-50 border border-gray-300 text-sm rounded-lg p-2 outline-none">
+                            <option value="dateDesc">Newest First</option>
+                            <option value="dateAsc">Oldest First</option>
+                            <option value="location">Location (A-Z)</option>
+                            <option value="name">Name (A-Z)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div x-show="filteredParcels.length === 0" class="text-center py-10">
+                    <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
+                        </path>
+                    </svg>
+                    <p class="text-gray-500 font-medium">No parcels found.</p>
+                </div>
+
+                <!-- Parcel List -->
+                <div class="space-y-3">
+                    <template x-for="parcel in filteredParcels" :key="parcel.barcode">
+                        <div @click="editParcel(parcel)"
+                            class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 active:bg-blue-50 cursor-pointer flex justify-between items-center transition">
+                            <div class="overflow-hidden">
+                                <h4 class="font-bold text-gray-900 truncate" x-text="parcel.name || 'Unnamed Item'">
+                                </h4>
+                                <div class="flex items-center gap-2 text-xs mt-1">
+                                    <span
+                                        class="bg-gray-100 text-gray-600 px-2 py-0.5 rounded font-mono border border-gray-200"
+                                        x-text="parcel.barcode"></span>
+                                    <span x-show="parcel.location" class="text-blue-600 flex items-center gap-1">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                            </path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        </svg>
+                                        <span x-text="parcel.location"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <svg class="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                </path>
+                            </svg>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // Database Initialization
+        const db = new Dexie('parcel_inventory');
+        db.version(1).stores({
+            parcels: 'barcode, name, location, createdAt, updatedAt' // primary key and indexed properties
+        });
+
+        // ZXing Scanner Instance
+        let codeReader = null;
+
+        // Make the component globally available as a fallback
+        window.parcelApp = function () {
+            return {
+                view: 'home', // 'home', 'scanner', 'form', 'list'
+                previousView: 'home',
+                headerTitle: 'Parcel Inventory',
+
+                parcels: [],
+                searchQuery: '',
+                sortBy: 'dateDesc',
+
+                currentParcel: {},
+                isEditing: false,
+                cameraError: '',
+
+                async initApp() {
+                    // Preload library codeReader
+                    codeReader = new ZXing.BrowserMultiFormatReader();
+                    await this.loadParcels();
+                },
+
+                navigate(targetView) {
+                    this.previousView = this.view;
+                    this.view = targetView;
+                    this.updateHeader();
+                    if (this.view !== 'scanner' && codeReader) {
+                        this.stopScanner();
+                    }
+                    if (targetView === 'list') {
+                        this.loadParcels();
+                    }
+                },
+
+                updateHeader() {
+                    const titles = {
+                        home: 'Parcel Inventory',
+                        scanner: 'Scan Barcode',
+                        form: this.isEditing ? 'Edit Parcel' : 'New Parcel',
+                        list: 'All Parcels'
+                    };
+                    this.headerTitle = titles[this.view];
+                },
+
+                async loadParcels() {
+                    this.parcels = await db.parcels.toArray();
+                },
+
+                get filteredParcels() {
+                    let result = this.parcels;
+
+                    if (this.searchQuery) {
+                        const q = this.searchQuery.toLowerCase();
+                        result = result.filter(p =>
+                            p.barcode.toLowerCase().includes(q) ||
+                            (p.name && p.name.toLowerCase().includes(q)) ||
+                            (p.location && p.location.toLowerCase().includes(q)) ||
+                            (p.tags && p.tags.toLowerCase().includes(q))
+                        );
+                    }
+
+                    result.sort((a, b) => {
+                        switch (this.sortBy) {
+                            case 'dateDesc': return b.updatedAt - a.updatedAt;
+                            case 'dateAsc': return a.updatedAt - b.updatedAt;
+                            case 'name': return (a.name || '').localeCompare(b.name || '');
+                            case 'location': return (a.location || '').localeCompare(b.location || '');
+                            default: return 0;
+                        }
+                    });
+
+                    return result;
+                },
+
+                startScanner() {
+                    this.navigate('scanner');
+                    this.cameraError = '';
+
+                    // Request back camera
+                    codeReader.decodeFromConstraints({ video: { facingMode: "environment" } }, 'scanner-video', (result, err) => {
+                        if (result) {
+                            this.handleScan(result.getText());
+                        }
+                        if (err && !(err instanceof ZXing.NotFoundException)) {
+                            // Ignored NotFoundException as it fires continuously when no barcode is in frame
+                            console.error(err);
+                        }
+                    }).catch(err => {
+                        this.cameraError = 'Unable to access camera. Please ensure permissions are granted and you are using HTTPS.';
+                        console.error(err);
+                    });
+                },
+
+                stopScanner() {
+                    if (codeReader) {
+                        codeReader.reset();
+                    }
+                },
+
+                async handleScan(barcodeStr) {
+                    this.stopScanner();
+
+                    const existingItem = await db.parcels.get(barcodeStr);
+
+                    if (existingItem) {
+                        this.currentParcel = { ...existingItem };
+                        this.isEditing = true;
+                    } else {
+                        this.currentParcel = {
+                            barcode: barcodeStr,
+                            name: '',
+                            description: '',
+                            location: '',
+                            tags: '',
+                            notes: ''
+                        };
+                        this.isEditing = false;
+                    }
+                    this.navigate('form');
+                },
+
+                manualEntry() {
+                    this.currentParcel = { barcode: '', name: '', description: '', location: '', tags: '', notes: '' };
+                    this.isEditing = false;
+                    this.navigate('form');
+                },
+
+                editParcel(parcel) {
+                    this.currentParcel = { ...parcel };
+                    this.isEditing = true;
+                    this.navigate('form');
+                },
+
+                async saveParcel() {
+                    if (!this.currentParcel.barcode || !this.currentParcel.barcode.trim()) {
+                        alert("Barcode ID is required.");
+                        return;
+                    }
+
+                    const now = Date.now();
+                    const parcelToSave = {
+                        ...this.currentParcel,
+                        barcode: this.currentParcel.barcode.trim(),
+                        updatedAt: now
+                    };
+
+                    if (!this.isEditing) {
+                        parcelToSave.createdAt = now;
+                        // Prevent overwriting if user manually typed an existing barcode
+                        const exists = await db.parcels.get(parcelToSave.barcode);
+                        if (exists) {
+                            if (!confirm("This barcode already exists. Overwrite?")) return;
+                        }
+                    } else if (!parcelToSave.createdAt) {
+                        parcelToSave.createdAt = now;
+                    }
+
+                    await db.parcels.put(parcelToSave);
+                    await this.loadParcels();
+
+                    // Go back to where we came from, or home
+                    this.navigate(this.previousView === 'scanner' ? 'home' : (this.previousView || 'home'));
+                },
+
+                async deleteParcel() {
+                    if (confirm("Are you sure you want to delete this parcel?")) {
+                        await db.parcels.delete(this.currentParcel.barcode);
+                        await this.loadParcels();
+                        this.navigate('list');
+                    }
+                },
+
+                async exportData() {
+                    const allParcels = await db.parcels.toArray();
+                    const jsonString = JSON.stringify(allParcels, null, 2);
+                    const blob = new Blob([jsonString], { type: "application/json" });
+                    const url = URL.createObjectURL(blob);
+
+                    const a = document.createElement('a');
+                    a.href = url;
+                    const dateStr = new Date().toISOString().split('T')[0];
+                    a.download = `parcel-backup-${dateStr}.json`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                },
+
+                async importData(event) {
+                    const file = event.target.files[0];
+                    if (!file) return;
+
+                    try {
+                        const text = await file.text();
+                        const data = JSON.parse(text);
+
+                        if (Array.isArray(data)) {
+                            // Validate and insert
+                            await db.parcels.bulkPut(data);
+                            alert(`Successfully imported ${data.length} records!`);
+                            await this.loadParcels();
+                            this.navigate('list');
+                        } else {
+                            alert("Invalid backup file format.");
+                        }
+                    } catch (error) {
+                        console.error(error);
+                        alert("Error importing file. Please check the console.");
+                    }
+
+                    // Reset file input
+                    event.target.value = '';
+                }
+            };
+        };
+
+        // Standard Alpine component registration
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('parcelApp', window.parcelApp);
+        });
+    </script>
+
+    <!-- Alpine.js is loaded AFTER the custom scripts to ensure no timing/race conditions -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</body>
+
+</html>

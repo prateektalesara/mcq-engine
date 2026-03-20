@@ -1,1289 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Milestones: The 10th Birthday</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniFlow - Agentic Orchestration</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap');
-
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #2c3e50;
-            font-family: 'Nunito', sans-serif;
-            touch-action: none;
-            /* Prevent pull-to-refresh on mobile */
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        #gameCanvas {
-            display: block;
-            width: 100%;
-            height: 100%;
-            /* Changed from 100vh to 100% for better mobile stability */
-        }
-
-        #ui-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        /* HUD */
-        #hud {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            color: white;
-            text-shadow: 2px 2px 0 #000;
-            font-family: 'Fredoka One', cursive;
-            font-size: 24px;
-            pointer-events: none;
-        }
-
-        /* Screens (Start, Game Over, etc) */
-        .screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            pointer-events: auto;
-            z-index: 10;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        h1 {
-            font-family: 'Fredoka One', cursive;
-            font-size: 48px;
-            margin-bottom: 10px;
-            color: #FFD700;
-            text-shadow: 3px 3px 0 #d35400;
-            text-align: center;
-            width: 100%;
-        }
-
-        p {
-            font-size: 18px;
-            max-width: 600px;
-            text-align: center;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .btn {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 24px;
-            font-family: 'Fredoka One', cursive;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 6px 0 #c0392b;
-            transition: transform 0.1s;
-        }
-
-        .btn:active {
-            transform: translateY(4px);
-            box-shadow: 0 2px 0 #c0392b;
-        }
-
-        /* Mobile Controls */
-        #controls {
-            display: none;
-            /* Shown via JS on touch devices */
-            width: 100%;
-            padding: 20px 40px;
-            box-sizing: border-box;
-            justify-content: space-between;
-            align-items: flex-end;
-            pointer-events: auto;
-            padding-bottom: 30px;
-        }
-
-        .control-btn {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 30px;
-            user-select: none;
-            backdrop-filter: blur(4px);
-            touch-action: none;
-        }
-
-        .control-btn:active {
-            background: rgba(255, 255, 255, 0.4);
-            transform: scale(0.95);
-        }
-
-        .d-pad {
-            display: flex;
-            gap: 20px;
-        }
-
-        /* Landscape Enforcement Screen */
-        #rotate-message {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #2c3e50;
-            z-index: 100;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-
-        #rotate-icon {
-            font-size: 60px;
-            margin-bottom: 20px;
-            animation: rotatePhone 2s infinite;
-        }
-
-        @keyframes rotatePhone {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            50% {
-                transform: rotate(-90deg);
-            }
-
-            100% {
-                transform: rotate(-90deg);
-            }
-        }
-
-        /* Media Query for Portrait Mobile */
-        @media screen and (orientation: portrait) and (max-width: 900px) {
-            #rotate-message {
-                display: flex;
-            }
-
-            #ui-layer,
-            #gameCanvas,
-            .screen {
-                visibility: hidden;
-            }
-        }
-
-        /* Final Message styling */
-        #final-message {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 100%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            font-family: 'Fredoka One', cursive;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 2s;
-            z-index: 20;
-        }
-
-        @keyframes bounceGift {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.1);
-            }
-        }
-
-        #gift-container {
-            cursor: pointer;
-            margin: 20px 0;
-            transition: transform 0.2s;
-            pointer-events: auto;
-        }
-
-        #gift-container:hover {
-            transform: scale(1.05);
-        }
-
-        #gift-box {
-            font-size: 100px;
-            animation: bounceGift 1.5s infinite;
-            filter: drop-shadow(0 0 10px gold);
-        }
-
-        #click-hint {
-            font-size: 24px;
-            color: #ffeaa7;
-            animation: blink 1s infinite alternate;
-        }
-
-        @keyframes blink {
-            from {
-                opacity: 0.5;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        #surprise-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes popIn {
-            from {
-                transform: scale(0);
-                opacity: 0;
-            }
-
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        #surprise-text {
-            color: #FFD700;
-            font-size: 40px;
-            text-shadow: 2px 2px #e91e63;
-            margin: 20px 0;
-            line-height: 1.2;
-        }
-
-        #doll-house-icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 15px #e91e63);
-        }
+        /* Custom scrollbar for dark theme */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
     </style>
 </head>
+<body class="bg-slate-950 text-slate-200 antialiased h-screen overflow-hidden">
 
-<body>
+    <div id="root"></div>
 
-    <canvas id="gameCanvas"></canvas>
+    <script type="text/babel">
+        const { useState } = React;
 
-    <!-- Rotate Prompt -->
-    <div id="rotate-message">
-        <div id="rotate-icon">📱</div>
-        <h1>Please Rotate Device</h1>
-        <p>This game is designed to be played in Landscape mode.</p>
-    </div>
+        // --- Icon Wrapper Component ---
+        const Icon = ({ name, size = 20, className = '' }) => (
+            <i className={`fas fa-${name} ${className} flex items-center justify-center`} style={{ fontSize: `${size}px`, width: `${size}px`, height: `${size}px` }}></i>
+        );
 
-    <div id="ui-layer">
-        <div id="hud">
-            <div id="level-display">Age: 1</div>
-            <div id="score-display">Memories: 0/3</div>
-        </div>
-
-        <div id="final-message">
-            <h1 id="bday-header" style="color: #fff; font-size: 48px; margin-bottom: 10px;">Happy 10th Birthday Sakina
-                !!!</h1>
-
-            <!-- Gift Section -->
-            <div id="gift-container" onclick="openGift()">
-                <div id="gift-box">🎁</div>
-                <div id="click-hint">Click to Open Gift!</div>
-            </div>
-
-            <!-- Surprise Reveal Section -->
-            <div id="surprise-container" class="hidden">
-                <div id="doll-house-icon">🏰</div>
-                <div id="surprise-text">Surprise Sakina you unlocked a doll house !!!</div>
-            </div>
-
-            <!-- Family Quote -->
-            <p id="family-quote" class="hidden" style="font-size: 24px; color: #ffeaa7; margin-top: 20px;">"We will
-                always be there for your every milestone."</p>
-        </div>
-
-        <div id="controls">
-            <div class="d-pad">
-                <div class="control-btn" id="btn-left">←</div>
-                <div class="control-btn" id="btn-right">→</div>
-            </div>
-            <div class="control-btn" id="btn-flap" style="width: 100px; border-radius: 30px;">FLAP</div>
-        </div>
-    </div>
-
-    <!-- START SCREEN -->
-    <div id="start-screen" class="screen">
-        <h1>MILESTONES</h1>
-        <p>Help Sakina fly through the years. Collect memories (stars) to grow up.<br>Tap FLAP to fly. Avoid the
-            obstacles!
-        </p>
-        <button class="btn" id="start-btn">Sakina, Start Journey</button>
-    </div>
-
-    <!-- LEVEL COMPLETE SCREEN -->
-    <div id="level-screen" class="screen hidden">
-        <h1 id="level-title">Age 1 Complete!</h1>
-        <p>Ready for the next year?</p>
-        <button class="btn" id="next-level-btn">Grow Up</button>
-    </div>
-
-    <!-- GAME OVER SCREEN -->
-    <div id="game-over-screen" class="screen hidden">
-        <h1>Ouch!</h1>
-        <p>Don't worry, we can always try again.</p>
-        <button class="btn" id="retry-btn">Try Again</button>
-    </div>
-
-    <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-
-        // --- CUSTOM PHOTOS CONFIGURATION ---
-        const girlImg = new Image();
-        girlImg.crossOrigin = "Anonymous";
-        girlImg.src = 'https://raw.githubusercontent.com/prateektalesara/mcq-engine/refs/heads/game/sk-i.png';
-
-        const momImg = new Image();
-        momImg.crossOrigin = "Anonymous";
-        momImg.src = 'https://raw.githubusercontent.com/prateektalesara/mcq-engine/refs/heads/game/mom-i.png';
-
-        const dadImg = new Image();
-        dadImg.crossOrigin = "Anonymous";
-        dadImg.src = 'https://raw.githubusercontent.com/prateektalesara/mcq-engine/refs/heads/game/dad-i.png';
-        // ------------------------------------
-
-        // Screens & UI
-        const startScreen = document.getElementById('start-screen');
-        const levelScreen = document.getElementById('level-screen');
-        const gameOverScreen = document.getElementById('game-over-screen');
-        const levelTitle = document.getElementById('level-title');
-        const hudLevel = document.getElementById('level-display');
-        const hudScore = document.getElementById('score-display');
-        const controls = document.getElementById('controls');
-        const finalMessage = document.getElementById('final-message');
-        const giftContainer = document.getElementById('gift-container');
-        const surpriseContainer = document.getElementById('surprise-container');
-        const familyQuote = document.getElementById('family-quote');
-
-        // Game State
-        let gameState = 'START';
-        let level = 1;
-        let maxLevels = 10; // Set to 10 for full game progression
-        let frames = 0;
-        let animationFrameId;
-
-        // Time management
-        let lastTime = 0;
-        let fireworkInterval = null;
-
-        // Physics
-        const GRAVITY = 0.28;
-        const FLAP_FORCE = -8.0;
-        const MOVE_SPEED = 0.4;
-        const MAX_H_SPEED = 6;
-        const FRICTION = 0.96;
-
-        // Input
-        const keys = {
-            ArrowLeft: false,
-            ArrowRight: false,
-            Space: false,
-            ArrowUp: false
-        };
-
-        // Entities
-        let player;
-        let obstacles = [];
-        let collectibles = [];
-        let particles = [];
-        let portal;
-        let parents = [];
-        let cake;
-
-        // Colors
-        const levelColors = [
-            '#87CEEB', '#AED581', '#4DB6AC', '#FFF176', '#FFB74D',
-            '#F06292', '#BA68C8', '#7986CB', '#4FC3F7', '#2c3e50'
+        // --- Mock Data ---
+        const initialWorkflows = [
+            { id: 'wf-1', name: 'Lead Enrichment Pipeline', status: 'running', instances: 42, avgTime: '1.2s', cost: '$4.20' },
+            { id: 'wf-2', name: 'Support Ticket Triage', status: 'idle', instances: 0, avgTime: '0.8s', cost: '$0.00' },
+            { id: 'wf-3', name: 'Daily Report Generator', status: 'running', instances: 3, avgTime: '45.0s', cost: '$12.50' },
+            { id: 'wf-4', name: 'Code Review Agent', status: 'aborted', instances: 0, avgTime: '12.4s', cost: '$1.10' },
         ];
 
-        // Resize
-        function resize() {
-            if (Math.abs(canvas.width - window.innerWidth) > 10 || Math.abs(canvas.height - window.innerHeight) > 10) {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-                    controls.style.display = 'flex';
-                }
-                if (gameState !== 'START') draw();
-            }
-        }
-        window.addEventListener('resize', resize);
+        const connectors = [
+            { id: 1, name: 'OpenAI', type: 'LLM', status: 'connected', icon: 'bolt', color: 'text-emerald-400' },
+            { id: 2, name: 'Google Drive', type: 'Storage', status: 'disconnected', icon: 'database', color: 'text-blue-400' },
+            { id: 3, name: 'Salesforce', type: 'CRM', status: 'connected', icon: 'chart-line', color: 'text-blue-500' },
+            { id: 4, name: 'Codex CLI', type: 'Compute', status: 'disconnected', icon: 'server', color: 'text-purple-400' },
+            { id: 5, name: 'Gmail / SMTP', type: 'Email', status: 'connected', icon: 'cog', color: 'text-red-400' },
+        ];
 
-        // Handle Orientation Change robustly
-        window.addEventListener('orientationchange', () => {
-            // Immediate resize
-            resize();
-            // Delayed resize to catch layout settlement (address bar hiding etc)
-            setTimeout(resize, 200);
-            setTimeout(resize, 500);
-        });
+        const organizations = [
+            { id: 'org-1', name: 'Acme Corp', teams: 4, users: 128, tier: 'Enterprise', usage: '450GB', spend: '$1,240.00' },
+            { id: 'org-2', name: 'Globex Inc', teams: 1, users: 12, tier: 'Pro', usage: '45GB', spend: '$120.00' },
+            { id: 'org-3', name: 'Soylent Corp', teams: 2, users: 34, tier: 'Pro', usage: '120GB', spend: '$340.50' },
+        ];
 
-        // Initial sizing
-        resize();
+        // --- Components ---
 
-        // ------------------ CLASSES ------------------
+        const SidebarItem = ({ icon, label, active, onClick }) => (
+            <button 
+                onClick={onClick}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                active ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                }`}
+            >
+                <Icon name={icon} size={18} />
+                <span className="font-medium text-sm">{label}</span>
+            </button>
+        );
 
-        class Player {
-            constructor() {
-                this.x = 100;
-                this.y = canvas.height - 150;
-                this.vx = 0;
-                this.vy = 0;
-                this.radius = 15;
-                this.width = 30;
-                this.height = 40;
-                this.facingRight = true;
-                this.balloons = 2;
-                this.flapCooldown = 0;
-            }
+        const Dashboard = () => (
+            <div className="space-y-6">
+                <h2 className="text-2xl font-bold text-white mb-6">System Overview</h2>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                {[
+                    { label: 'Active Instances', value: '1,248', icon: 'chart-line', color: 'text-emerald-400', trend: '+12%' },
+                    { label: 'Compute Time (ms)', value: '45.2M', icon: 'clock', color: 'text-blue-400', trend: '+5%' },
+                    { label: 'Data Processed (KB)', value: '8.4B', icon: 'database', color: 'text-purple-400', trend: '+24%' },
+                    { label: 'Reseller Revenue', value: '$8,420', icon: 'credit-card', color: 'text-indigo-400', trend: '+18%' },
+                ].map((stat, i) => (
+                    <div key={i} className="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                    <div className="flex justify-between items-start mb-4">
+                        <div className="p-2 bg-slate-900 rounded-lg">
+                            <Icon name={stat.icon} size={20} className={stat.color} />
+                        </div>
+                        <span className="text-emerald-400 text-sm font-medium">{stat.trend}</span>
+                    </div>
+                    <h3 className="text-slate-400 text-sm font-medium">{stat.label}</h3>
+                    <p className="text-3xl font-bold text-white mt-1">{stat.value}</p>
+                    </div>
+                ))}
+                </div>
+                <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 h-64 flex items-center justify-center">
+                    <p className="text-slate-500"><Icon name="chart-area" size={40} className="mb-4 mx-auto opacity-50" /> [ Compute & Network Utilization Chart Placeholder ]</p>
+                </div>
+            </div>
+        );
 
-            update(dt) {
-                if (gameState === 'CUTSCENE' || gameState === 'ENDED') {
-                    this.cutsceneBehavior(dt);
-                    return;
-                }
+        const Workflows = () => {
+            const [flows, setFlows] = useState(initialWorkflows);
 
-                // Physics
-                this.vy += GRAVITY * dt;
-                this.vx *= Math.pow(FRICTION, dt);
-                this.x += this.vx * dt;
-                this.y += this.vy * dt;
-
-                // Inputs
-                if (keys.ArrowRight) {
-                    this.vx += MOVE_SPEED * dt;
-                    this.facingRight = true;
-                }
-                if (keys.ArrowLeft) {
-                    this.vx -= MOVE_SPEED * dt;
-                    this.facingRight = false;
-                }
-
-                if (this.vx > MAX_H_SPEED) this.vx = MAX_H_SPEED;
-                if (this.vx < -MAX_H_SPEED) this.vx = -MAX_H_SPEED;
-
-                if (this.y + this.height / 2 > canvas.height - 20) {
-                    this.y = canvas.height - 20 - this.height / 2;
-                    this.vy = 0;
-                }
-                if (this.y < 0) {
-                    this.y = 0;
-                    this.vy = 0;
-                }
-                if (this.x > canvas.width) this.x = 0;
-                if (this.x < 0) this.x = canvas.width;
-
-                if (this.flapCooldown > 0) this.flapCooldown -= 1 * dt;
-            }
-
-            flap() {
-                this.vy = FLAP_FORCE;
-                createParticles(this.x, this.y + 20, 3, '#fff');
-            }
-
-            cutsceneBehavior(dt) {
-                this.vy += GRAVITY * dt;
-                this.vx *= 0.8;
-                this.y += this.vy * dt;
-                this.x += this.vx * dt;
-
-                if (this.y + this.height / 2 > canvas.height - 50) {
-                    this.y = canvas.height - 50 - this.height / 2;
-                    this.vy = 0;
-                }
-            }
-
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-
-                // Balloons
-                if (this.balloons > 0) {
-                    ctx.strokeStyle = '#fff';
-                    ctx.beginPath();
-                    ctx.moveTo(0, -20);
-                    ctx.lineTo(-10, -50);
-                    ctx.moveTo(0, -20);
-                    ctx.lineTo(10, -50);
-                    ctx.stroke();
-
-                    // Balloon 1
-                    ctx.fillStyle = '#e74c3c';
-                    ctx.beginPath();
-                    ctx.ellipse(-10, -55, 12, 15, 0, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.fillStyle = 'rgba(255,255,255,0.3)';
-                    ctx.beginPath();
-                    ctx.ellipse(-13, -58, 3, 5, 0, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    // Balloon 2
-                    ctx.fillStyle = '#3498db';
-                    ctx.beginPath();
-                    ctx.ellipse(10, -55, 12, 15, 0, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.fillStyle = 'rgba(255,255,255,0.3)';
-                    ctx.beginPath();
-                    ctx.ellipse(7, -58, 3, 5, 0, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-
-                // Draw Girl Body
-                ctx.fillStyle = '#9b59b6';
-                ctx.beginPath();
-                ctx.moveTo(0, -10);
-                ctx.lineTo(-10, 20);
-                ctx.lineTo(10, 20);
-                ctx.fill();
-
-                // Draw Custom Face (Girl)
-                try {
-                    const size = 60; // Size
-                    ctx.save();
-                    ctx.translate(0, -30); // Position
-
-                    ctx.beginPath();
-                    ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
-                    ctx.closePath();
-                    ctx.clip();
-
-                    if (!this.facingRight) {
-                        ctx.scale(-1, 1);
-                    }
-
-                    const zoom = 1.5;
-                    ctx.drawImage(girlImg, -size * zoom / 2, -size * zoom / 2, size * zoom, size * zoom);
-
-                    ctx.restore();
-
-                } catch (e) {
-                    ctx.fillStyle = '#ffe0b2';
-                    ctx.beginPath();
-                    ctx.arc(0, -15, 10, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                ctx.restore();
-            }
-        }
-
-        class Obstacle {
-            constructor(x, y, type) {
-                this.x = x;
-                this.y = y;
-                this.startX = x;
-                this.startY = y;
-                this.type = type;
-                this.size = 20;
-                // Difficulty: Obstacles get faster each level
-                let levelSpeedBonus = (level || 1) * 0.15;
-                this.speed = (Math.random() * 2 + 1) + levelSpeedBonus;
-                this.dir = 1;
-                this.angle = 0;
-            }
-
-            update(dt) {
-                if (this.type === 'horizontal') {
-                    this.x += (this.speed * this.dir) * dt;
-                    if (this.x > canvas.width + 50) this.x = -50;
-                    if (this.x < -50) this.x = canvas.width + 50;
-                } else if (this.type === 'vertical') {
-                    this.y = this.startY + Math.sin(Date.now() * 0.002) * 50;
-                } else if (this.type === 'circle') {
-                    this.angle += 0.05 * dt;
-                    this.x = this.startX + Math.cos(this.angle) * 50;
-                    this.y = this.startY + Math.sin(this.angle) * 50;
-                }
-            }
-
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.fillStyle = '#546e7a';
-                ctx.beginPath();
-                ctx.arc(0, 0, this.size, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.strokeStyle = '#37474f';
-                ctx.lineWidth = 2;
-                for (let i = 0; i < 8; i++) {
-                    let a = (Math.PI * 2 / 8) * i + frames * 0.05;
-                    let sx = Math.cos(a) * (this.size + 5);
-                    let sy = Math.sin(a) * (this.size + 5);
-                    ctx.beginPath();
-                    ctx.moveTo(0, 0);
-                    ctx.lineTo(sx, sy);
-                    ctx.stroke();
-                }
-                ctx.restore();
-            }
-        }
-
-        class Collectible {
-            constructor(x, y) {
-                this.x = x;
-                this.baseY = y;
-                this.y = y;
-                this.size = 15;
-                this.collected = false;
-                this.floatOffset = Math.random() * Math.PI * 2;
-            }
-
-            update(dt) {
-                this.y = this.baseY + Math.sin(Date.now() * 0.003 + this.floatOffset) * 10;
-            }
-
-            draw() {
-                if (this.collected) return;
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.fillStyle = '#f1c40f';
-                ctx.beginPath();
-                for (let i = 0; i < 5; i++) {
-                    ctx.lineTo(Math.cos((18 + i * 72) * 0.0174533) * this.size,
-                        -Math.sin((18 + i * 72) * 0.0174533) * this.size);
-                    ctx.lineTo(Math.cos((54 + i * 72) * 0.0174533) * (this.size / 2),
-                        -Math.sin((54 + i * 72) * 0.0174533) * (this.size / 2));
-                }
-                ctx.closePath();
-                ctx.fill();
-                ctx.strokeStyle = '#f39c12';
-                ctx.lineWidth = 2;
-                ctx.stroke();
-                ctx.restore();
-            }
-        }
-
-        class Portal {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.active = false;
-                this.radius = 0;
-            }
-
-            update(dt) {
-                if (this.active && this.radius < 40) {
-                    this.radius += 2 * dt;
-                }
-            }
-
-            draw() {
-                if (!this.active) return;
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(frames * 0.05);
-                ctx.strokeStyle = '#fff';
-                ctx.lineWidth = 3;
-                ctx.setLineDash([5, 5]);
-                ctx.beginPath();
-                ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
-                ctx.stroke();
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-                ctx.fill();
-                ctx.restore();
-
-                if (this.active) {
-                    ctx.fillStyle = '#fff';
-                    ctx.font = '16px Fredoka One';
-                    ctx.textAlign = 'center';
-                    ctx.fillText('Next Year', this.x, this.y - 50);
-                }
-            }
-        }
-
-        class Particle {
-            constructor(x, y, color, type = 'normal') {
-                this.x = x;
-                this.y = y;
-                this.color = color;
-                this.type = type;
-                this.life = 100;
-
-                if (type === 'firework') {
-                    const angle = Math.random() * Math.PI * 2;
-                    const speed = Math.random() * 6 + 2;
-                    this.vx = Math.cos(angle) * speed;
-                    this.vy = Math.sin(angle) * speed;
-                    this.size = Math.random() * 3 + 1;
-                    this.decay = Math.random() * 1.5 + 0.5;
-                } else {
-                    this.vx = (Math.random() - 0.5) * 6;
-                    this.vy = (Math.random() - 0.5) * 6;
-                    this.size = Math.random() * 5 + 2;
-                    this.decay = 2;
-                }
-            }
-
-            update(dt) {
-                this.x += this.vx * dt;
-                this.y += this.vy * dt;
-
-                if (this.type === 'firework') {
-                    this.vy += 0.1 * dt;
-                    this.vx *= 0.95;
-                    this.vy *= 0.95;
-                }
-
-                this.life -= this.decay * dt;
-            }
-
-            draw() {
-                ctx.save();
-                ctx.globalAlpha = Math.max(0, this.life / 100);
-
-                if (this.type === 'firework') {
-                    ctx.globalCompositeOperation = 'lighter';
-                }
-
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-
-                ctx.restore();
-            }
-        }
-
-        // ------------------ GAME LOGIC ------------------
-
-        function getOrdinal(n) {
-            var s = ["th", "st", "nd", "rd"];
-            var v = n % 100;
-            return n + (s[(v - 20) % 10] || s[v] || s[0]);
-        }
-
-        function initLevel(lvl) {
-            level = lvl;
-            player = new Player();
-            particles = [];
-            obstacles = [];
-            collectibles = [];
-            parents = [];
-
-            if (fireworkInterval) {
-                clearInterval(fireworkInterval);
-                fireworkInterval = null;
-            }
-
-            hudLevel.innerText = `Age: ${level}`;
-            hudScore.innerText = `Memories: 0/3`;
-            finalMessage.style.opacity = 0;
-
-            giftContainer.style.display = 'none';
-            giftContainer.classList.remove('hidden');
-            surpriseContainer.classList.add('hidden');
-            familyQuote.classList.add('hidden');
-
-            if (level === maxLevels) {
-                initBirthdayLevel();
-            } else {
-                initStandardLevel(lvl);
-            }
-
-            gameState = 'PLAYING';
-        }
-
-        function initStandardLevel(lvl) {
-            portal = new Portal(canvas.width - 100, canvas.height - 100);
-
-            // Clear existing arrays
-            collectibles = [];
-            obstacles = [];
-
-            // Intelligent Spawning Helper
-            const isSafeLocation = (x, y, radius, itemsToCheck) => {
-                // 1. Check Player Start Zone (safety bubble)
-                // Player starts at (100, canvas.height - 150)
-                const startX = 100;
-                const startY = canvas.height - 150;
-                const distToStart = Math.sqrt((x - startX) ** 2 + (y - startY) ** 2);
-                if (distToStart < 150) return false; // Reduced safety bubble slightly
-
-                // 2. Check Portal Zone
-                const distToPortal = Math.sqrt((x - portal.x) ** 2 + (y - portal.y) ** 2);
-                if (distToPortal < 100) return false; // Reduced safety bubble slightly
-
-                // 3. Check distance from other items
-                for (let item of itemsToCheck) {
-                    const dx = x - item.x;
-                    const dy = y - item.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    // Ensure items aren't overlapping. 
-                    // Tighter gap for harder gameplay (radius + size + 20)
-                    if (dist < (radius + item.size + 20)) return false;
-                }
-                return true;
+            const abortFlow = (id) => {
+                setFlows(flows.map(f => f.id === id ? { ...f, status: 'aborted', instances: 0 } : f));
             };
 
-            // 1. Generate Collectibles first (they are the goal)
-            const starCount = 3;
-            let attempts = 0;
-            while (collectibles.length < starCount && attempts < 500) {
-                attempts++;
-                let paddingX = 50;
-                let paddingY = 50;
-
-                let minX = 100;
-                let maxX = Math.max(minX + 100, canvas.width - 100);
-
-                let minY = 50;
-                let maxY = Math.max(minY + 50, canvas.height - 100);
-
-                let cx = minX + Math.random() * (maxX - minX);
-                let cy = minY + Math.random() * (maxY - minY);
-
-                if (isSafeLocation(cx, cy, 20, collectibles)) {
-                    collectibles.push(new Collectible(cx, cy));
-                }
-            }
-
-            // Fallback: If we couldn't place enough stars safely, place them anyway
-            while (collectibles.length < starCount) {
-                let cx = 150 + Math.random() * (canvas.width - 200);
-                let cy = 50 + Math.random() * (canvas.height - 150);
-                collectibles.push(new Collectible(cx, cy));
-            }
-
-            // 2. Generate Obstacles (avoiding collectibles)
-            // Difficulty: More obstacles (Up to 20)
-            let maxObs = Math.min((lvl * 2) + 2, 20);
-            if (canvas.width < 600) maxObs = Math.min(maxObs, 12);
-
-            attempts = 0;
-
-            while (obstacles.length < maxObs && attempts < 200) {
-                attempts++;
-                let ox = 200 + Math.random() * (canvas.width - 300);
-                let oy = 50 + Math.random() * (canvas.height - 150);
-
-                // Determine type based on level
-                let type = 'static';
-                if (lvl > 3) type = Math.random() > 0.5 ? 'horizontal' : 'static';
-                if (lvl > 6) type = Math.random() > 0.5 ? 'vertical' : 'horizontal';
-                if (lvl > 8) type = 'circle';
-
-                // Tighter clearance for moving obstacles to make it harder
-                let clearance = (type === 'static') ? 25 : 60;
-
-                if (isSafeLocation(ox, oy, clearance, [...obstacles, ...collectibles])) {
-                    obstacles.push(new Obstacle(ox, oy, type));
-                }
-            }
-        }
-
-        function initBirthdayLevel() {
-            collectibles = [];
-            obstacles = [];
-            portal = null;
-            cake = { x: canvas.width / 2, y: canvas.height - 60, w: 100, h: 60 };
-            parents.push({ x: canvas.width / 2 - 80, y: canvas.height - 110, role: 'dad' });
-            parents.push({ x: canvas.width / 2 + 80, y: canvas.height - 110, role: 'mom' });
-
-            hudScore.innerText = "Memories: A lot";
-
-            const bdayHeader = document.getElementById('bday-header');
-            if (bdayHeader) {
-                bdayHeader.innerText = `Happy ${getOrdinal(maxLevels)} Birthday Sakina !!!`;
-            }
-        }
-
-        function update(dt) {
-            if (gameState !== 'PLAYING' && gameState !== 'CUTSCENE' && gameState !== 'ENDED') return;
-
-            frames++;
-            player.update(dt);
-
-            obstacles.forEach(o => o.update(dt));
-            collectibles.forEach(c => c.update(dt));
-
-            for (let i = particles.length - 1; i >= 0; i--) {
-                let p = particles[i];
-                p.update(dt);
-                if (p.life <= 0) {
-                    particles.splice(i, 1);
-                }
-            }
-
-            if (portal) portal.update(dt);
-
-            if (gameState === 'PLAYING') {
-                checkCollisions();
-            }
-
-            if (level === maxLevels && gameState === 'PLAYING') {
-                let dx = player.x - cake.x;
-                let dy = player.y - (canvas.height - 50);
-                if (Math.abs(dx) < 150 && player.y > canvas.height - 150) {
-                    startEndingCutscene();
-                }
-            }
-        }
-
-        function checkCollisions() {
-            let collectedCount = 0;
-            collectibles.forEach(c => {
-                let dx = player.x - c.x;
-                let dy = player.y - c.y;
-                let dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < player.radius + c.size && !c.collected) {
-                    c.collected = true;
-                    createParticles(c.x, c.y, 10, '#f1c40f');
-                }
-                if (c.collected) collectedCount++;
-            });
-
-            hudScore.innerText = `Memories: ${collectedCount}/3`;
-
-            if (portal && collectedCount === 3 && !portal.active) {
-                portal.active = true;
-                createParticles(portal.x, portal.y, 20, '#fff');
-            }
-
-            if (portal && portal.active) {
-                let dx = player.x - portal.x;
-                let dy = player.y - portal.y;
-                if (Math.sqrt(dx * dx + dy * dy) < 40) {
-                    completeLevel();
-                }
-            }
-
-            obstacles.forEach(o => {
-                let dx = player.x - o.x;
-                let dy = player.y - o.y;
-                if (Math.sqrt(dx * dx + dy * dy) < player.radius + o.size - 5) {
-                    gameOver();
-                }
-            });
-        }
-
-        function createParticles(x, y, count, color, type) {
-            for (let i = 0; i < count; i++) {
-                particles.push(new Particle(x, y, color, type));
-            }
-        }
-
-        function draw() {
-            let bgIndex = level - 1;
-            if (bgIndex >= levelColors.length) bgIndex = levelColors.length - 1;
-            ctx.fillStyle = levelColors[bgIndex];
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = '#2c3e50';
-            ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
-
-            ctx.fillStyle = 'rgba(255,255,255,0.3)';
-            ctx.beginPath();
-            ctx.arc(100 + Math.sin(frames * 0.01) * 50, 100, 40, 0, Math.PI * 2);
-            ctx.arc(150 + Math.sin(frames * 0.01) * 50, 90, 50, 0, Math.PI * 2);
-            ctx.arc(200 + Math.sin(frames * 0.01) * 50, 100, 40, 0, Math.PI * 2);
-            ctx.fill();
-
-            if (portal) portal.draw();
-            obstacles.forEach(o => o.draw());
-            collectibles.forEach(c => c.draw());
-
-            if (level === maxLevels) {
-                drawBirthdayScene();
-            }
-
-            player.draw();
-            particles.forEach(p => p.draw());
-        }
-
-        function drawBirthdayScene() {
-            parents.forEach(p => {
-                ctx.save();
-                ctx.translate(p.x, p.y);
-
-                try {
-                    // Draw Body (Restored)
-                    ctx.fillStyle = p.role === 'dad' ? '#34495e' : '#e91e63';
-                    ctx.fillRect(-15, 0, 30, 90);
-
-                    // Draw Avatar Head
-                    const size = 100; // Large size
-                    ctx.save();
-                    ctx.translate(0, -50); // Adjusted Y
-
-                    // Clip to Circle
-                    ctx.beginPath();
-                    ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
-                    ctx.closePath();
-                    ctx.clip();
-
-                    // Zoom Hack 1.5x
-                    const zoom = 1.5;
-                    if (p.role === 'dad') {
-                        ctx.drawImage(dadImg, -size * zoom / 2, -size * zoom / 2, size * zoom, size * zoom);
-                    } else {
-                        ctx.drawImage(momImg, -size * zoom / 2, -size * zoom / 2, size * zoom, size * zoom);
-                    }
-
-                    ctx.restore();
-                } catch (e) {
-                    ctx.fillStyle = p.role === 'dad' ? '#34495e' : '#e91e63';
-                    ctx.fillRect(-15, 0, 30, 90);
-                    ctx.fillStyle = '#ffe0b2';
-                    ctx.beginPath();
-                    ctx.arc(0, -15, 20, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                ctx.restore();
-            });
-
-            ctx.save();
-            ctx.translate(cake.x, cake.y);
-            ctx.fillStyle = '#8e44ad';
-            ctx.fillRect(-60, 40, 120, 10);
-            ctx.fillStyle = '#fff';
-            ctx.fillRect(-50, 0, 100, 40);
-            ctx.fillStyle = '#ffc0cb';
-            ctx.fillRect(-50, 0, 100, 10);
-
-            for (let i = 0; i < 10; i++) {
-                let cx = -40 + i * 9;
-                ctx.fillStyle = '#f1c40f';
-                ctx.fillRect(cx, -15, 4, 15);
-                if (frames % 10 < 5) {
-                    ctx.fillStyle = '#e67e22';
-                    ctx.beginPath();
-                    ctx.arc(cx + 2, -18, 4, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            }
-            ctx.restore();
-        }
-
-        function gameOver() {
-            gameState = 'GAMEOVER';
-            gameOverScreen.classList.remove('hidden');
-        }
-
-        function completeLevel() {
-            gameState = 'LEVEL_END';
-            if (level < maxLevels) {
-                levelTitle.innerText = `Age ${level} Complete!`;
-                levelScreen.classList.remove('hidden');
-            }
-        }
-
-        function nextLevel() {
-            level++;
-            levelScreen.classList.add('hidden');
-            initLevel(level);
-        }
-
-        function startEndingCutscene() {
-            gameState = 'CUTSCENE';
-            keys.ArrowLeft = false;
-            keys.ArrowRight = false;
-            keys.Space = false;
-
-            let interval = setInterval(() => {
-                if (gameState === 'ENDED') {
-                    clearInterval(interval);
-                    return;
-                }
-
-                let dx = player.x - cake.x;
-                if (Math.abs(dx) > 10) {
-                    player.x -= Math.sign(dx) * 1;
-                    player.facingRight = dx < 0;
-                    if (frames % 20 === 0 && player.y > canvas.height - 40) player.vy = -3;
-                } else {
-                    clearInterval(interval);
-                    triggerFinale();
-                }
-            }, 16);
-        }
-
-        function triggerFinale() {
-            gameState = 'ENDED';
-            player.vx = 0;
-            player.vy = 0;
-            player.y = canvas.height - 20 - player.height / 2;
-
-            parents[0].x = player.x - 40;
-            parents[1].x = player.x + 40;
-
-            // Initial explosion
-            for (let i = 0; i < 60; i++) {
-                setTimeout(() => {
-                    createParticles(Math.random() * canvas.width, Math.random() * canvas.height / 2 + 50, 40, getRandomColor(), 'firework');
-                }, i * 50);
-            }
-
-            finalMessage.style.opacity = 1;
-
-            giftContainer.style.display = 'block';
-
-            // Continuous fireworks loop
-            fireworkInterval = setInterval(() => {
-                if (particles.length > 400) return;
-
-                let ex = Math.random() * (canvas.width * 0.8) + (canvas.width * 0.1);
-                let ey = Math.random() * (canvas.height * 0.4) + 50;
-                createParticles(ex, ey, 30, getRandomColor(), 'firework');
-            }, 800);
-        }
-
-        // --- NEW GIFT REVEAL FUNCTION ---
-        function openGift() {
-            const giftBox = document.getElementById('gift-container');
-            const surprise = document.getElementById('surprise-container');
-            const quote = document.getElementById('family-quote');
-
-            // Hide Gift
-            giftBox.style.display = 'none';
-
-            // Explosion Effect at center
-            createParticles(canvas.width / 2, canvas.height / 2, 100, '#FFD700', 'firework');
-            createParticles(canvas.width / 2, canvas.height / 2, 50, '#e91e63', 'firework');
-
-            // Show Surprise
-            surprise.classList.remove('hidden');
-
-            // Fade in Quote after short delay
-            setTimeout(() => {
-                quote.classList.remove('hidden');
-                quote.style.opacity = 1;
-            }, 1000);
-        }
-
-        function getRandomColor() {
-            const colors = ['#e74c3c', '#e67e22', '#f1c40f', '#2ecc71', '#3498db', '#9b59b6'];
-            return colors[Math.floor(Math.random() * colors.length)];
-        }
-
-        window.addEventListener('keydown', e => {
-            if (e.code === 'ArrowLeft') keys.ArrowLeft = true;
-            if (e.code === 'ArrowRight') keys.ArrowRight = true;
-            if (e.code === 'Space' || e.code === 'ArrowUp') {
-                e.preventDefault(); // Prevent scrolling/button clicking
-                if (!keys.Space) player.flap();
-                keys.Space = true;
-            }
-        });
-
-        window.addEventListener('keyup', e => {
-            if (e.code === 'ArrowLeft') keys.ArrowLeft = false;
-            if (e.code === 'ArrowRight') keys.ArrowRight = false;
-            if (e.code === 'Space' || e.code === 'ArrowUp') keys.Space = false;
-        });
-
-        const btnLeft = document.getElementById('btn-left');
-        const btnRight = document.getElementById('btn-right');
-        const btnFlap = document.getElementById('btn-flap');
-
-        const addTouch = (elem, code) => {
-            elem.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                if (code === 'Space') player.flap();
-                keys[code] = true;
-            }, { passive: false });
-            elem.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                keys[code] = false;
-            }, { passive: false });
+            return (
+                <div className="space-y-6">
+                <div className="flex justify-between items-center">
+                    <h2 className="text-2xl font-bold text-white">Flow Orchestration</h2>
+                    <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors">
+                        <Icon name="plus" size={14} /> <span>Create Flow</span>
+                    </button>
+                </div>
+
+                <div className="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
+                    <table className="w-full text-left border-collapse">
+                    <thead>
+                        <tr className="bg-slate-900 text-slate-400 text-sm border-b border-slate-700">
+                        <th className="p-4 font-medium">Workflow Name</th>
+                        <th className="p-4 font-medium">Status</th>
+                        <th className="p-4 font-medium">Active Instances</th>
+                        <th className="p-4 font-medium">Avg Eval Time</th>
+                        <th className="p-4 font-medium">Current Cost</th>
+                        <th className="p-4 font-medium text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-700/50">
+                        {flows.map((flow) => (
+                        <tr key={flow.id} className="text-slate-300 hover:bg-slate-700/30 transition-colors">
+                            <td className="p-4 font-medium text-white">{flow.name}</td>
+                            <td className="p-4">
+                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                flow.status === 'running' ? 'bg-emerald-400/10 text-emerald-400 border border-emerald-400/20' : 
+                                flow.status === 'aborted' ? 'bg-rose-400/10 text-rose-400 border border-rose-400/20' : 
+                                'bg-slate-600/20 text-slate-400 border border-slate-600/30'
+                            }`}>
+                                {flow.status.toUpperCase()}
+                            </span>
+                            </td>
+                            <td className="p-4">{flow.instances}</td>
+                            <td className="p-4">{flow.avgTime}</td>
+                            <td className="p-4">{flow.cost}</td>
+                            <td className="p-4 flex justify-end space-x-2">
+                            <button className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-emerald-400 bg-slate-900 rounded-lg transition-colors" title="Start/Resume">
+                                <Icon name="play" size={12} />
+                            </button>
+                            <button 
+                                onClick={() => abortFlow(flow.id)}
+                                disabled={flow.status !== 'running'}
+                                className={`w-8 h-8 flex items-center justify-center rounded-lg transition-colors ${
+                                flow.status === 'running' 
+                                    ? 'text-slate-400 hover:text-rose-400 bg-slate-900' 
+                                    : 'text-slate-600 bg-slate-900/50 cursor-not-allowed'
+                                }`}
+                                title="Abort Execution"
+                            >
+                                <Icon name="square" size={14} />
+                            </button>
+                            </td>
+                        </tr>
+                        ))}
+                    </tbody>
+                    </table>
+                </div>
+                </div>
+            );
         };
 
-        addTouch(btnLeft, 'ArrowLeft');
-        addTouch(btnRight, 'ArrowRight');
-        addTouch(btnFlap, 'Space');
+        const Connectors = () => (
+            <div className="space-y-6">
+                <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-bold text-white">Agent Connectors</h2>
+                <div className="relative">
+                    <Icon name="search" size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                    <input 
+                    type="text" 
+                    placeholder="Search integrations..." 
+                    className="bg-slate-800 border border-slate-700 text-white rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:border-indigo-500 w-64 transition-colors"
+                    />
+                </div>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {connectors.map(connector => (
+                    <div key={connector.id} className="bg-slate-800 border border-slate-700 rounded-xl p-6 flex flex-col items-center text-center hover:border-slate-500 transition-colors">
+                    <div className="h-16 w-16 bg-slate-900 rounded-2xl flex items-center justify-center mb-4 border border-slate-700">
+                        <Icon name={connector.icon} size={24} className={connector.color} />
+                    </div>
+                    <h3 className="text-lg font-semibold text-white">{connector.name}</h3>
+                    <p className="text-slate-400 text-sm mb-6">{connector.type}</p>
+                    <button className={`w-full py-2 rounded-lg font-medium transition-colors ${
+                        connector.status === 'connected' 
+                        ? 'bg-slate-900 text-slate-300 border border-slate-700 hover:bg-slate-700'
+                        : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                    }`}>
+                        {connector.status === 'connected' ? 'Configure' : 'Connect'}
+                    </button>
+                    </div>
+                ))}
+                
+                {/* Add Custom Connector Card */}
+                <div className="bg-slate-800/50 border border-dashed border-slate-600 rounded-xl p-6 flex flex-col items-center justify-center text-center hover:bg-slate-800/80 hover:border-slate-500 transition-all cursor-pointer">
+                    <div className="h-12 w-12 bg-slate-900 rounded-full flex items-center justify-center mb-4 text-slate-400">
+                        <Icon name="plus" size={20} />
+                    </div>
+                    <h3 className="text-slate-300 font-medium">Build Custom Connector</h3>
+                    <p className="text-slate-500 text-sm mt-1">REST API, GraphQL, or gRPC</p>
+                </div>
+                </div>
+            </div>
+        );
 
-        document.getElementById('start-btn').addEventListener('click', (e) => {
-            e.target.blur(); // Remove focus
+        const Organizations = () => (
+            <div className="space-y-6">
+                <div className="flex justify-between items-center mb-2">
+                <div>
+                    <h2 className="text-2xl font-bold text-white">Reseller Management</h2>
+                    <p className="text-slate-400 text-sm mt-1">Manage tenant organizations, teams, and billing sub-accounts.</p>
+                </div>
+                <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors">
+                    <Icon name="plus" size={14} /> <span>New Organization</span>
+                </button>
+                </div>
 
-            // Attempt Fullscreen
-            if (document.documentElement.requestFullscreen && ('ontouchstart' in window)) {
-                document.documentElement.requestFullscreen().catch(err => { });
-            }
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="bg-indigo-900/20 border border-indigo-500/30 p-5 rounded-xl">
+                    <div className="flex items-center space-x-3 text-indigo-400 mb-2">
+                    <Icon name="layer-group" size={16} /> <span className="font-medium">Total Tenants</span>
+                    </div>
+                    <p className="text-3xl font-bold text-white">124</p>
+                </div>
+                <div className="bg-emerald-900/20 border border-emerald-500/30 p-5 rounded-xl">
+                    <div className="flex items-center space-x-3 text-emerald-400 mb-2">
+                    <Icon name="credit-card" size={16} /> <span className="font-medium">Aggregated Spend</span>
+                    </div>
+                    <p className="text-3xl font-bold text-white">$45,200.50</p>
+                </div>
+                <div className="bg-blue-900/20 border border-blue-500/30 p-5 rounded-xl">
+                    <div className="flex items-center space-x-3 text-blue-400 mb-2">
+                    <Icon name="network-wired" size={16} /> <span className="font-medium">Platform Margin</span>
+                    </div>
+                    <p className="text-3xl font-bold text-white">32.5%</p>
+                </div>
+                </div>
 
-            startScreen.classList.add('hidden');
-            initLevel(1);
+                <div className="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
+                <table className="w-full text-left border-collapse">
+                    <thead>
+                    <tr className="bg-slate-900 text-slate-400 text-sm border-b border-slate-700">
+                        <th className="p-4 font-medium">Organization Name</th>
+                        <th className="p-4 font-medium">Plan Tier</th>
+                        <th className="p-4 font-medium">Teams / Users</th>
+                        <th className="p-4 font-medium">Data / Compute Usage</th>
+                        <th className="p-4 font-medium">Current Spend</th>
+                        <th className="p-4 font-medium text-right">Settings</th>
+                    </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-700/50">
+                    {organizations.map((org) => (
+                        <tr key={org.id} className="text-slate-300 hover:bg-slate-700/30 transition-colors">
+                        <td className="p-4 font-medium text-white">{org.name}</td>
+                        <td className="p-4">
+                            <span className="bg-slate-900 text-slate-300 px-2.5 py-1 rounded border border-slate-700 text-xs">
+                            {org.tier}
+                            </span>
+                        </td>
+                        <td className="p-4">{org.teams} Teams / {org.users} Users</td>
+                        <td className="p-4 text-emerald-400">{org.usage}</td>
+                        <td className="p-4 font-medium">{org.spend}</td>
+                        <td className="p-4 text-right">
+                            <button className="text-slate-400 hover:text-white transition-colors">
+                                <Icon name="cog" size={16} />
+                            </button>
+                        </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        );
 
-            if (animationFrameId) cancelAnimationFrame(animationFrameId);
-            lastTime = performance.now();
-            loop(lastTime);
-        });
+        const App = () => {
+            const [activeTab, setActiveTab] = useState('dashboard');
 
-        document.getElementById('next-level-btn').addEventListener('click', (e) => {
-            e.target.blur();
-            nextLevel();
-        });
+            const renderContent = () => {
+                switch(activeTab) {
+                    case 'dashboard': return <Dashboard />;
+                    case 'workflows': return <Workflows />;
+                    case 'connectors': return <Connectors />;
+                    case 'organizations': return <Organizations />;
+                    default: return <Dashboard />;
+                }
+            };
 
-        document.getElementById('retry-btn').addEventListener('click', (e) => {
-            e.target.blur();
-            gameOverScreen.classList.add('hidden');
-            initLevel(level);
-        });
+            return (
+                <div className="flex h-screen bg-slate-950 font-sans selection:bg-indigo-500/30 text-slate-200">
+                    {/* Sidebar */}
+                    <div className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0">
+                        <div className="p-6 flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
+                            <Icon name="bolt" size={16} className="text-white" />
+                        </div>
+                        <span className="text-xl font-bold tracking-tight text-white">OmniFlow</span>
+                        </div>
+                        
+                        <div className="px-4 py-2">
+                        <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-2">Core Engine</div>
+                        <div className="space-y-1">
+                            <SidebarItem icon="chart-line" label="Dashboard" active={activeTab === 'dashboard'} onClick={() => setActiveTab('dashboard')} />
+                            <SidebarItem icon="layer-group" label="Workflows" active={activeTab === 'workflows'} onClick={() => setActiveTab('workflows')} />
+                            <SidebarItem icon="plug" label="Connectors" active={activeTab === 'connectors'} onClick={() => setActiveTab('connectors')} />
+                        </div>
+                        </div>
 
-        function loop(timestamp) {
-            // Calculate delta time (dt)
-            // Divide by 16.666 to normalize to ~60FPS
-            // (16.66ms is one frame at 60FPS)
-            const dt = (timestamp - lastTime) / 16.666;
-            lastTime = timestamp;
+                        <div className="px-4 py-6">
+                        <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-2">Reseller Hub</div>
+                        <div className="space-y-1">
+                            <SidebarItem icon="users" label="Organizations" active={activeTab === 'organizations'} onClick={() => setActiveTab('organizations')} />
+                            <SidebarItem icon="credit-card" label="Global Billing" active={activeTab === 'billing'} onClick={() => setActiveTab('billing')} />
+                        </div>
+                        </div>
 
-            // Cap dt to prevent huge jumps if tab is inactive
-            // If dt is too high (e.g. > 4), pretend it's just 1 frame
-            const safeDt = Math.min(dt, 4);
+                        <div className="mt-auto p-4 border-t border-slate-800">
+                        <div className="flex items-center space-x-3 px-2">
+                            <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center">
+                            <span className="font-bold text-slate-300">SA</span>
+                            </div>
+                            <div>
+                            <p className="text-sm font-medium text-white">Super Admin</p>
+                            <p className="text-xs text-slate-500">Master Account</p>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
 
-            update(safeDt);
-            draw();
-            animationFrameId = requestAnimationFrame(loop);
-        }
+                    {/* Main Content */}
+                    <div className="flex-1 flex flex-col overflow-hidden">
+                        {/* Top Header */}
+                        <header className="h-16 bg-slate-900/50 backdrop-blur-md border-b border-slate-800 flex items-center justify-between px-8 shrink-0">
+                        <div className="flex items-center text-sm text-slate-400">
+                            <span>OmniFlow Engine</span>
+                            <span className="mx-2">/</span>
+                            <span className="text-white capitalize">{activeTab}</span>
+                        </div>
+                        <div className="flex items-center space-x-4">
+                            <div className="bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 flex items-center space-x-2 text-sm cursor-pointer hover:border-slate-500 transition-colors">
+                            <span className="text-slate-300">Global Context</span>
+                            <Icon name="chevron-down" size={12} className="text-slate-500" />
+                            </div>
+                            <button className="text-slate-400 hover:text-white relative transition-colors">
+                            <Icon name="bell" size={18} />
+                            <span className="absolute top-0 right-0 w-2 h-2 bg-rose-500 rounded-full border-2 border-slate-900"></span>
+                            </button>
+                        </div>
+                        </header>
 
+                        {/* Dynamic View Area */}
+                        <main className="flex-1 overflow-auto p-8">
+                        <div className="max-w-7xl mx-auto pb-12">
+                            {renderContent()}
+                        </div>
+                        </main>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
 </body>
-
 </html>
