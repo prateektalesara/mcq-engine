@@ -159,10 +159,33 @@
                 <div x-show="cameraError" class="bg-red-100 text-red-700 p-4 rounded-lg mb-4 text-sm"
                     x-text="cameraError"></div>
 
-                <div class="scanner-container flex-grow bg-black shadow-lg">
+                <!-- Camera Select -->
+                <div x-show="videoDevices.length > 1" class="mb-3">
+                    <select x-model="selectedDeviceId" @change="onCameraChange()"
+                        class="w-full bg-white border border-gray-300 rounded-lg p-2 text-sm outline-none text-gray-700 shadow-sm">
+                        <option value="">Auto-Select Main Camera</option>
+                        <template x-for="device in videoDevices" :key="device.deviceId">
+                            <option :value="device.deviceId"
+                                x-text="device.label || 'Camera ' + device.deviceId.substring(0,5)"></option>
+                        </template>
+                    </select>
+                </div>
+
+                <div class="scanner-container flex-grow bg-black shadow-lg relative rounded-xl overflow-hidden">
                     <video id="scanner-video" class="w-full h-full object-cover"></video>
                     <div class="scanner-overlay"></div>
                     <div class="scan-line"></div>
+                </div>
+
+                <!-- Zoom Slider -->
+                <div x-show="zoomSupported" class="mt-4 bg-white p-3 rounded-xl shadow-sm border border-gray-200">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="block text-xs font-bold text-gray-500 uppercase">Zoom</label>
+                        <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded"
+                            x-text="parseFloat(zoomValue).toFixed(1) + 'x'"></span>
+                    </div>
+                    <input type="range" x-model="zoomValue" @input="applyZoom()" :min="zoomMin" :max="zoomMax"
+                        step="0.1" class="w-full accent-blue-600">
                 </div>
 
                 <button @click="stopScanner(); navigate('home')"
@@ -334,6 +357,14 @@
                 isEditing: false,
                 cameraError: '',
 
+                videoDevices: [],
+                selectedDeviceId: '',
+                videoTrack: null,
+                zoomSupported: false,
+                zoomMin: 1,
+                zoomMax: 1,
+                zoomValue: 1,
+
                 async initApp() {
                     // Preload library codeReader
                     codeReader = new ZXing.BrowserMultiFormatReader();
@@ -395,28 +426,87 @@
                 startScanner() {
                     this.navigate('scanner');
                     this.cameraError = '';
+                    this.startCamera();
+                },
 
-                    // Request high-res back camera to avoid blurriness on mobile
+                startCamera() {
+                    if (codeReader) codeReader.reset();
+
                     const constraints = {
                         video: {
-                            facingMode: "environment",
                             width: { min: 640, ideal: 1920 },
-                            height: { min: 480, ideal: 1080 }
+                            height: { min: 480, ideal: 1080 },
+                            advanced: [{ focusMode: "continuous" }]
                         }
                     };
+
+                    if (this.selectedDeviceId) {
+                        constraints.video.deviceId = { exact: this.selectedDeviceId };
+                    } else {
+                        constraints.video.facingMode = "environment";
+                    }
 
                     codeReader.decodeFromConstraints(constraints, 'scanner-video', (result, err) => {
                         if (result) {
                             this.handleScan(result.getText());
                         }
                         if (err && !(err instanceof ZXing.NotFoundException)) {
-                            // Ignored NotFoundException as it fires continuously when no barcode is in frame
                             console.error(err);
                         }
+                    }).then(() => {
+                        // Success in starting stream, setup devices and zoom
+                        setTimeout(async () => {
+                            if (this.videoDevices.length === 0) {
+                                try {
+                                    const devices = await codeReader.listVideoInputDevices();
+                                    // Filter for back cameras if possible, otherwise list all video inputs
+                                    this.videoDevices = devices;
+                                } catch (e) { }
+                            }
+
+                            const video = document.getElementById('scanner-video');
+                            if (video && video.srcObject) {
+                                const track = video.srcObject.getVideoTracks()[0];
+                                this.videoTrack = track;
+                                try {
+                                    const caps = track.getCapabilities();
+                                    if (caps.zoom) {
+                                        this.zoomSupported = true;
+                                        this.zoomMin = caps.zoom.min || 1;
+                                        this.zoomMax = Math.min(caps.zoom.max || 5, 5); // Sensible limit to avoid pixelation
+                                        const settings = track.getSettings();
+                                        this.zoomValue = settings.zoom || this.zoomMin;
+                                    } else {
+                                        this.zoomSupported = false;
+                                    }
+                                } catch (e) {
+                                    console.log('Capabilities error', e);
+                                    this.zoomSupported = false;
+                                }
+                            }
+                        }, 500);
                     }).catch(err => {
-                        this.cameraError = 'Unable to access camera. Please ensure permissions are granted and you are using HTTPS.';
+                        this.cameraError = 'Unable to access camera or constraints not met. Try falling back to default camera.';
                         console.error(err);
+
+                        // Fallback if the advanced constraints caused overconstraint error
+                        if (constraints.video.advanced) {
+                            delete constraints.video.advanced;
+                            codeReader.decodeFromConstraints(constraints, 'scanner-video', (res, e) => { }).catch(e2 => console.error(e2));
+                        }
                     });
+                },
+
+                onCameraChange() {
+                    this.startCamera();
+                },
+
+                applyZoom() {
+                    if (this.videoTrack && this.zoomSupported) {
+                        this.videoTrack.applyConstraints({
+                            advanced: [{ zoom: parseFloat(this.zoomValue) }]
+                        }).catch(err => console.log('Zoom error:', err));
+                    }
                 },
 
                 stopScanner() {
