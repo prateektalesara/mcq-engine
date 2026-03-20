@@ -396,8 +396,16 @@
                     this.navigate('scanner');
                     this.cameraError = '';
 
-                    // Request back camera
-                    codeReader.decodeFromConstraints({ video: { facingMode: "environment" } }, 'scanner-video', (result, err) => {
+                    // Request high-res back camera to avoid blurriness on mobile
+                    const constraints = {
+                        video: {
+                            facingMode: "environment",
+                            width: { min: 640, ideal: 1920 },
+                            height: { min: 480, ideal: 1080 }
+                        }
+                    };
+
+                    codeReader.decodeFromConstraints(constraints, 'scanner-video', (result, err) => {
                         if (result) {
                             this.handleScan(result.getText());
                         }
