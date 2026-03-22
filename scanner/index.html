@@ -70,6 +70,15 @@
         [x-cloak] {
             display: none !important;
         }
+
+        /* Highlight matching search text */
+        mark.search-highlight {
+            background-color: #fef08a;
+            color: #854d0e;
+            font-weight: 600;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
     </style>
 </head>
 
@@ -241,7 +250,42 @@
                         placeholder="Any additional notes..."></textarea>
                 </div>
 
-                <div class="pt-4 flex flex-col gap-3">
+                <!-- NEW: Rapid Item Entry Section -->
+                <div class="border-t border-gray-200 pt-5 mt-4">
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">Items Inside</label>
+                    
+                    <!-- Existing Items List -->
+                    <div class="space-y-2 mb-3">
+                        <template x-for="(item, index) in currentParcel.items" :key="item.id">
+                            <div class="flex gap-2 items-center group">
+                                <input type="text" x-model="item.name" 
+                                    @keydown.enter.prevent="$refs.quickAddInput.focus()"
+                                    class="flex-1 border border-gray-300 rounded-lg p-2.5 text-sm text-gray-900 outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50" 
+                                    placeholder="Item name...">
+                                <button @click="removeItem(index)" type="button" 
+                                    class="text-red-500 p-2.5 bg-red-50 rounded-lg hover:bg-red-100 transition active:scale-95 touch-manipulation" title="Remove Item">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                </button>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Quick Add Input (Mobile Optimized) -->
+                    <div class="flex gap-2 items-center bg-blue-50 p-2 rounded-xl border border-blue-200 shadow-inner">
+                        <input type="text" x-model="newItemName" x-ref="quickAddInput"
+                            @keydown.enter.prevent="quickAddItem()"
+                            enterkeyhint="send"
+                            class="flex-1 bg-transparent border-none px-2 py-1 text-base text-blue-900 outline-none placeholder-blue-400 font-medium" 
+                            placeholder="Type item & tap Return...">
+                        <button @click="quickAddItem()" type="button" 
+                            class="bg-blue-600 text-white p-2.5 rounded-lg hover:bg-blue-700 transition active:scale-95 shadow-sm touch-manipulation flex-shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        </button>
+                    </div>
+                    <p class="text-[10px] text-gray-400 mt-1.5 ml-1">Tip: Press Enter/Return on your keyboard to instantly add and keep typing.</p>
+                </div>
+
+                <div class="pt-6 flex flex-col gap-3 border-t border-gray-100">
                     <button @click="saveParcel()"
                         class="w-full bg-green-600 text-white p-4 rounded-xl font-bold shadow active:bg-green-700 text-lg">
                         <span x-text="isEditing ? 'Update Parcel' : 'Save New Parcel'"></span>
@@ -265,7 +309,7 @@
                 <!-- Search and Sort -->
                 <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-200 space-y-3 sticky top-[60px] z-40">
                     <div class="relative">
-                        <input type="text" x-model="searchQuery" placeholder="Search by name, barcode, location..."
+                        <input type="text" x-model="searchQuery" placeholder="Search basically anything..."
                             class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500">
                         <svg class="w-5 h-5 text-gray-400 absolute left-3 top-3.5" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
@@ -292,38 +336,58 @@
                             d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
                         </path>
                     </svg>
-                    <p class="text-gray-500 font-medium">No parcels found.</p>
+                    <p class="text-gray-500 font-medium" x-text="searchQuery ? 'No matching results.' : 'No parcels found.'"></p>
                 </div>
 
                 <!-- Parcel List -->
                 <div class="space-y-3">
                     <template x-for="parcel in filteredParcels" :key="parcel.barcode">
                         <div @click="editParcel(parcel)"
-                            class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 active:bg-blue-50 cursor-pointer flex justify-between items-center transition">
-                            <div class="overflow-hidden">
-                                <h4 class="font-bold text-gray-900 truncate" x-text="parcel.name || 'Unnamed Item'">
-                                </h4>
-                                <div class="flex items-center gap-2 text-xs mt-1">
-                                    <span
-                                        class="bg-gray-100 text-gray-600 px-2 py-0.5 rounded font-mono border border-gray-200"
-                                        x-text="parcel.barcode"></span>
-                                    <span x-show="parcel.location" class="text-blue-600 flex items-center gap-1">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                            </path>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        </svg>
-                                        <span x-text="parcel.location"></span>
-                                    </span>
+                            class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 active:bg-blue-50 cursor-pointer transition relative flex flex-col gap-2">
+                            
+                            <div class="flex justify-between items-start">
+                                <div class="overflow-hidden w-full pr-4">
+                                    <h4 class="font-bold text-gray-900 truncate" x-text="parcel.name || 'Unnamed Item'"></h4>
+                                    
+                                    <div class="flex flex-wrap items-center gap-2 text-xs mt-1.5">
+                                        <!-- Barcode Badge -->
+                                        <span class="bg-gray-100 text-gray-600 px-2 py-0.5 rounded font-mono border border-gray-200"
+                                            x-text="parcel.barcode"></span>
+                                        
+                                        <!-- Location Badge -->
+                                        <span x-show="parcel.location" class="text-blue-600 flex items-center gap-1 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            </svg>
+                                            <span x-text="parcel.location"></span>
+                                        </span>
+
+                                        <!-- Items Count Badge -->
+                                        <span x-show="parcel.items && parcel.items.length > 0" class="text-purple-600 flex items-center gap-1 bg-purple-50 px-1.5 py-0.5 rounded border border-purple-100">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                            </svg>
+                                            <span x-text="parcel.items.length + ' item' + (parcel.items.length > 1 ? 's' : '')"></span>
+                                        </span>
+                                    </div>
                                 </div>
+                                <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
                             </div>
-                            <svg class="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
-                                </path>
-                            </svg>
+
+                            <!-- Search Match Preview Box -->
+                            <div x-show="searchQuery && parcel.$match" 
+                                class="mt-1 text-sm bg-yellow-50 text-gray-700 p-2.5 rounded-lg border border-yellow-200">
+                                <span class="font-bold text-[10px] uppercase tracking-wider text-yellow-800 bg-yellow-200 px-1.5 py-0.5 rounded mr-1" 
+                                      x-text="parcel.$match.label"></span>
+                                <span class="text-sm" x-html="parcel.$match.snippet"></span>
+                            </div>
+
                         </div>
                     </template>
                 </div>
@@ -336,16 +400,15 @@
         // Database Initialization
         const db = new Dexie('parcel_inventory');
         db.version(1).stores({
-            parcels: 'barcode, name, location, createdAt, updatedAt' // primary key and indexed properties
+            parcels: 'barcode, name, location, createdAt, updatedAt' 
         });
 
         // ZXing Scanner Instance
         let codeReader = null;
 
-        // Make the component globally available as a fallback
         window.parcelApp = function () {
             return {
-                view: 'home', // 'home', 'scanner', 'form', 'list'
+                view: 'home', 
                 previousView: 'home',
                 headerTitle: 'Parcel Inventory',
 
@@ -353,7 +416,8 @@
                 searchQuery: '',
                 sortBy: 'dateDesc',
 
-                currentParcel: {},
+                currentParcel: { items: [] },
+                newItemName: '', // State for the quick add input
                 isEditing: false,
                 cameraError: '',
 
@@ -366,7 +430,6 @@
                 zoomValue: 1,
 
                 async initApp() {
-                    // Preload library codeReader
                     codeReader = new ZXing.BrowserMultiFormatReader();
                     await this.loadParcels();
                 },
@@ -394,20 +457,77 @@
                 },
 
                 async loadParcels() {
-                    this.parcels = await db.parcels.toArray();
+                    const data = await db.parcels.toArray();
+                    this.parcels = data.map(p => ({ ...p, items: p.items || [] }));
+                },
+
+                highlightMatch(text, query) {
+                    if (!text || !query) return '';
+                    const strText = String(text);
+                    const idx = strText.toLowerCase().indexOf(query.toLowerCase());
+                    
+                    if (idx === -1) {
+                        return strText.length > 40 ? strText.substring(0, 40) + '...' : strText;
+                    }
+                    
+                    const start = Math.max(0, idx - 15);
+                    const end = Math.min(strText.length, idx + query.length + 20);
+                    let snippet = strText.substring(start, end);
+                    
+                    const regex = new RegExp(`(${query})`, 'gi');
+                    let highlighted = snippet.replace(regex, '<mark class="search-highlight">$1</mark>');
+                    
+                    if (start > 0) highlighted = '... ' + highlighted;
+                    if (end < strText.length) highlighted = highlighted + ' ...';
+                    
+                    return highlighted;
                 },
 
                 get filteredParcels() {
-                    let result = this.parcels;
+                    let result = [...this.parcels];
 
                     if (this.searchQuery) {
                         const q = this.searchQuery.toLowerCase();
-                        result = result.filter(p =>
-                            p.barcode.toLowerCase().includes(q) ||
-                            (p.name && p.name.toLowerCase().includes(q)) ||
-                            (p.location && p.location.toLowerCase().includes(q)) ||
-                            (p.tags && p.tags.toLowerCase().includes(q))
-                        );
+                        const matchedResults = [];
+
+                        for (const p of result) {
+                            let matchContext = null;
+
+                            const fieldsToCheck = [
+                                { key: 'name', label: 'Name' },
+                                { key: 'barcode', label: 'Barcode' },
+                                { key: 'location', label: 'Location' },
+                                { key: 'tags', label: 'Tags' },
+                                { key: 'description', label: 'Description' },
+                                { key: 'notes', label: 'Notes' }
+                            ];
+
+                            for (const field of fieldsToCheck) {
+                                if (p[field.key] && String(p[field.key]).toLowerCase().includes(q)) {
+                                    matchContext = { 
+                                        label: field.label, 
+                                        snippet: this.highlightMatch(p[field.key], this.searchQuery) 
+                                    };
+                                    break;
+                                }
+                            }
+
+                            if (!matchContext && p.items && p.items.length > 0) {
+                                const matchedItem = p.items.find(item => item.name && String(item.name).toLowerCase().includes(q));
+                                if (matchedItem) {
+                                    matchContext = { 
+                                        label: 'Item', 
+                                        snippet: this.highlightMatch(matchedItem.name, this.searchQuery) 
+                                    };
+                                }
+                            }
+
+                            if (matchContext) {
+                                p.$match = matchContext;
+                                matchedResults.push(p);
+                            }
+                        }
+                        result = matchedResults;
                     }
 
                     result.sort((a, b) => {
@@ -421,6 +541,33 @@
                     });
 
                     return result;
+                },
+
+                // Mobile Rapid Entry logic
+                quickAddItem() {
+                    const val = this.newItemName.trim();
+                    if (!val) return;
+
+                    if (!this.currentParcel.items) {
+                        this.currentParcel.items = [];
+                    }
+
+                    // Add to the list
+                    this.currentParcel.items.push({ id: Date.now(), name: val });
+                    
+                    // Clear the input field immediately
+                    this.newItemName = '';
+
+                    // Keep focus on the quick add input to prevent keyboard from closing
+                    this.$nextTick(() => {
+                        if (this.$refs.quickAddInput) {
+                            this.$refs.quickAddInput.focus();
+                        }
+                    });
+                },
+
+                removeItem(index) {
+                    this.currentParcel.items.splice(index, 1);
                 },
 
                 startScanner() {
@@ -454,12 +601,10 @@
                             console.error(err);
                         }
                     }).then(() => {
-                        // Success in starting stream, setup devices and zoom
                         setTimeout(async () => {
                             if (this.videoDevices.length === 0) {
                                 try {
                                     const devices = await codeReader.listVideoInputDevices();
-                                    // Filter for back cameras if possible, otherwise list all video inputs
                                     this.videoDevices = devices;
                                 } catch (e) { }
                             }
@@ -473,7 +618,7 @@
                                     if (caps.zoom) {
                                         this.zoomSupported = true;
                                         this.zoomMin = caps.zoom.min || 1;
-                                        this.zoomMax = Math.min(caps.zoom.max || 5, 5); // Sensible limit to avoid pixelation
+                                        this.zoomMax = Math.min(caps.zoom.max || 5, 5); 
                                         const settings = track.getSettings();
                                         this.zoomValue = settings.zoom || this.zoomMin;
                                     } else {
@@ -489,7 +634,6 @@
                         this.cameraError = 'Unable to access camera or constraints not met. Try falling back to default camera.';
                         console.error(err);
 
-                        // Fallback if the advanced constraints caused overconstraint error
                         if (constraints.video.advanced) {
                             delete constraints.video.advanced;
                             codeReader.decodeFromConstraints(constraints, 'scanner-video', (res, e) => { }).catch(e2 => console.error(e2));
@@ -517,11 +661,12 @@
 
                 async handleScan(barcodeStr) {
                     this.stopScanner();
+                    this.newItemName = ''; // reset pending items
 
                     const existingItem = await db.parcels.get(barcodeStr);
 
                     if (existingItem) {
-                        this.currentParcel = { ...existingItem };
+                        this.currentParcel = { items: [], ...existingItem };
                         this.isEditing = true;
                     } else {
                         this.currentParcel = {
@@ -530,7 +675,8 @@
                             description: '',
                             location: '',
                             tags: '',
-                            notes: ''
+                            notes: '',
+                            items: []
                         };
                         this.isEditing = false;
                     }
@@ -538,13 +684,18 @@
                 },
 
                 manualEntry() {
-                    this.currentParcel = { barcode: '', name: '', description: '', location: '', tags: '', notes: '' };
+                    this.currentParcel = { barcode: '', name: '', description: '', location: '', tags: '', notes: '', items: [] };
+                    this.newItemName = '';
                     this.isEditing = false;
                     this.navigate('form');
                 },
 
                 editParcel(parcel) {
-                    this.currentParcel = { ...parcel };
+                    const clonedParcel = { ...parcel };
+                    delete clonedParcel.$match;
+                    
+                    this.currentParcel = { items: [], ...clonedParcel };
+                    this.newItemName = '';
                     this.isEditing = true;
                     this.navigate('form');
                 },
@@ -555,16 +706,27 @@
                         return;
                     }
 
+                    // Failsafe: If the user typed an item but forgot to press Return/Add, save it anyway
+                    if (this.newItemName && this.newItemName.trim() !== '') {
+                        if (!this.currentParcel.items) this.currentParcel.items = [];
+                        this.currentParcel.items.push({ id: Date.now(), name: this.newItemName.trim() });
+                        this.newItemName = '';
+                    }
+
+                    const cleanItems = (this.currentParcel.items || []).filter(item => item.name && item.name.trim() !== '');
+
                     const now = Date.now();
                     const parcelToSave = {
                         ...this.currentParcel,
                         barcode: this.currentParcel.barcode.trim(),
+                        items: cleanItems,
                         updatedAt: now
                     };
+                    
+                    delete parcelToSave.$match;
 
                     if (!this.isEditing) {
                         parcelToSave.createdAt = now;
-                        // Prevent overwriting if user manually typed an existing barcode
                         const exists = await db.parcels.get(parcelToSave.barcode);
                         if (exists) {
                             if (!confirm("This barcode already exists. Overwrite?")) return;
@@ -576,7 +738,6 @@
                     await db.parcels.put(parcelToSave);
                     await this.loadParcels();
 
-                    // Go back to where we came from, or home
                     this.navigate(this.previousView === 'scanner' ? 'home' : (this.previousView || 'home'));
                 },
 
@@ -613,7 +774,6 @@
                         const data = JSON.parse(text);
 
                         if (Array.isArray(data)) {
-                            // Validate and insert
                             await db.parcels.bulkPut(data);
                             alert(`Successfully imported ${data.length} records!`);
                             await this.loadParcels();
@@ -625,21 +785,19 @@
                         console.error(error);
                         alert("Error importing file. Please check the console.");
                     }
-
-                    // Reset file input
                     event.target.value = '';
                 }
             };
         };
 
-        // Standard Alpine component registration
         document.addEventListener('alpine:init', () => {
             Alpine.data('parcelApp', window.parcelApp);
         });
     </script>
 
-    <!-- Alpine.js is loaded AFTER the custom scripts to ensure no timing/race conditions -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
 
 </html>
+
+
