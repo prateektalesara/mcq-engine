@@ -716,12 +716,14 @@
                     const cleanItems = (this.currentParcel.items || []).filter(item => item.name && item.name.trim() !== '');
 
                     const now = Date.now();
-                    const parcelToSave = {
+                    
+                    // DEEP CLONE FIX to strip Alpine Proxies before passing to Dexie/IndexedDB
+                    let parcelToSave = JSON.parse(JSON.stringify({
                         ...this.currentParcel,
                         barcode: this.currentParcel.barcode.trim(),
                         items: cleanItems,
                         updatedAt: now
-                    };
+                    }));
                     
                     delete parcelToSave.$match;
 
@@ -799,5 +801,4 @@
 </body>
 
 </html>
-
 
