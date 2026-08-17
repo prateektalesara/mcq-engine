@@ -1,0 +1,1268 @@
+{
+    "id": "cfa-level-1-session-2-paper-1",
+    "title": "CFA Level I - Session 2 Mock Exam (Paper 1)",
+    "description": "Full-length 90-question, professional-grade mock exam featuring complex vignettes, realistic calculations, and deep-dive scenarios replicating the true CFA exam difficulty for Session 2 topics (Equity, Fixed Income, Derivatives, Alternatives, Portfolio Management).",
+    "durationMinutes": 135,
+    "questions": [
+        {
+            "id": 1,
+            "text": "A 28-year, 8% annual coupon bond has a par value of $1,000. If the market's required yield to maturity is 2%, the current price of the bond is closest to:",
+            "options": [
+                "$2105.30",
+                "$2276.88",
+                "$2459.55"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the present value of the annuity of coupon payments plus the present value of the par value.",
+            "explanation": "The price of the bond is the sum of the present value of all future cash flows discounted at the yield to maturity. The exact bond price is $2276.88."
+        },
+        {
+            "id": 2,
+            "text": "A real estate investment trust (REIT) is evaluating a commercial property. The property is expected to generate a net operating income (NOI) of $840,000 next year. Comparable properties in the area are selling at capitalization (cap) rates of 7.3%. Using the direct capitalization method, the estimated value of the property is closest to:",
+            "options": [
+                "$9,496,605",
+                "$11,506,849",
+                "$13,596,601"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Property Value = NOI / Cap Rate.",
+            "explanation": "Under the direct capitalization method, value is estimated by dividing the next year's NOI by the appropriate capitalization rate. The exact property value is $11,506,849."
+        },
+        {
+            "id": 3,
+            "text": "An investor enters into a 90-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $57. The continuously compounded risk-free rate is 2.9%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$55.74",
+                "$57.41",
+                "$60.25"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $57.41."
+        },
+        {
+            "id": 4,
+            "text": "A real estate investment trust (REIT) is evaluating a commercial property. The property is expected to generate a net operating income (NOI) of $829,000 next year. Comparable properties in the area are selling at capitalization (cap) rates of 7.0%. Using the direct capitalization method, the estimated value of the property is closest to:",
+            "options": [
+                "$8,724,421",
+                "$11,842,857",
+                "$14,128,089"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Property Value = NOI / Cap Rate.",
+            "explanation": "Under the direct capitalization method, value is estimated by dividing the next year's NOI by the appropriate capitalization rate. The exact property value is $11,842,857."
+        },
+        {
+            "id": 5,
+            "text": "An investor enters into a 180-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $136. The continuously compounded risk-free rate is 3.7%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$134.59",
+                "$138.50",
+                "$143.64"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $138.50."
+        },
+        {
+            "id": 6,
+            "text": "An investor enters into a 30-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $109. The continuously compounded risk-free rate is 5.8%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$105.25",
+                "$109.52",
+                "$112.38"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $109.52."
+        },
+        {
+            "id": 7,
+            "text": "James Smith is evaluating the expected return of Quantum Materials stock. The risk-free rate is 2.4%, the expected return on the market is 8.4%, and the stock's beta is 1.48. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "9.88%",
+                "11.28%",
+                "12.43%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 11.28%."
+        },
+        {
+            "id": 8,
+            "text": "An analyst is valuing ByteCorp using the Gordon Growth Model. The company just paid a dividend (D0) of $2.60. Dividends are expected to grow at a constant rate of 4% indefinitely. If the required rate of return on the stock is 12%, the intrinsic value of the stock is closest to:",
+            "options": [
+                "$30.24",
+                "$33.78",
+                "$38.05"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: V0 = D0 * (1 + g) / (r - g). Make sure r and g are decimals.",
+            "explanation": "Calculation is performed using the Gordon Growth Model. The exact intrinsic value is $33.78."
+        },
+        {
+            "id": 9,
+            "text": "A real estate investment trust (REIT) is evaluating a commercial property. The property is expected to generate a net operating income (NOI) of $770,000 next year. Comparable properties in the area are selling at capitalization (cap) rates of 8.7%. Using the direct capitalization method, the estimated value of the property is closest to:",
+            "options": [
+                "$6,948,162",
+                "$8,850,575",
+                "$11,021,177"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Property Value = NOI / Cap Rate.",
+            "explanation": "Under the direct capitalization method, value is estimated by dividing the next year's NOI by the appropriate capitalization rate. The exact property value is $8,850,575."
+        },
+        {
+            "id": 10,
+            "text": "Robert Chen is evaluating the expected return of ByteCorp stock. The risk-free rate is 3.1%, the expected return on the market is 8.3%, and the stock's beta is 0.81. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "5.93%",
+                "7.31%",
+                "8.68%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 7.31%."
+        },
+        {
+            "id": 11,
+            "text": "A hedge fund with $200 million in initial assets under management (AUM) charges a 1% management fee (based on end-of-year AUM before incentive fees) and an 20% incentive fee on returns strictly net of the management fee. There is no hurdle rate and the fund is well above its high-water mark. If the fund earns a gross return of 21% for the year, the total fees collected by the fund manager are closest to:",
+            "options": [
+                "$9.26 million",
+                "$10.34 million",
+                "$12.85 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the end-of-year AUM before fees, apply the management fee, subtract it to find net profit, and then apply the incentive fee.",
+            "explanation": "Management fee is based on AUM, and incentive fee is based on the profit after the management fee is deducted. Management fee is $2.42M, incentive fee is $7.92M, total is $10.34M."
+        },
+        {
+            "id": 12,
+            "text": "An investor enters into a 180-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $58. The continuously compounded risk-free rate is 2.3%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$55.77",
+                "$58.66",
+                "$60.28"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $58.66."
+        },
+        {
+            "id": 13,
+            "text": "An investor enters into a 180-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $82. The continuously compounded risk-free rate is 4.6%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$80.99",
+                "$83.88",
+                "$87.78"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $83.88."
+        },
+        {
+            "id": 14,
+            "text": "An analyst is valuing NovaTech using the Gordon Growth Model. The company just paid a dividend (D0) of $2.43. Dividends are expected to grow at a constant rate of 4% indefinitely. If the required rate of return on the stock is 8%, the intrinsic value of the stock is closest to:",
+            "options": [
+                "$56.33",
+                "$63.24",
+                "$72.96"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: V0 = D0 * (1 + g) / (r - g). Make sure r and g are decimals.",
+            "explanation": "Calculation is performed using the Gordon Growth Model. The exact intrinsic value is $63.24."
+        },
+        {
+            "id": 15,
+            "text": "An analyst is valuing Quantum Materials using the Gordon Growth Model. The company just paid a dividend (D0) of $3.84. Dividends are expected to grow at a constant rate of 3% indefinitely. If the required rate of return on the stock is 6%, the intrinsic value of the stock is closest to:",
+            "options": [
+                "$117.11",
+                "$131.92",
+                "$147.55"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: V0 = D0 * (1 + g) / (r - g). Make sure r and g are decimals.",
+            "explanation": "Calculation is performed using the Gordon Growth Model. The exact intrinsic value is $131.92."
+        },
+        {
+            "id": 16,
+            "text": "A real estate investment trust (REIT) is evaluating a commercial property. The property is expected to generate a net operating income (NOI) of $735,000 next year. Comparable properties in the area are selling at capitalization (cap) rates of 5.8%. Using the direct capitalization method, the estimated value of the property is closest to:",
+            "options": [
+                "$9,997,166",
+                "$12,672,414",
+                "$15,453,169"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Property Value = NOI / Cap Rate.",
+            "explanation": "Under the direct capitalization method, value is estimated by dividing the next year's NOI by the appropriate capitalization rate. The exact property value is $12,672,414."
+        },
+        {
+            "id": 17,
+            "text": "A hedge fund with $200 million in initial assets under management (AUM) charges a 2% management fee (based on end-of-year AUM before incentive fees) and an 20% incentive fee on returns strictly net of the management fee. There is no hurdle rate and the fund is well above its high-water mark. If the fund earns a gross return of 13% for the year, the total fees collected by the fund manager are closest to:",
+            "options": [
+                "$7.72 million",
+                "$8.82 million",
+                "$10.86 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the end-of-year AUM before fees, apply the management fee, subtract it to find net profit, and then apply the incentive fee.",
+            "explanation": "Management fee is based on AUM, and incentive fee is based on the profit after the management fee is deducted. Management fee is $4.52M, incentive fee is $4.30M, total is $8.82M."
+        },
+        {
+            "id": 18,
+            "text": "A real estate investment trust (REIT) is evaluating a commercial property. The property is expected to generate a net operating income (NOI) of $474,000 next year. Comparable properties in the area are selling at capitalization (cap) rates of 8.2%. Using the direct capitalization method, the estimated value of the property is closest to:",
+            "options": [
+                "$4,588,160",
+                "$5,780,488",
+                "$6,830,071"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Property Value = NOI / Cap Rate.",
+            "explanation": "Under the direct capitalization method, value is estimated by dividing the next year's NOI by the appropriate capitalization rate. The exact property value is $5,780,488."
+        },
+        {
+            "id": 19,
+            "text": "An investor enters into a 30-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $92. The continuously compounded risk-free rate is 3.8%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$88.80",
+                "$92.29",
+                "$95.18"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $92.29."
+        },
+        {
+            "id": 20,
+            "text": "A hedge fund with $50 million in initial assets under management (AUM) charges a 1% management fee (based on end-of-year AUM before incentive fees) and an 15% incentive fee on returns strictly net of the management fee. There is no hurdle rate and the fund is well above its high-water mark. If the fund earns a gross return of 14% for the year, the total fees collected by the fund manager are closest to:",
+            "options": [
+                "$1.36 million",
+                "$1.53 million",
+                "$1.82 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the end-of-year AUM before fees, apply the management fee, subtract it to find net profit, and then apply the incentive fee.",
+            "explanation": "Management fee is based on AUM, and incentive fee is based on the profit after the management fee is deducted. Management fee is $0.57M, incentive fee is $0.96M, total is $1.53M."
+        },
+        {
+            "id": 21,
+            "text": "A hedge fund with $50 million in initial assets under management (AUM) charges a 1% management fee (based on end-of-year AUM before incentive fees) and an 20% incentive fee on returns strictly net of the management fee. There is no hurdle rate and the fund is well above its high-water mark. If the fund earns a gross return of 21% for the year, the total fees collected by the fund manager are closest to:",
+            "options": [
+                "$2.24 million",
+                "$2.58 million",
+                "$3.10 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the end-of-year AUM before fees, apply the management fee, subtract it to find net profit, and then apply the incentive fee.",
+            "explanation": "Management fee is based on AUM, and incentive fee is based on the profit after the management fee is deducted. Management fee is $0.60M, incentive fee is $1.98M, total is $2.58M."
+        },
+        {
+            "id": 22,
+            "text": "An analyst is valuing NovaTech using the Gordon Growth Model. The company just paid a dividend (D0) of $1.59. Dividends are expected to grow at a constant rate of 2% indefinitely. If the required rate of return on the stock is 5%, the intrinsic value of the stock is closest to:",
+            "options": [
+                "$43.37",
+                "$54.07",
+                "$64.17"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: V0 = D0 * (1 + g) / (r - g). Make sure r and g are decimals.",
+            "explanation": "Calculation is performed using the Gordon Growth Model. The exact intrinsic value is $54.07."
+        },
+        {
+            "id": 23,
+            "text": "Michael Chang is evaluating the expected return of Stellar Energy stock. The risk-free rate is 4.0%, the expected return on the market is 10.7%, and the stock's beta is 1.5. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "12.15%",
+                "14.05%",
+                "15.54%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 14.05%."
+        },
+        {
+            "id": 24,
+            "text": "An investor enters into a 180-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $140. The continuously compounded risk-free rate is 2.1%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$136.32",
+                "$141.46",
+                "$145.47"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $141.46."
+        },
+        {
+            "id": 25,
+            "text": "An analyst is valuing ByteCorp using the Gordon Growth Model. The company just paid a dividend (D0) of $4.33. Dividends are expected to grow at a constant rate of 6% indefinitely. If the required rate of return on the stock is 10%, the intrinsic value of the stock is closest to:",
+            "options": [
+                "$100.60",
+                "$114.75",
+                "$126.95"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: V0 = D0 * (1 + g) / (r - g). Make sure r and g are decimals.",
+            "explanation": "Calculation is performed using the Gordon Growth Model. The exact intrinsic value is $114.75."
+        },
+        {
+            "id": 26,
+            "text": "A hedge fund with $50 million in initial assets under management (AUM) charges a 1.5% management fee (based on end-of-year AUM before incentive fees) and an 15% incentive fee on returns strictly net of the management fee. There is no hurdle rate and the fund is well above its high-water mark. If the fund earns a gross return of 23% for the year, the total fees collected by the fund manager are closest to:",
+            "options": [
+                "$2.04 million",
+                "$2.51 million",
+                "$2.80 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the end-of-year AUM before fees, apply the management fee, subtract it to find net profit, and then apply the incentive fee.",
+            "explanation": "Management fee is based on AUM, and incentive fee is based on the profit after the management fee is deducted. Management fee is $0.92M, incentive fee is $1.59M, total is $2.51M."
+        },
+        {
+            "id": 27,
+            "text": "A hedge fund with $100 million in initial assets under management (AUM) charges a 2% management fee (based on end-of-year AUM before incentive fees) and an 20% incentive fee on returns strictly net of the management fee. There is no hurdle rate and the fund is well above its high-water mark. If the fund earns a gross return of 8% for the year, the total fees collected by the fund manager are closest to:",
+            "options": [
+                "$2.91 million",
+                "$3.33 million",
+                "$4.31 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the end-of-year AUM before fees, apply the management fee, subtract it to find net profit, and then apply the incentive fee.",
+            "explanation": "Management fee is based on AUM, and incentive fee is based on the profit after the management fee is deducted. Management fee is $2.16M, incentive fee is $1.17M, total is $3.33M."
+        },
+        {
+            "id": 28,
+            "text": "An analyst is valuing Stellar Energy using the Gordon Growth Model. The company just paid a dividend (D0) of $2.89. Dividends are expected to grow at a constant rate of 6% indefinitely. If the required rate of return on the stock is 10%, the intrinsic value of the stock is closest to:",
+            "options": [
+                "$68.46",
+                "$76.55",
+                "$85.95"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: V0 = D0 * (1 + g) / (r - g). Make sure r and g are decimals.",
+            "explanation": "Calculation is performed using the Gordon Growth Model. The exact intrinsic value is $76.55."
+        },
+        {
+            "id": 29,
+            "text": "A real estate investment trust (REIT) is evaluating a commercial property. The property is expected to generate a net operating income (NOI) of $743,000 next year. Comparable properties in the area are selling at capitalization (cap) rates of 9.9%. Using the direct capitalization method, the estimated value of the property is closest to:",
+            "options": [
+                "$5,471,800",
+                "$7,505,051",
+                "$9,100,349"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Property Value = NOI / Cap Rate.",
+            "explanation": "Under the direct capitalization method, value is estimated by dividing the next year's NOI by the appropriate capitalization rate. The exact property value is $7,505,051."
+        },
+        {
+            "id": 30,
+            "text": "A hedge fund with $500 million in initial assets under management (AUM) charges a 1.5% management fee (based on end-of-year AUM before incentive fees) and an 20% incentive fee on returns strictly net of the management fee. There is no hurdle rate and the fund is well above its high-water mark. If the fund earns a gross return of 11% for the year, the total fees collected by the fund manager are closest to:",
+            "options": [
+                "$12.68 million",
+                "$17.66 million",
+                "$20.01 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the end-of-year AUM before fees, apply the management fee, subtract it to find net profit, and then apply the incentive fee.",
+            "explanation": "Management fee is based on AUM, and incentive fee is based on the profit after the management fee is deducted. Management fee is $8.32M, incentive fee is $9.33M, total is $17.66M."
+        },
+        {
+            "id": 31,
+            "text": "Aisha Patel is evaluating the expected return of ByteCorp stock. The risk-free rate is 1.9%, the expected return on the market is 9.8%, and the stock's beta is 1.47. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "11.71%",
+                "13.51%",
+                "15.49%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 13.51%."
+        },
+        {
+            "id": 32,
+            "text": "A 23-year, 4% annual coupon bond has a par value of $1,000. If the market's required yield to maturity is 2%, the current price of the bond is closest to:",
+            "options": [
+                "$1255.56",
+                "$1365.84",
+                "$1466.69"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the present value of the annuity of coupon payments plus the present value of the par value.",
+            "explanation": "The price of the bond is the sum of the present value of all future cash flows discounted at the yield to maturity. The exact bond price is $1365.84."
+        },
+        {
+            "id": 33,
+            "text": "An investor enters into a 30-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $70. The continuously compounded risk-free rate is 3.2%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$68.37",
+                "$70.18",
+                "$72.77"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $70.18."
+        },
+        {
+            "id": 34,
+            "text": "An analyst is valuing Quantum Materials using the Gordon Growth Model. The company just paid a dividend (D0) of $1.94. Dividends are expected to grow at a constant rate of 6% indefinitely. If the required rate of return on the stock is 9%, the intrinsic value of the stock is closest to:",
+            "options": [
+                "$61.42",
+                "$68.48",
+                "$80.23"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: V0 = D0 * (1 + g) / (r - g). Make sure r and g are decimals.",
+            "explanation": "Calculation is performed using the Gordon Growth Model. The exact intrinsic value is $68.48."
+        },
+        {
+            "id": 35,
+            "text": "An investor enters into a 60-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $80. The continuously compounded risk-free rate is 4.0%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$78.19",
+                "$80.53",
+                "$83.67"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $80.53."
+        },
+        {
+            "id": 36,
+            "text": "A real estate investment trust (REIT) is evaluating a commercial property. The property is expected to generate a net operating income (NOI) of $324,000 next year. Comparable properties in the area are selling at capitalization (cap) rates of 6.9%. Using the direct capitalization method, the estimated value of the property is closest to:",
+            "options": [
+                "$3,343,100",
+                "$4,695,652",
+                "$5,555,546"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Property Value = NOI / Cap Rate.",
+            "explanation": "Under the direct capitalization method, value is estimated by dividing the next year's NOI by the appropriate capitalization rate. The exact property value is $4,695,652."
+        },
+        {
+            "id": 37,
+            "text": "An investor enters into a 30-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $115. The continuously compounded risk-free rate is 2.2%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$109.78",
+                "$115.21",
+                "$119.98"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $115.21."
+        },
+        {
+            "id": 38,
+            "text": "Robert Chen is evaluating the expected return of Stellar Energy stock. The risk-free rate is 3.7%, the expected return on the market is 10.7%, and the stock's beta is 0.64. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "7.36%",
+                "8.18%",
+                "9.55%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 8.18%."
+        },
+        {
+            "id": 39,
+            "text": "A real estate investment trust (REIT) is evaluating a commercial property. The property is expected to generate a net operating income (NOI) of $434,000 next year. Comparable properties in the area are selling at capitalization (cap) rates of 8.1%. Using the direct capitalization method, the estimated value of the property is closest to:",
+            "options": [
+                "$4,037,266",
+                "$5,358,025",
+                "$6,592,235"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Property Value = NOI / Cap Rate.",
+            "explanation": "Under the direct capitalization method, value is estimated by dividing the next year's NOI by the appropriate capitalization rate. The exact property value is $5,358,025."
+        },
+        {
+            "id": 40,
+            "text": "An analyst is valuing ByteCorp using the Gordon Growth Model. The company just paid a dividend (D0) of $3.49. Dividends are expected to grow at a constant rate of 4% indefinitely. If the required rate of return on the stock is 10%, the intrinsic value of the stock is closest to:",
+            "options": [
+                "$52.58",
+                "$60.49",
+                "$70.26"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: V0 = D0 * (1 + g) / (r - g). Make sure r and g are decimals.",
+            "explanation": "Calculation is performed using the Gordon Growth Model. The exact intrinsic value is $60.49."
+        },
+        {
+            "id": 41,
+            "text": "A hedge fund with $500 million in initial assets under management (AUM) charges a 2% management fee (based on end-of-year AUM before incentive fees) and an 20% incentive fee on returns strictly net of the management fee. There is no hurdle rate and the fund is well above its high-water mark. If the fund earns a gross return of 16% for the year, the total fees collected by the fund manager are closest to:",
+            "options": [
+                "$22.44 million",
+                "$25.28 million",
+                "$28.33 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the end-of-year AUM before fees, apply the management fee, subtract it to find net profit, and then apply the incentive fee.",
+            "explanation": "Management fee is based on AUM, and incentive fee is based on the profit after the management fee is deducted. Management fee is $11.60M, incentive fee is $13.68M, total is $25.28M."
+        },
+        {
+            "id": 42,
+            "text": "An investor enters into a 90-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $60. The continuously compounded risk-free rate is 2.8%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$58.65",
+                "$60.42",
+                "$62.87"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $60.42."
+        },
+        {
+            "id": 43,
+            "text": "An investor enters into a 30-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $114. The continuously compounded risk-free rate is 2.7%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$109.63",
+                "$114.25",
+                "$119.74"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $114.25."
+        },
+        {
+            "id": 44,
+            "text": "A hedge fund with $200 million in initial assets under management (AUM) charges a 1% management fee (based on end-of-year AUM before incentive fees) and an 20% incentive fee on returns strictly net of the management fee. There is no hurdle rate and the fund is well above its high-water mark. If the fund earns a gross return of 22% for the year, the total fees collected by the fund manager are closest to:",
+            "options": [
+                "$7.81 million",
+                "$10.75 million",
+                "$13.30 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the end-of-year AUM before fees, apply the management fee, subtract it to find net profit, and then apply the incentive fee.",
+            "explanation": "Management fee is based on AUM, and incentive fee is based on the profit after the management fee is deducted. Management fee is $2.44M, incentive fee is $8.31M, total is $10.75M."
+        },
+        {
+            "id": 45,
+            "text": "An analyst is valuing BioGenix using the Gordon Growth Model. The company just paid a dividend (D0) of $2.93. Dividends are expected to grow at a constant rate of 3% indefinitely. If the required rate of return on the stock is 6%, the intrinsic value of the stock is closest to:",
+            "options": [
+                "$82.05",
+                "$100.54",
+                "$117.48"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: V0 = D0 * (1 + g) / (r - g). Make sure r and g are decimals.",
+            "explanation": "Calculation is performed using the Gordon Growth Model. The exact intrinsic value is $100.54."
+        },
+        {
+            "id": 46,
+            "text": "An investor enters into a 180-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $79. The continuously compounded risk-free rate is 4.1%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$78.96",
+                "$80.61",
+                "$83.89"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $80.61."
+        },
+        {
+            "id": 47,
+            "text": "Aisha Patel is evaluating the expected return of Quantum Materials stock. The risk-free rate is 2.9%, the expected return on the market is 10.3%, and the stock's beta is 1.26. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "10.20%",
+                "12.22%",
+                "13.59%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 12.22%."
+        },
+        {
+            "id": 48,
+            "text": "An analyst is valuing NovaTech using the Gordon Growth Model. The company just paid a dividend (D0) of $1.75. Dividends are expected to grow at a constant rate of 2% indefinitely. If the required rate of return on the stock is 5%, the intrinsic value of the stock is closest to:",
+            "options": [
+                "$47.72",
+                "$59.58",
+                "$71.49"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: V0 = D0 * (1 + g) / (r - g). Make sure r and g are decimals.",
+            "explanation": "Calculation is performed using the Gordon Growth Model. The exact intrinsic value is $59.58."
+        },
+        {
+            "id": 49,
+            "text": "An investor enters into a 90-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $59. The continuously compounded risk-free rate is 2.5%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$58.00",
+                "$59.36",
+                "$62.09"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $59.36."
+        },
+        {
+            "id": 50,
+            "text": "A hedge fund with $500 million in initial assets under management (AUM) charges a 1% management fee (based on end-of-year AUM before incentive fees) and an 20% incentive fee on returns strictly net of the management fee. There is no hurdle rate and the fund is well above its high-water mark. If the fund earns a gross return of 14% for the year, the total fees collected by the fund manager are closest to:",
+            "options": [
+                "$14.58 million",
+                "$18.56 million",
+                "$23.70 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the end-of-year AUM before fees, apply the management fee, subtract it to find net profit, and then apply the incentive fee.",
+            "explanation": "Management fee is based on AUM, and incentive fee is based on the profit after the management fee is deducted. Management fee is $5.70M, incentive fee is $12.86M, total is $18.56M."
+        },
+        {
+            "id": 51,
+            "text": "Robert Chen is evaluating the expected return of BioGenix stock. The risk-free rate is 1.7%, the expected return on the market is 12.0%, and the stock's beta is 0.84. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "8.68%",
+                "10.35%",
+                "11.48%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 10.35%."
+        },
+        {
+            "id": 52,
+            "text": "A hedge fund with $200 million in initial assets under management (AUM) charges a 1% management fee (based on end-of-year AUM before incentive fees) and an 20% incentive fee on returns strictly net of the management fee. There is no hurdle rate and the fund is well above its high-water mark. If the fund earns a gross return of 17% for the year, the total fees collected by the fund manager are closest to:",
+            "options": [
+                "$7.48 million",
+                "$8.67 million",
+                "$10.71 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the end-of-year AUM before fees, apply the management fee, subtract it to find net profit, and then apply the incentive fee.",
+            "explanation": "Management fee is based on AUM, and incentive fee is based on the profit after the management fee is deducted. Management fee is $2.34M, incentive fee is $6.33M, total is $8.67M."
+        },
+        {
+            "id": 53,
+            "text": "Elena Rostova is evaluating the expected return of BioGenix stock. The risk-free rate is 1.7%, the expected return on the market is 11.7%, and the stock's beta is 1.15. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "11.50%",
+                "13.20%",
+                "15.08%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 13.20%."
+        },
+        {
+            "id": 54,
+            "text": "Sarah Jenkins is evaluating the expected return of Stellar Energy stock. The risk-free rate is 3.7%, the expected return on the market is 8.9%, and the stock's beta is 1.11. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "7.79%",
+                "9.47%",
+                "11.14%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 9.47%."
+        },
+        {
+            "id": 55,
+            "text": "An analyst is valuing NovaTech using the Gordon Growth Model. The company just paid a dividend (D0) of $4.22. Dividends are expected to grow at a constant rate of 5% indefinitely. If the required rate of return on the stock is 11%, the intrinsic value of the stock is closest to:",
+            "options": [
+                "$62.60",
+                "$73.90",
+                "$88.36"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: V0 = D0 * (1 + g) / (r - g). Make sure r and g are decimals.",
+            "explanation": "Calculation is performed using the Gordon Growth Model. The exact intrinsic value is $73.90."
+        },
+        {
+            "id": 56,
+            "text": "A real estate investment trust (REIT) is evaluating a commercial property. The property is expected to generate a net operating income (NOI) of $786,000 next year. Comparable properties in the area are selling at capitalization (cap) rates of 9.5%. Using the direct capitalization method, the estimated value of the property is closest to:",
+            "options": [
+                "$6,435,652",
+                "$8,273,684",
+                "$10,231,202"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Property Value = NOI / Cap Rate.",
+            "explanation": "Under the direct capitalization method, value is estimated by dividing the next year's NOI by the appropriate capitalization rate. The exact property value is $8,273,684."
+        },
+        {
+            "id": 57,
+            "text": "A hedge fund with $100 million in initial assets under management (AUM) charges a 1% management fee (based on end-of-year AUM before incentive fees) and an 15% incentive fee on returns strictly net of the management fee. There is no hurdle rate and the fund is well above its high-water mark. If the fund earns a gross return of 21% for the year, the total fees collected by the fund manager are closest to:",
+            "options": [
+                "$3.57 million",
+                "$4.18 million",
+                "$4.80 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the end-of-year AUM before fees, apply the management fee, subtract it to find net profit, and then apply the incentive fee.",
+            "explanation": "Management fee is based on AUM, and incentive fee is based on the profit after the management fee is deducted. Management fee is $1.21M, incentive fee is $2.97M, total is $4.18M."
+        },
+        {
+            "id": 58,
+            "text": "A real estate investment trust (REIT) is evaluating a commercial property. The property is expected to generate a net operating income (NOI) of $540,000 next year. Comparable properties in the area are selling at capitalization (cap) rates of 7.2%. Using the direct capitalization method, the estimated value of the property is closest to:",
+            "options": [
+                "$5,305,384",
+                "$7,500,000",
+                "$9,711,086"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Property Value = NOI / Cap Rate.",
+            "explanation": "Under the direct capitalization method, value is estimated by dividing the next year's NOI by the appropriate capitalization rate. The exact property value is $7,500,000."
+        },
+        {
+            "id": 59,
+            "text": "A real estate investment trust (REIT) is evaluating a commercial property. The property is expected to generate a net operating income (NOI) of $273,000 next year. Comparable properties in the area are selling at capitalization (cap) rates of 5.0%. Using the direct capitalization method, the estimated value of the property is closest to:",
+            "options": [
+                "$3,925,110",
+                "$5,460,000",
+                "$6,765,002"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Property Value = NOI / Cap Rate.",
+            "explanation": "Under the direct capitalization method, value is estimated by dividing the next year's NOI by the appropriate capitalization rate. The exact property value is $5,460,000."
+        },
+        {
+            "id": 60,
+            "text": "A hedge fund with $200 million in initial assets under management (AUM) charges a 1.5% management fee (based on end-of-year AUM before incentive fees) and an 20% incentive fee on returns strictly net of the management fee. There is no hurdle rate and the fund is well above its high-water mark. If the fund earns a gross return of 22% for the year, the total fees collected by the fund manager are closest to:",
+            "options": [
+                "$10.34 million",
+                "$11.73 million",
+                "$14.55 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the end-of-year AUM before fees, apply the management fee, subtract it to find net profit, and then apply the incentive fee.",
+            "explanation": "Management fee is based on AUM, and incentive fee is based on the profit after the management fee is deducted. Management fee is $3.66M, incentive fee is $8.07M, total is $11.73M."
+        },
+        {
+            "id": 61,
+            "text": "A hedge fund with $50 million in initial assets under management (AUM) charges a 2% management fee (based on end-of-year AUM before incentive fees) and an 15% incentive fee on returns strictly net of the management fee. There is no hurdle rate and the fund is well above its high-water mark. If the fund earns a gross return of 11% for the year, the total fees collected by the fund manager are closest to:",
+            "options": [
+                "$1.33 million",
+                "$1.77 million",
+                "$2.07 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the end-of-year AUM before fees, apply the management fee, subtract it to find net profit, and then apply the incentive fee.",
+            "explanation": "Management fee is based on AUM, and incentive fee is based on the profit after the management fee is deducted. Management fee is $1.11M, incentive fee is $0.66M, total is $1.77M."
+        },
+        {
+            "id": 62,
+            "text": "An analyst is valuing Quantum Materials using the Gordon Growth Model. The company just paid a dividend (D0) of $4.65. Dividends are expected to grow at a constant rate of 4% indefinitely. If the required rate of return on the stock is 9%, the intrinsic value of the stock is closest to:",
+            "options": [
+                "$77.41",
+                "$96.63",
+                "$114.74"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: V0 = D0 * (1 + g) / (r - g). Make sure r and g are decimals.",
+            "explanation": "Calculation is performed using the Gordon Growth Model. The exact intrinsic value is $96.63."
+        },
+        {
+            "id": 63,
+            "text": "Aisha Patel is evaluating the expected return of AeroDynamics stock. The risk-free rate is 3.2%, the expected return on the market is 9.1%, and the stock's beta is 0.68. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "6.25%",
+                "7.21%",
+                "8.23%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 7.21%."
+        },
+        {
+            "id": 64,
+            "text": "Aisha Patel is evaluating the expected return of AeroDynamics stock. The risk-free rate is 2.6%, the expected return on the market is 8.9%, and the stock's beta is 1.5. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "10.17%",
+                "12.05%",
+                "13.38%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 12.05%."
+        },
+        {
+            "id": 65,
+            "text": "An investor enters into a 90-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $80. The continuously compounded risk-free rate is 4.7%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$78.40",
+                "$80.93",
+                "$84.18"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $80.93."
+        },
+        {
+            "id": 66,
+            "text": "A real estate investment trust (REIT) is evaluating a commercial property. The property is expected to generate a net operating income (NOI) of $663,000 next year. Comparable properties in the area are selling at capitalization (cap) rates of 9.8%. Using the direct capitalization method, the estimated value of the property is closest to:",
+            "options": [
+                "$5,262,900",
+                "$6,765,306",
+                "$7,871,298"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Property Value = NOI / Cap Rate.",
+            "explanation": "Under the direct capitalization method, value is estimated by dividing the next year's NOI by the appropriate capitalization rate. The exact property value is $6,765,306."
+        },
+        {
+            "id": 67,
+            "text": "An analyst is valuing NovaTech using the Gordon Growth Model. The company just paid a dividend (D0) of $3.01. Dividends are expected to grow at a constant rate of 6% indefinitely. If the required rate of return on the stock is 9%, the intrinsic value of the stock is closest to:",
+            "options": [
+                "$87.24",
+                "$106.26",
+                "$122.13"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: V0 = D0 * (1 + g) / (r - g). Make sure r and g are decimals.",
+            "explanation": "Calculation is performed using the Gordon Growth Model. The exact intrinsic value is $106.26."
+        },
+        {
+            "id": 68,
+            "text": "Michael Chang is evaluating the expected return of Stellar Energy stock. The risk-free rate is 4.5%, the expected return on the market is 7.5%, and the stock's beta is 1.57. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "7.56%",
+                "9.21%",
+                "10.95%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 9.21%."
+        },
+        {
+            "id": 69,
+            "text": "Elena Rostova is evaluating the expected return of AeroDynamics stock. The risk-free rate is 1.8%, the expected return on the market is 7.6%, and the stock's beta is 1.43. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "8.76%",
+                "10.09%",
+                "11.39%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 10.09%."
+        },
+        {
+            "id": 70,
+            "text": "Michael Chang is evaluating the expected return of NovaTech stock. The risk-free rate is 3.7%, the expected return on the market is 8.3%, and the stock's beta is 0.77. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "6.03%",
+                "7.24%",
+                "8.31%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 7.24%."
+        },
+        {
+            "id": 71,
+            "text": "A real estate investment trust (REIT) is evaluating a commercial property. The property is expected to generate a net operating income (NOI) of $841,000 next year. Comparable properties in the area are selling at capitalization (cap) rates of 5.3%. Using the direct capitalization method, the estimated value of the property is closest to:",
+            "options": [
+                "$12,806,860",
+                "$15,867,925",
+                "$19,655,618"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Property Value = NOI / Cap Rate.",
+            "explanation": "Under the direct capitalization method, value is estimated by dividing the next year's NOI by the appropriate capitalization rate. The exact property value is $15,867,925."
+        },
+        {
+            "id": 72,
+            "text": "A real estate investment trust (REIT) is evaluating a commercial property. The property is expected to generate a net operating income (NOI) of $187,000 next year. Comparable properties in the area are selling at capitalization (cap) rates of 6.2%. Using the direct capitalization method, the estimated value of the property is closest to:",
+            "options": [
+                "$2,192,199",
+                "$3,016,129",
+                "$3,918,859"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Property Value = NOI / Cap Rate.",
+            "explanation": "Under the direct capitalization method, value is estimated by dividing the next year's NOI by the appropriate capitalization rate. The exact property value is $3,016,129."
+        },
+        {
+            "id": 73,
+            "text": "A hedge fund with $100 million in initial assets under management (AUM) charges a 1% management fee (based on end-of-year AUM before incentive fees) and an 20% incentive fee on returns strictly net of the management fee. There is no hurdle rate and the fund is well above its high-water mark. If the fund earns a gross return of 8% for the year, the total fees collected by the fund manager are closest to:",
+            "options": [
+                "$1.78 million",
+                "$2.46 million",
+                "$2.98 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the end-of-year AUM before fees, apply the management fee, subtract it to find net profit, and then apply the incentive fee.",
+            "explanation": "Management fee is based on AUM, and incentive fee is based on the profit after the management fee is deducted. Management fee is $1.08M, incentive fee is $1.38M, total is $2.46M."
+        },
+        {
+            "id": 74,
+            "text": "An investor enters into a 180-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $86. The continuously compounded risk-free rate is 2.5%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$84.91",
+                "$87.07",
+                "$89.92"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $87.07."
+        },
+        {
+            "id": 75,
+            "text": "Sarah Jenkins is evaluating the expected return of Stellar Energy stock. The risk-free rate is 2.5%, the expected return on the market is 8.6%, and the stock's beta is 1.74. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "10.93%",
+                "13.11%",
+                "15.53%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 13.11%."
+        },
+        {
+            "id": 76,
+            "text": "Aisha Patel is evaluating the expected return of ByteCorp stock. The risk-free rate is 2.3%, the expected return on the market is 11.9%, and the stock's beta is 1.25. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "11.74%",
+                "14.30%",
+                "17.05%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 14.30%."
+        },
+        {
+            "id": 77,
+            "text": "A hedge fund with $50 million in initial assets under management (AUM) charges a 2% management fee (based on end-of-year AUM before incentive fees) and an 15% incentive fee on returns strictly net of the management fee. There is no hurdle rate and the fund is well above its high-water mark. If the fund earns a gross return of 11% for the year, the total fees collected by the fund manager are closest to:",
+            "options": [
+                "$1.41 million",
+                "$1.77 million",
+                "$2.08 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the end-of-year AUM before fees, apply the management fee, subtract it to find net profit, and then apply the incentive fee.",
+            "explanation": "Management fee is based on AUM, and incentive fee is based on the profit after the management fee is deducted. Management fee is $1.11M, incentive fee is $0.66M, total is $1.77M."
+        },
+        {
+            "id": 78,
+            "text": "A 22-year, 4% annual coupon bond has a par value of $1,000. If the market's required yield to maturity is 2%, the current price of the bond is closest to:",
+            "options": [
+                "$1243.34",
+                "$1353.16",
+                "$1438.61"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the present value of the annuity of coupon payments plus the present value of the par value.",
+            "explanation": "The price of the bond is the sum of the present value of all future cash flows discounted at the yield to maturity. The exact bond price is $1353.16."
+        },
+        {
+            "id": 79,
+            "text": "A 11-year, 4% annual coupon bond has a par value of $1,000. If the market's required yield to maturity is 5%, the current price of the bond is closest to:",
+            "options": [
+                "$793.56",
+                "$916.94",
+                "$966.50"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the present value of the annuity of coupon payments plus the present value of the par value.",
+            "explanation": "The price of the bond is the sum of the present value of all future cash flows discounted at the yield to maturity. The exact bond price is $916.94."
+        },
+        {
+            "id": 80,
+            "text": "A hedge fund with $50 million in initial assets under management (AUM) charges a 1% management fee (based on end-of-year AUM before incentive fees) and an 15% incentive fee on returns strictly net of the management fee. There is no hurdle rate and the fund is well above its high-water mark. If the fund earns a gross return of 19% for the year, the total fees collected by the fund manager are closest to:",
+            "options": [
+                "$1.69 million",
+                "$1.93 million",
+                "$2.29 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the end-of-year AUM before fees, apply the management fee, subtract it to find net profit, and then apply the incentive fee.",
+            "explanation": "Management fee is based on AUM, and incentive fee is based on the profit after the management fee is deducted. Management fee is $0.59M, incentive fee is $1.34M, total is $1.93M."
+        },
+        {
+            "id": 81,
+            "text": "An analyst is valuing NovaTech using the Gordon Growth Model. The company just paid a dividend (D0) of $3.46. Dividends are expected to grow at a constant rate of 5% indefinitely. If the required rate of return on the stock is 9%, the intrinsic value of the stock is closest to:",
+            "options": [
+                "$81.27",
+                "$90.86",
+                "$102.39"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: V0 = D0 * (1 + g) / (r - g). Make sure r and g are decimals.",
+            "explanation": "Calculation is performed using the Gordon Growth Model. The exact intrinsic value is $90.86."
+        },
+        {
+            "id": 82,
+            "text": "An analyst is valuing ByteCorp using the Gordon Growth Model. The company just paid a dividend (D0) of $1.20. Dividends are expected to grow at a constant rate of 3% indefinitely. If the required rate of return on the stock is 10%, the intrinsic value of the stock is closest to:",
+            "options": [
+                "$14.21",
+                "$17.68",
+                "$20.99"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: V0 = D0 * (1 + g) / (r - g). Make sure r and g are decimals.",
+            "explanation": "Calculation is performed using the Gordon Growth Model. The exact intrinsic value is $17.68."
+        },
+        {
+            "id": 83,
+            "text": "An investor enters into a 180-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $84. The continuously compounded risk-free rate is 4.0%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$83.42",
+                "$85.67",
+                "$89.34"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $85.67."
+        },
+        {
+            "id": 84,
+            "text": "Robert Chen is evaluating the expected return of Stellar Energy stock. The risk-free rate is 2.8%, the expected return on the market is 7.4%, and the stock's beta is 1.41. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "8.02%",
+                "9.29%",
+                "10.92%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 9.29%."
+        },
+        {
+            "id": 85,
+            "text": "An investor enters into a 90-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $99. The continuously compounded risk-free rate is 2.2%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$95.00",
+                "$99.54",
+                "$103.74"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $99.54."
+        },
+        {
+            "id": 86,
+            "text": "A real estate investment trust (REIT) is evaluating a commercial property. The property is expected to generate a net operating income (NOI) of $859,000 next year. Comparable properties in the area are selling at capitalization (cap) rates of 9.4%. Using the direct capitalization method, the estimated value of the property is closest to:",
+            "options": [
+                "$7,333,629",
+                "$9,138,298",
+                "$11,151,567"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Property Value = NOI / Cap Rate.",
+            "explanation": "Under the direct capitalization method, value is estimated by dividing the next year's NOI by the appropriate capitalization rate. The exact property value is $9,138,298."
+        },
+        {
+            "id": 87,
+            "text": "An investor enters into a 30-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $66. The continuously compounded risk-free rate is 2.6%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$64.03",
+                "$66.14",
+                "$69.07"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $66.14."
+        },
+        {
+            "id": 88,
+            "text": "Robert Chen is evaluating the expected return of AeroDynamics stock. The risk-free rate is 2.5%, the expected return on the market is 9.0%, and the stock's beta is 0.65. According to the Capital Asset Pricing Model (CAPM), the expected return of the stock is closest to:",
+            "options": [
+                "5.71%",
+                "6.73%",
+                "7.51%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: E(R) = Rf + Beta * (Rm - Rf).",
+            "explanation": "The Capital Asset Pricing Model calculates expected return based on the risk-free rate plus a risk premium determined by beta. The exact CAPM expected return is 6.73%."
+        },
+        {
+            "id": 89,
+            "text": "A real estate investment trust (REIT) is evaluating a commercial property. The property is expected to generate a net operating income (NOI) of $111,000 next year. Comparable properties in the area are selling at capitalization (cap) rates of 6.4%. Using the direct capitalization method, the estimated value of the property is closest to:",
+            "options": [
+                "$1,413,917",
+                "$1,734,375",
+                "$2,213,681"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Property Value = NOI / Cap Rate.",
+            "explanation": "Under the direct capitalization method, value is estimated by dividing the next year's NOI by the appropriate capitalization rate. The exact property value is $1,734,375."
+        },
+        {
+            "id": 90,
+            "text": "An investor enters into a 180-day forward contract on an underlying asset that does not pay any dividends or generate cash flows. The current spot price of the asset is $66. The continuously compounded risk-free rate is 4.8%. The no-arbitrage forward price is closest to:",
+            "options": [
+                "$65.53",
+                "$67.58",
+                "$70.38"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: F = S0 * e^(r * T), where T is time in years (days/365).",
+            "explanation": "The no-arbitrage forward price is calculated by compounding the spot price at the continuous risk-free rate over the life of the contract. The exact forward price is $67.58."
+        }
+    ]
+}
