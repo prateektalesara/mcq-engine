@@ -1,0 +1,1268 @@
+{
+    "id": "cfa-level-1-session-1-paper-3",
+    "title": "CFA Level I - Session 1 Mock Exam (Paper 3)",
+    "description": "Full-length 90-question, professional-grade mock exam featuring complex vignettes, realistic calculations, and deep-dive scenarios replicating the true CFA exam difficulty.",
+    "durationMinutes": 135,
+    "questions": [
+        {
+            "id": 1,
+            "text": "Consider a portfolio composed of two risky assets, Asset A and Asset B. Asset A has an expected return of 15% and a standard deviation of 21%. Asset B has an expected return of 9% and a standard deviation of 14%. The correlation coefficient between the returns of the two assets is 0.07. If an investor allocates 50% of her funds to Asset A and 50% to Asset B, the expected standard deviation of the portfolio is closest to:",
+            "options": [
+                "10.81%",
+                "13.02%",
+                "16.16%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: sqrt(wA^2 * stdA^2 + wB^2 * stdB^2 + 2*wA*wB*stdA*stdB*corr)",
+            "explanation": "Calculation is performed using the portfolio variance formula. The portfolio standard deviation is 13.02%."
+        },
+        {
+            "id": 2,
+            "text": "Elena Rostova, CFA, is a portfolio manager at Meridian Wealth. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of NovaTech. The report concludes that NovaTech is severely undervalued. Before the report is distributed to clients, Elena Rostova purchases 1000 shares of NovaTech for her personal account and 18000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, Elena Rostova has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 3,
+            "text": "An economist observes that in the country of Zephyria, the central bank has recently engaged in open market purchases of government securities, decreased the reserve requirement from 9% to 6%, and lowered the policy rate by 75 basis points. Concurrently, the government has increased infrastructure spending and decreased corporate tax rates. The combined effect of these monetary and fiscal policies on Zephyria's aggregate demand (AD) is most likely to be:",
+            "options": [
+                "Strongly contractionary.",
+                "Strongly expansionary.",
+                "Indeterminate without knowing the relative magnitudes."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Analyze whether each policy increases or decreases the money supply and government injections.",
+            "explanation": "Open market purchases, lower reserve requirements, lower policy rates, increased spending, and lower taxes all act to expand the economy and increase aggregate demand."
+        },
+        {
+            "id": 4,
+            "text": "An analyst is evaluating a project with an initial outlay of $500,000. The project is expected to generate cash flows of $173,000 in Year 1, $210,000 in Year 2, $290,000 in Year 3, and $283,000 in Year 4. The company's weighted average cost of capital (WACC) is 10.0%. The net present value (NPV) of the project is closest to:",
+            "options": [
+                "$205,624",
+                "$242,001",
+                "$266,316"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount each cash flow back to present value using the WACC.",
+            "explanation": "NPV = -Outlay + CF1/(1+r) + CF2/(1+r)^2 + CF3/(1+r)^3 + CF4/(1+r)^4. The exact NPV is $242,001."
+        },
+        {
+            "id": 5,
+            "text": "Elena Rostova, a research analyst at Summit Partners, is preparing a report on the telecommunications sector. He incorporates several paragraphs from a recent industry journal article published by J. Maynard Keynes into his report. Elena Rostova changes a few words in the copied text but does not cite the original author or the journal. According to the CFA Institute Standards of Professional Conduct, Elena Rostova has violated the Standard relating to:",
+            "options": [
+                "Misrepresentation (Plagiarism).",
+                "Diligence and Reasonable Basis.",
+                "Communication with Clients and Prospective Clients."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Using someone else's work without credit is a specific violation.",
+            "explanation": "Standard I(C) Misrepresentation strictly prohibits plagiarism. Changing a few words without citing the original source still constitutes plagiarism."
+        },
+        {
+            "id": 6,
+            "text": "An analyst is evaluating a project with an initial outlay of $496,000. The project is expected to generate cash flows of $181,000 in Year 1, $173,000 in Year 2, $281,000 in Year 3, and $272,000 in Year 4. The company's weighted average cost of capital (WACC) is 8.2%. The net present value (NPV) of the project is closest to:",
+            "options": [
+                "$213,789",
+                "$239,341",
+                "$282,465"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount each cash flow back to present value using the WACC.",
+            "explanation": "NPV = -Outlay + CF1/(1+r) + CF2/(1+r)^2 + CF3/(1+r)^3 + CF4/(1+r)^4. The exact NPV is $239,341."
+        },
+        {
+            "id": 7,
+            "text": "Elena Rostova, CFA, is a portfolio manager at Vanguard Analytics. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of ByteCorp. The report concludes that ByteCorp is severely undervalued. Before the report is distributed to clients, Elena Rostova purchases 3000 shares of ByteCorp for her personal account and 24000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, Elena Rostova has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 8,
+            "text": "An economist observes that in the country of Avalon, the central bank has recently engaged in open market sales of government securities, increased the reserve requirement from 9% to 12%, and raised the policy rate by 25 basis points. Concurrently, the government has reduced infrastructure spending and increased corporate tax rates. The combined effect of these monetary and fiscal policies on Avalon's aggregate demand (AD) is most likely to be:",
+            "options": [
+                "Strongly contractionary.",
+                "Strongly expansionary.",
+                "Indeterminate without knowing the relative magnitudes."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Analyze whether each policy increases or decreases the money supply and government injections.",
+            "explanation": "Open market sales, higher reserve requirements, higher policy rates, reduced spending, and higher taxes all act to contract the economy and reduce aggregate demand."
+        },
+        {
+            "id": 9,
+            "text": "Consider a portfolio composed of two risky assets, Asset A and Asset B. Asset A has an expected return of 10% and a standard deviation of 17%. Asset B has an expected return of 7% and a standard deviation of 9%. The correlation coefficient between the returns of the two assets is 0.1. If an investor allocates 60% of her funds to Asset A and 40% to Asset B, the expected standard deviation of the portfolio is closest to:",
+            "options": [
+                "8.54%",
+                "11.15%",
+                "13.87%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: sqrt(wA^2 * stdA^2 + wB^2 * stdB^2 + 2*wA*wB*stdA*stdB*corr)",
+            "explanation": "Calculation is performed using the portfolio variance formula. The portfolio standard deviation is 11.15%."
+        },
+        {
+            "id": 10,
+            "text": "Elena Rostova, a research analyst at Vanguard Analytics, is preparing a report on the telecommunications sector. He incorporates several paragraphs from a recent industry journal article published by Dr. H. Markowitz into his report. Elena Rostova changes a few words in the copied text but does not cite the original author or the journal. According to the CFA Institute Standards of Professional Conduct, Elena Rostova has violated the Standard relating to:",
+            "options": [
+                "Misrepresentation (Plagiarism).",
+                "Diligence and Reasonable Basis.",
+                "Communication with Clients and Prospective Clients."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Using someone else's work without credit is a specific violation.",
+            "explanation": "Standard I(C) Misrepresentation strictly prohibits plagiarism. Changing a few words without citing the original source still constitutes plagiarism."
+        },
+        {
+            "id": 11,
+            "text": "An analyst is evaluating a project with an initial outlay of $688,000. The project is expected to generate cash flows of $199,000 in Year 1, $198,000 in Year 2, $286,000 in Year 3, and $302,000 in Year 4. The company's weighted average cost of capital (WACC) is 8.1%. The net present value (NPV) of the project is closest to:",
+            "options": [
+                "$93,677",
+                "$113,093",
+                "$125,370"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount each cash flow back to present value using the WACC.",
+            "explanation": "NPV = -Outlay + CF1/(1+r) + CF2/(1+r)^2 + CF3/(1+r)^3 + CF4/(1+r)^4. The exact NPV is $113,093."
+        },
+        {
+            "id": 12,
+            "text": "James Smith, a research analyst at Apex Investments, is preparing a report on the telecommunications sector. He incorporates several paragraphs from a recent industry journal article published by Dr. A. Smith into his report. James Smith changes a few words in the copied text but does not cite the original author or the journal. According to the CFA Institute Standards of Professional Conduct, James Smith has violated the Standard relating to:",
+            "options": [
+                "Misrepresentation (Plagiarism).",
+                "Diligence and Reasonable Basis.",
+                "Communication with Clients and Prospective Clients."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Using someone else's work without credit is a specific violation.",
+            "explanation": "Standard I(C) Misrepresentation strictly prohibits plagiarism. Changing a few words without citing the original source still constitutes plagiarism."
+        },
+        {
+            "id": 13,
+            "text": "Consider a portfolio composed of two risky assets, Asset A and Asset B. Asset A has an expected return of 13% and a standard deviation of 17%. Asset B has an expected return of 7% and a standard deviation of 9%. The correlation coefficient between the returns of the two assets is 0.78. If an investor allocates 50% of her funds to Asset A and 50% to Asset B, the expected standard deviation of the portfolio is closest to:",
+            "options": [
+                "10.16%",
+                "12.34%",
+                "14.90%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: sqrt(wA^2 * stdA^2 + wB^2 * stdB^2 + 2*wA*wB*stdA*stdB*corr)",
+            "explanation": "Calculation is performed using the portfolio variance formula. The portfolio standard deviation is 12.34%."
+        },
+        {
+            "id": 14,
+            "text": "An analyst is evaluating a project with an initial outlay of $513,000. The project is expected to generate cash flows of $159,000 in Year 1, $222,000 in Year 2, $291,000 in Year 3, and $222,000 in Year 4. The company's weighted average cost of capital (WACC) is 11.3%. The net present value (NPV) of the project is closest to:",
+            "options": [
+                "$147,488",
+                "$164,796",
+                "$196,861"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount each cash flow back to present value using the WACC.",
+            "explanation": "NPV = -Outlay + CF1/(1+r) + CF2/(1+r)^2 + CF3/(1+r)^3 + CF4/(1+r)^4. The exact NPV is $164,796."
+        },
+        {
+            "id": 15,
+            "text": "Consider a portfolio composed of two risky assets, Asset A and Asset B. Asset A has an expected return of 11% and a standard deviation of 22%. Asset B has an expected return of 5% and a standard deviation of 8%. The correlation coefficient between the returns of the two assets is -0.27. If an investor allocates 60% of her funds to Asset A and 40% to Asset B, the expected standard deviation of the portfolio is closest to:",
+            "options": [
+                "10.40%",
+                "12.71%",
+                "15.66%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: sqrt(wA^2 * stdA^2 + wB^2 * stdB^2 + 2*wA*wB*stdA*stdB*corr)",
+            "explanation": "Calculation is performed using the portfolio variance formula. The portfolio standard deviation is 12.71%."
+        },
+        {
+            "id": 16,
+            "text": "Consider a portfolio composed of two risky assets, Asset A and Asset B. Asset A has an expected return of 10% and a standard deviation of 17%. Asset B has an expected return of 6% and a standard deviation of 12%. The correlation coefficient between the returns of the two assets is 0.4. If an investor allocates 40% of her funds to Asset A and 60% to Asset B, the expected standard deviation of the portfolio is closest to:",
+            "options": [
+                "9.91%",
+                "11.72%",
+                "15.20%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: sqrt(wA^2 * stdA^2 + wB^2 * stdB^2 + 2*wA*wB*stdA*stdB*corr)",
+            "explanation": "Calculation is performed using the portfolio variance formula. The portfolio standard deviation is 11.72%."
+        },
+        {
+            "id": 17,
+            "text": "An economist observes that in the country of Mercia, the central bank has recently engaged in open market sales of government securities, increased the reserve requirement from 8% to 12%, and raised the policy rate by 25 basis points. Concurrently, the government has reduced infrastructure spending and increased corporate tax rates. The combined effect of these monetary and fiscal policies on Mercia's aggregate demand (AD) is most likely to be:",
+            "options": [
+                "Strongly contractionary.",
+                "Strongly expansionary.",
+                "Indeterminate without knowing the relative magnitudes."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Analyze whether each policy increases or decreases the money supply and government injections.",
+            "explanation": "Open market sales, higher reserve requirements, higher policy rates, reduced spending, and higher taxes all act to contract the economy and reduce aggregate demand."
+        },
+        {
+            "id": 18,
+            "text": "Sarah Jenkins, a research analyst at Summit Partners, is preparing a report on the telecommunications sector. He incorporates several paragraphs from a recent industry journal article published by Dr. A. Smith into his report. Sarah Jenkins changes a few words in the copied text but does not cite the original author or the journal. According to the CFA Institute Standards of Professional Conduct, Sarah Jenkins has violated the Standard relating to:",
+            "options": [
+                "Misrepresentation (Plagiarism).",
+                "Diligence and Reasonable Basis.",
+                "Communication with Clients and Prospective Clients."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Using someone else's work without credit is a specific violation.",
+            "explanation": "Standard I(C) Misrepresentation strictly prohibits plagiarism. Changing a few words without citing the original source still constitutes plagiarism."
+        },
+        {
+            "id": 19,
+            "text": "An analyst is evaluating a project with an initial outlay of $672,000. The project is expected to generate cash flows of $133,000 in Year 1, $190,000 in Year 2, $247,000 in Year 3, and $299,000 in Year 4. The company's weighted average cost of capital (WACC) is 10.6%. The net present value (NPV) of the project is closest to:",
+            "options": [
+                "$-11,675",
+                "$-14,025",
+                "$-16,159"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount each cash flow back to present value using the WACC.",
+            "explanation": "NPV = -Outlay + CF1/(1+r) + CF2/(1+r)^2 + CF3/(1+r)^3 + CF4/(1+r)^4. The exact NPV is $-14,025."
+        },
+        {
+            "id": 20,
+            "text": "An economist observes that in the country of Gondwana, the central bank has recently engaged in open market sales of government securities, increased the reserve requirement from 8% to 11%, and raised the policy rate by 25 basis points. Concurrently, the government has reduced infrastructure spending and increased corporate tax rates. The combined effect of these monetary and fiscal policies on Gondwana's aggregate demand (AD) is most likely to be:",
+            "options": [
+                "Strongly contractionary.",
+                "Strongly expansionary.",
+                "Indeterminate without knowing the relative magnitudes."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Analyze whether each policy increases or decreases the money supply and government injections.",
+            "explanation": "Open market sales, higher reserve requirements, higher policy rates, reduced spending, and higher taxes all act to contract the economy and reduce aggregate demand."
+        },
+        {
+            "id": 21,
+            "text": "Robert Chen, CFA, is a portfolio manager at Apex Investments. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of AeroDynamics. The report concludes that AeroDynamics is severely undervalued. Before the report is distributed to clients, Robert Chen purchases 2000 shares of AeroDynamics for her personal account and 38000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, Robert Chen has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 22,
+            "text": "David O'Connor, CFA, is a portfolio manager at Global Horizon Capital. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of Stellar Energy. The report concludes that Stellar Energy is severely undervalued. Before the report is distributed to clients, David O'Connor purchases 4000 shares of Stellar Energy for her personal account and 35000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, David O'Connor has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 23,
+            "text": "Consider a portfolio composed of two risky assets, Asset A and Asset B. Asset A has an expected return of 14% and a standard deviation of 21%. Asset B has an expected return of 7% and a standard deviation of 9%. The correlation coefficient between the returns of the two assets is -0.45. If an investor allocates 50% of her funds to Asset A and 50% to Asset B, the expected standard deviation of the portfolio is closest to:",
+            "options": [
+                "7.34%",
+                "9.38%",
+                "11.47%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: sqrt(wA^2 * stdA^2 + wB^2 * stdB^2 + 2*wA*wB*stdA*stdB*corr)",
+            "explanation": "Calculation is performed using the portfolio variance formula. The portfolio standard deviation is 9.38%."
+        },
+        {
+            "id": 24,
+            "text": "Sarah Jenkins, a research analyst at Apex Investments, is preparing a report on the telecommunications sector. He incorporates several paragraphs from a recent industry journal article published by Dr. A. Smith into his report. Sarah Jenkins changes a few words in the copied text but does not cite the original author or the journal. According to the CFA Institute Standards of Professional Conduct, Sarah Jenkins has violated the Standard relating to:",
+            "options": [
+                "Misrepresentation (Plagiarism).",
+                "Diligence and Reasonable Basis.",
+                "Communication with Clients and Prospective Clients."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Using someone else's work without credit is a specific violation.",
+            "explanation": "Standard I(C) Misrepresentation strictly prohibits plagiarism. Changing a few words without citing the original source still constitutes plagiarism."
+        },
+        {
+            "id": 25,
+            "text": "A manufacturing firm operating under US GAAP reports the following financial data for the year ended December 31: Beginning Inventory of $45000, Purchases of $103000, and Ending Inventory of $48000. During the year, the firm recorded an inventory write-down of $8000 due to obsolescence. If the firm had used IFRS instead of US GAAP, and the net realizable value of the inventory subsequently recovered by $9000 in the following year, the most appropriate accounting treatment under IFRS would be to:",
+            "options": [
+                "Reverse the write-down up to the original cost of the inventory, decreasing COGS.",
+                "Recognize the recovery as a direct increase to retained earnings.",
+                "Ignore the recovery because inventory reversals are prohibited under IFRS."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "IFRS allows reversals of inventory write-downs, unlike US GAAP.",
+            "explanation": "Under IFRS, if the net realizable value of previously written-down inventory recovers, the write-down can be reversed. The reversal is recognized as a reduction in cost of goods sold (COGS) in the period it occurs, capped at the original cost."
+        },
+        {
+            "id": 26,
+            "text": "An analyst is evaluating a project with an initial outlay of $593,000. The project is expected to generate cash flows of $156,000 in Year 1, $186,000 in Year 2, $250,000 in Year 3, and $350,000 in Year 4. The company's weighted average cost of capital (WACC) is 8.1%. The net present value (NPV) of the project is closest to:",
+            "options": [
+                "$134,540",
+                "$164,699",
+                "$196,717"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount each cash flow back to present value using the WACC.",
+            "explanation": "NPV = -Outlay + CF1/(1+r) + CF2/(1+r)^2 + CF3/(1+r)^3 + CF4/(1+r)^4. The exact NPV is $164,699."
+        },
+        {
+            "id": 27,
+            "text": "Robert Chen, CFA, is a portfolio manager at Vanguard Analytics. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of BioGenix. The report concludes that BioGenix is severely undervalued. Before the report is distributed to clients, Robert Chen purchases 1000 shares of BioGenix for her personal account and 20000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, Robert Chen has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 28,
+            "text": "An analyst is evaluating a project with an initial outlay of $481,000. The project is expected to generate cash flows of $176,000 in Year 1, $229,000 in Year 2, $192,000 in Year 3, and $220,000 in Year 4. The company's weighted average cost of capital (WACC) is 8.9%. The net present value (NPV) of the project is closest to:",
+            "options": [
+                "$157,518",
+                "$178,810",
+                "$210,463"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount each cash flow back to present value using the WACC.",
+            "explanation": "NPV = -Outlay + CF1/(1+r) + CF2/(1+r)^2 + CF3/(1+r)^3 + CF4/(1+r)^4. The exact NPV is $178,810."
+        },
+        {
+            "id": 29,
+            "text": "A manufacturing firm operating under US GAAP reports the following financial data for the year ended December 31: Beginning Inventory of $36000, Purchases of $105000, and Ending Inventory of $44000. During the year, the firm recorded an inventory write-down of $10000 due to obsolescence. If the firm had used IFRS instead of US GAAP, and the net realizable value of the inventory subsequently recovered by $5000 in the following year, the most appropriate accounting treatment under IFRS would be to:",
+            "options": [
+                "Reverse the write-down up to the original cost of the inventory, decreasing COGS.",
+                "Recognize the recovery as a direct increase to retained earnings.",
+                "Ignore the recovery because inventory reversals are prohibited under IFRS."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "IFRS allows reversals of inventory write-downs, unlike US GAAP.",
+            "explanation": "Under IFRS, if the net realizable value of previously written-down inventory recovers, the write-down can be reversed. The reversal is recognized as a reduction in cost of goods sold (COGS) in the period it occurs, capped at the original cost."
+        },
+        {
+            "id": 30,
+            "text": "An analyst is evaluating a project with an initial outlay of $479,000. The project is expected to generate cash flows of $200,000 in Year 1, $212,000 in Year 2, $218,000 in Year 3, and $219,000 in Year 4. The company's weighted average cost of capital (WACC) is 10.2%. The net present value (NPV) of the project is closest to:",
+            "options": [
+                "$151,464",
+                "$188,453",
+                "$217,416"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount each cash flow back to present value using the WACC.",
+            "explanation": "NPV = -Outlay + CF1/(1+r) + CF2/(1+r)^2 + CF3/(1+r)^3 + CF4/(1+r)^4. The exact NPV is $188,453."
+        },
+        {
+            "id": 31,
+            "text": "A manufacturing firm operating under US GAAP reports the following financial data for the year ended December 31: Beginning Inventory of $40000, Purchases of $118000, and Ending Inventory of $54000. During the year, the firm recorded an inventory write-down of $11000 due to obsolescence. If the firm had used IFRS instead of US GAAP, and the net realizable value of the inventory subsequently recovered by $9000 in the following year, the most appropriate accounting treatment under IFRS would be to:",
+            "options": [
+                "Reverse the write-down up to the original cost of the inventory, decreasing COGS.",
+                "Recognize the recovery as a direct increase to retained earnings.",
+                "Ignore the recovery because inventory reversals are prohibited under IFRS."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "IFRS allows reversals of inventory write-downs, unlike US GAAP.",
+            "explanation": "Under IFRS, if the net realizable value of previously written-down inventory recovers, the write-down can be reversed. The reversal is recognized as a reduction in cost of goods sold (COGS) in the period it occurs, capped at the original cost."
+        },
+        {
+            "id": 32,
+            "text": "Consider a portfolio composed of two risky assets, Asset A and Asset B. Asset A has an expected return of 15% and a standard deviation of 18%. Asset B has an expected return of 7% and a standard deviation of 9%. The correlation coefficient between the returns of the two assets is 0.32. If an investor allocates 60% of her funds to Asset A and 40% to Asset B, the expected standard deviation of the portfolio is closest to:",
+            "options": [
+                "9.69%",
+                "12.43%",
+                "14.82%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: sqrt(wA^2 * stdA^2 + wB^2 * stdB^2 + 2*wA*wB*stdA*stdB*corr)",
+            "explanation": "Calculation is performed using the portfolio variance formula. The portfolio standard deviation is 12.43%."
+        },
+        {
+            "id": 33,
+            "text": "An economist observes that in the country of Eldoria, the central bank has recently engaged in open market sales of government securities, increased the reserve requirement from 9% to 13%, and raised the policy rate by 50 basis points. Concurrently, the government has reduced infrastructure spending and increased corporate tax rates. The combined effect of these monetary and fiscal policies on Eldoria's aggregate demand (AD) is most likely to be:",
+            "options": [
+                "Strongly contractionary.",
+                "Strongly expansionary.",
+                "Indeterminate without knowing the relative magnitudes."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Analyze whether each policy increases or decreases the money supply and government injections.",
+            "explanation": "Open market sales, higher reserve requirements, higher policy rates, reduced spending, and higher taxes all act to contract the economy and reduce aggregate demand."
+        },
+        {
+            "id": 34,
+            "text": "Consider a portfolio composed of two risky assets, Asset A and Asset B. Asset A has an expected return of 12% and a standard deviation of 20%. Asset B has an expected return of 6% and a standard deviation of 8%. The correlation coefficient between the returns of the two assets is -0.4. If an investor allocates 40% of her funds to Asset A and 60% to Asset B, the expected standard deviation of the portfolio is closest to:",
+            "options": [
+                "6.34%",
+                "7.50%",
+                "9.25%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: sqrt(wA^2 * stdA^2 + wB^2 * stdB^2 + 2*wA*wB*stdA*stdB*corr)",
+            "explanation": "Calculation is performed using the portfolio variance formula. The portfolio standard deviation is 7.50%."
+        },
+        {
+            "id": 35,
+            "text": "Consider a portfolio composed of two risky assets, Asset A and Asset B. Asset A has an expected return of 10% and a standard deviation of 17%. Asset B has an expected return of 8% and a standard deviation of 13%. The correlation coefficient between the returns of the two assets is -0.49. If an investor allocates 60% of her funds to Asset A and 40% to Asset B, the expected standard deviation of the portfolio is closest to:",
+            "options": [
+                "7.08%",
+                "8.89%",
+                "11.06%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: sqrt(wA^2 * stdA^2 + wB^2 * stdB^2 + 2*wA*wB*stdA*stdB*corr)",
+            "explanation": "Calculation is performed using the portfolio variance formula. The portfolio standard deviation is 8.89%."
+        },
+        {
+            "id": 36,
+            "text": "Consider a portfolio composed of two risky assets, Asset A and Asset B. Asset A has an expected return of 12% and a standard deviation of 20%. Asset B has an expected return of 8% and a standard deviation of 11%. The correlation coefficient between the returns of the two assets is 0.5. If an investor allocates 50% of her funds to Asset A and 50% to Asset B, the expected standard deviation of the portfolio is closest to:",
+            "options": [
+                "11.54%",
+                "13.61%",
+                "17.05%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: sqrt(wA^2 * stdA^2 + wB^2 * stdB^2 + 2*wA*wB*stdA*stdB*corr)",
+            "explanation": "Calculation is performed using the portfolio variance formula. The portfolio standard deviation is 13.61%."
+        },
+        {
+            "id": 37,
+            "text": "Aisha Patel, CFA, is a portfolio manager at Meridian Wealth. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of NovaTech. The report concludes that NovaTech is severely undervalued. Before the report is distributed to clients, Aisha Patel purchases 3000 shares of NovaTech for her personal account and 32000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, Aisha Patel has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 38,
+            "text": "James Smith, CFA, is a portfolio manager at Summit Partners. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of Stellar Energy. The report concludes that Stellar Energy is severely undervalued. Before the report is distributed to clients, James Smith purchases 3000 shares of Stellar Energy for her personal account and 17000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, James Smith has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 39,
+            "text": "Robert Chen, a research analyst at Vanguard Analytics, is preparing a report on the telecommunications sector. He incorporates several paragraphs from a recent industry journal article published by J. Maynard Keynes into his report. Robert Chen changes a few words in the copied text but does not cite the original author or the journal. According to the CFA Institute Standards of Professional Conduct, Robert Chen has violated the Standard relating to:",
+            "options": [
+                "Misrepresentation (Plagiarism).",
+                "Diligence and Reasonable Basis.",
+                "Communication with Clients and Prospective Clients."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Using someone else's work without credit is a specific violation.",
+            "explanation": "Standard I(C) Misrepresentation strictly prohibits plagiarism. Changing a few words without citing the original source still constitutes plagiarism."
+        },
+        {
+            "id": 40,
+            "text": "A manufacturing firm operating under US GAAP reports the following financial data for the year ended December 31: Beginning Inventory of $39000, Purchases of $120000, and Ending Inventory of $55000. During the year, the firm recorded an inventory write-down of $8000 due to obsolescence. If the firm had used IFRS instead of US GAAP, and the net realizable value of the inventory subsequently recovered by $15000 in the following year, the most appropriate accounting treatment under IFRS would be to:",
+            "options": [
+                "Reverse the write-down up to the original cost of the inventory, decreasing COGS.",
+                "Recognize the recovery as a direct increase to retained earnings.",
+                "Ignore the recovery because inventory reversals are prohibited under IFRS."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "IFRS allows reversals of inventory write-downs, unlike US GAAP.",
+            "explanation": "Under IFRS, if the net realizable value of previously written-down inventory recovers, the write-down can be reversed. The reversal is recognized as a reduction in cost of goods sold (COGS) in the period it occurs, capped at the original cost."
+        },
+        {
+            "id": 41,
+            "text": "Sarah Jenkins, a research analyst at Vanguard Analytics, is preparing a report on the telecommunications sector. He incorporates several paragraphs from a recent industry journal article published by Dr. A. Smith into his report. Sarah Jenkins changes a few words in the copied text but does not cite the original author or the journal. According to the CFA Institute Standards of Professional Conduct, Sarah Jenkins has violated the Standard relating to:",
+            "options": [
+                "Misrepresentation (Plagiarism).",
+                "Diligence and Reasonable Basis.",
+                "Communication with Clients and Prospective Clients."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Using someone else's work without credit is a specific violation.",
+            "explanation": "Standard I(C) Misrepresentation strictly prohibits plagiarism. Changing a few words without citing the original source still constitutes plagiarism."
+        },
+        {
+            "id": 42,
+            "text": "An economist observes that in the country of Gondwana, the central bank has recently engaged in open market sales of government securities, increased the reserve requirement from 9% to 12%, and raised the policy rate by 50 basis points. Concurrently, the government has reduced infrastructure spending and increased corporate tax rates. The combined effect of these monetary and fiscal policies on Gondwana's aggregate demand (AD) is most likely to be:",
+            "options": [
+                "Strongly contractionary.",
+                "Strongly expansionary.",
+                "Indeterminate without knowing the relative magnitudes."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Analyze whether each policy increases or decreases the money supply and government injections.",
+            "explanation": "Open market sales, higher reserve requirements, higher policy rates, reduced spending, and higher taxes all act to contract the economy and reduce aggregate demand."
+        },
+        {
+            "id": 43,
+            "text": "A manufacturing firm operating under US GAAP reports the following financial data for the year ended December 31: Beginning Inventory of $38000, Purchases of $134000, and Ending Inventory of $40000. During the year, the firm recorded an inventory write-down of $11000 due to obsolescence. If the firm had used IFRS instead of US GAAP, and the net realizable value of the inventory subsequently recovered by $6000 in the following year, the most appropriate accounting treatment under IFRS would be to:",
+            "options": [
+                "Reverse the write-down up to the original cost of the inventory, decreasing COGS.",
+                "Recognize the recovery as a direct increase to retained earnings.",
+                "Ignore the recovery because inventory reversals are prohibited under IFRS."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "IFRS allows reversals of inventory write-downs, unlike US GAAP.",
+            "explanation": "Under IFRS, if the net realizable value of previously written-down inventory recovers, the write-down can be reversed. The reversal is recognized as a reduction in cost of goods sold (COGS) in the period it occurs, capped at the original cost."
+        },
+        {
+            "id": 44,
+            "text": "A manufacturing firm operating under US GAAP reports the following financial data for the year ended December 31: Beginning Inventory of $49000, Purchases of $107000, and Ending Inventory of $48000. During the year, the firm recorded an inventory write-down of $10000 due to obsolescence. If the firm had used IFRS instead of US GAAP, and the net realizable value of the inventory subsequently recovered by $15000 in the following year, the most appropriate accounting treatment under IFRS would be to:",
+            "options": [
+                "Reverse the write-down up to the original cost of the inventory, decreasing COGS.",
+                "Recognize the recovery as a direct increase to retained earnings.",
+                "Ignore the recovery because inventory reversals are prohibited under IFRS."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "IFRS allows reversals of inventory write-downs, unlike US GAAP.",
+            "explanation": "Under IFRS, if the net realizable value of previously written-down inventory recovers, the write-down can be reversed. The reversal is recognized as a reduction in cost of goods sold (COGS) in the period it occurs, capped at the original cost."
+        },
+        {
+            "id": 45,
+            "text": "An economist observes that in the country of Mercia, the central bank has recently engaged in open market purchases of government securities, decreased the reserve requirement from 10% to 6%, and lowered the policy rate by 75 basis points. Concurrently, the government has increased infrastructure spending and decreased corporate tax rates. The combined effect of these monetary and fiscal policies on Mercia's aggregate demand (AD) is most likely to be:",
+            "options": [
+                "Strongly contractionary.",
+                "Strongly expansionary.",
+                "Indeterminate without knowing the relative magnitudes."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Analyze whether each policy increases or decreases the money supply and government injections.",
+            "explanation": "Open market purchases, lower reserve requirements, lower policy rates, increased spending, and lower taxes all act to expand the economy and increase aggregate demand."
+        },
+        {
+            "id": 46,
+            "text": "A manufacturing firm operating under US GAAP reports the following financial data for the year ended December 31: Beginning Inventory of $32000, Purchases of $116000, and Ending Inventory of $46000. During the year, the firm recorded an inventory write-down of $11000 due to obsolescence. If the firm had used IFRS instead of US GAAP, and the net realizable value of the inventory subsequently recovered by $8000 in the following year, the most appropriate accounting treatment under IFRS would be to:",
+            "options": [
+                "Reverse the write-down up to the original cost of the inventory, decreasing COGS.",
+                "Recognize the recovery as a direct increase to retained earnings.",
+                "Ignore the recovery because inventory reversals are prohibited under IFRS."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "IFRS allows reversals of inventory write-downs, unlike US GAAP.",
+            "explanation": "Under IFRS, if the net realizable value of previously written-down inventory recovers, the write-down can be reversed. The reversal is recognized as a reduction in cost of goods sold (COGS) in the period it occurs, capped at the original cost."
+        },
+        {
+            "id": 47,
+            "text": "A manufacturing firm operating under US GAAP reports the following financial data for the year ended December 31: Beginning Inventory of $40000, Purchases of $129000, and Ending Inventory of $56000. During the year, the firm recorded an inventory write-down of $10000 due to obsolescence. If the firm had used IFRS instead of US GAAP, and the net realizable value of the inventory subsequently recovered by $15000 in the following year, the most appropriate accounting treatment under IFRS would be to:",
+            "options": [
+                "Reverse the write-down up to the original cost of the inventory, decreasing COGS.",
+                "Recognize the recovery as a direct increase to retained earnings.",
+                "Ignore the recovery because inventory reversals are prohibited under IFRS."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "IFRS allows reversals of inventory write-downs, unlike US GAAP.",
+            "explanation": "Under IFRS, if the net realizable value of previously written-down inventory recovers, the write-down can be reversed. The reversal is recognized as a reduction in cost of goods sold (COGS) in the period it occurs, capped at the original cost."
+        },
+        {
+            "id": 48,
+            "text": "Consider a portfolio composed of two risky assets, Asset A and Asset B. Asset A has an expected return of 15% and a standard deviation of 20%. Asset B has an expected return of 9% and a standard deviation of 14%. The correlation coefficient between the returns of the two assets is 0.01. If an investor allocates 60% of her funds to Asset A and 40% to Asset B, the expected standard deviation of the portfolio is closest to:",
+            "options": [
+                "9.70%",
+                "13.29%",
+                "15.72%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: sqrt(wA^2 * stdA^2 + wB^2 * stdB^2 + 2*wA*wB*stdA*stdB*corr)",
+            "explanation": "Calculation is performed using the portfolio variance formula. The portfolio standard deviation is 13.29%."
+        },
+        {
+            "id": 49,
+            "text": "An analyst is evaluating a project with an initial outlay of $579,000. The project is expected to generate cash flows of $176,000 in Year 1, $211,000 in Year 2, $205,000 in Year 3, and $206,000 in Year 4. The company's weighted average cost of capital (WACC) is 10.9%. The net present value (NPV) of the project is closest to:",
+            "options": [
+                "$30,527",
+                "$37,752",
+                "$41,557"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount each cash flow back to present value using the WACC.",
+            "explanation": "NPV = -Outlay + CF1/(1+r) + CF2/(1+r)^2 + CF3/(1+r)^3 + CF4/(1+r)^4. The exact NPV is $37,752."
+        },
+        {
+            "id": 50,
+            "text": "An economist observes that in the country of Gondwana, the central bank has recently engaged in open market purchases of government securities, decreased the reserve requirement from 10% to 7%, and lowered the policy rate by 75 basis points. Concurrently, the government has increased infrastructure spending and decreased corporate tax rates. The combined effect of these monetary and fiscal policies on Gondwana's aggregate demand (AD) is most likely to be:",
+            "options": [
+                "Strongly contractionary.",
+                "Strongly expansionary.",
+                "Indeterminate without knowing the relative magnitudes."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Analyze whether each policy increases or decreases the money supply and government injections.",
+            "explanation": "Open market purchases, lower reserve requirements, lower policy rates, increased spending, and lower taxes all act to expand the economy and increase aggregate demand."
+        },
+        {
+            "id": 51,
+            "text": "David O'Connor, CFA, is a portfolio manager at Global Horizon Capital. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of BioGenix. The report concludes that BioGenix is severely undervalued. Before the report is distributed to clients, David O'Connor purchases 4000 shares of BioGenix for her personal account and 14000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, David O'Connor has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 52,
+            "text": "An economist observes that in the country of Mercia, the central bank has recently engaged in open market purchases of government securities, decreased the reserve requirement from 10% to 6%, and lowered the policy rate by 75 basis points. Concurrently, the government has increased infrastructure spending and decreased corporate tax rates. The combined effect of these monetary and fiscal policies on Mercia's aggregate demand (AD) is most likely to be:",
+            "options": [
+                "Strongly contractionary.",
+                "Strongly expansionary.",
+                "Indeterminate without knowing the relative magnitudes."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Analyze whether each policy increases or decreases the money supply and government injections.",
+            "explanation": "Open market purchases, lower reserve requirements, lower policy rates, increased spending, and lower taxes all act to expand the economy and increase aggregate demand."
+        },
+        {
+            "id": 53,
+            "text": "An analyst is evaluating a project with an initial outlay of $577,000. The project is expected to generate cash flows of $182,000 in Year 1, $168,000 in Year 2, $263,000 in Year 3, and $387,000 in Year 4. The company's weighted average cost of capital (WACC) is 11.9%. The net present value (NPV) of the project is closest to:",
+            "options": [
+                "$127,746",
+                "$154,340",
+                "$171,379"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount each cash flow back to present value using the WACC.",
+            "explanation": "NPV = -Outlay + CF1/(1+r) + CF2/(1+r)^2 + CF3/(1+r)^3 + CF4/(1+r)^4. The exact NPV is $154,340."
+        },
+        {
+            "id": 54,
+            "text": "Robert Chen, CFA, is a portfolio manager at Meridian Wealth. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of AeroDynamics. The report concludes that AeroDynamics is severely undervalued. Before the report is distributed to clients, Robert Chen purchases 2000 shares of AeroDynamics for her personal account and 43000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, Robert Chen has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 55,
+            "text": "A manufacturing firm operating under US GAAP reports the following financial data for the year ended December 31: Beginning Inventory of $30000, Purchases of $116000, and Ending Inventory of $49000. During the year, the firm recorded an inventory write-down of $12000 due to obsolescence. If the firm had used IFRS instead of US GAAP, and the net realizable value of the inventory subsequently recovered by $15000 in the following year, the most appropriate accounting treatment under IFRS would be to:",
+            "options": [
+                "Reverse the write-down up to the original cost of the inventory, decreasing COGS.",
+                "Recognize the recovery as a direct increase to retained earnings.",
+                "Ignore the recovery because inventory reversals are prohibited under IFRS."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "IFRS allows reversals of inventory write-downs, unlike US GAAP.",
+            "explanation": "Under IFRS, if the net realizable value of previously written-down inventory recovers, the write-down can be reversed. The reversal is recognized as a reduction in cost of goods sold (COGS) in the period it occurs, capped at the original cost."
+        },
+        {
+            "id": 56,
+            "text": "A manufacturing firm operating under US GAAP reports the following financial data for the year ended December 31: Beginning Inventory of $40000, Purchases of $131000, and Ending Inventory of $60000. During the year, the firm recorded an inventory write-down of $12000 due to obsolescence. If the firm had used IFRS instead of US GAAP, and the net realizable value of the inventory subsequently recovered by $6000 in the following year, the most appropriate accounting treatment under IFRS would be to:",
+            "options": [
+                "Reverse the write-down up to the original cost of the inventory, decreasing COGS.",
+                "Recognize the recovery as a direct increase to retained earnings.",
+                "Ignore the recovery because inventory reversals are prohibited under IFRS."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "IFRS allows reversals of inventory write-downs, unlike US GAAP.",
+            "explanation": "Under IFRS, if the net realizable value of previously written-down inventory recovers, the write-down can be reversed. The reversal is recognized as a reduction in cost of goods sold (COGS) in the period it occurs, capped at the original cost."
+        },
+        {
+            "id": 57,
+            "text": "An economist observes that in the country of Gondwana, the central bank has recently engaged in open market sales of government securities, increased the reserve requirement from 10% to 12%, and raised the policy rate by 50 basis points. Concurrently, the government has reduced infrastructure spending and increased corporate tax rates. The combined effect of these monetary and fiscal policies on Gondwana's aggregate demand (AD) is most likely to be:",
+            "options": [
+                "Strongly contractionary.",
+                "Strongly expansionary.",
+                "Indeterminate without knowing the relative magnitudes."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Analyze whether each policy increases or decreases the money supply and government injections.",
+            "explanation": "Open market sales, higher reserve requirements, higher policy rates, reduced spending, and higher taxes all act to contract the economy and reduce aggregate demand."
+        },
+        {
+            "id": 58,
+            "text": "Consider a portfolio composed of two risky assets, Asset A and Asset B. Asset A has an expected return of 12% and a standard deviation of 18%. Asset B has an expected return of 6% and a standard deviation of 11%. The correlation coefficient between the returns of the two assets is 0.78. If an investor allocates 50% of her funds to Asset A and 50% to Asset B, the expected standard deviation of the portfolio is closest to:",
+            "options": [
+                "10.28%",
+                "13.73%",
+                "16.05%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: sqrt(wA^2 * stdA^2 + wB^2 * stdB^2 + 2*wA*wB*stdA*stdB*corr)",
+            "explanation": "Calculation is performed using the portfolio variance formula. The portfolio standard deviation is 13.73%."
+        },
+        {
+            "id": 59,
+            "text": "Consider a portfolio composed of two risky assets, Asset A and Asset B. Asset A has an expected return of 13% and a standard deviation of 20%. Asset B has an expected return of 6% and a standard deviation of 9%. The correlation coefficient between the returns of the two assets is -0.1. If an investor allocates 50% of her funds to Asset A and 50% to Asset B, the expected standard deviation of the portfolio is closest to:",
+            "options": [
+                "8.57%",
+                "10.55%",
+                "12.25%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: sqrt(wA^2 * stdA^2 + wB^2 * stdB^2 + 2*wA*wB*stdA*stdB*corr)",
+            "explanation": "Calculation is performed using the portfolio variance formula. The portfolio standard deviation is 10.55%."
+        },
+        {
+            "id": 60,
+            "text": "Michael Chang, CFA, is a portfolio manager at Global Horizon Capital. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of AeroDynamics. The report concludes that AeroDynamics is severely undervalued. Before the report is distributed to clients, Michael Chang purchases 5000 shares of AeroDynamics for her personal account and 43000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, Michael Chang has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 61,
+            "text": "Consider a portfolio composed of two risky assets, Asset A and Asset B. Asset A has an expected return of 14% and a standard deviation of 19%. Asset B has an expected return of 5% and a standard deviation of 12%. The correlation coefficient between the returns of the two assets is -0.09. If an investor allocates 50% of her funds to Asset A and 50% to Asset B, the expected standard deviation of the portfolio is closest to:",
+            "options": [
+                "7.82%",
+                "10.77%",
+                "12.47%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: sqrt(wA^2 * stdA^2 + wB^2 * stdB^2 + 2*wA*wB*stdA*stdB*corr)",
+            "explanation": "Calculation is performed using the portfolio variance formula. The portfolio standard deviation is 10.77%."
+        },
+        {
+            "id": 62,
+            "text": "Consider a portfolio composed of two risky assets, Asset A and Asset B. Asset A has an expected return of 10% and a standard deviation of 23%. Asset B has an expected return of 7% and a standard deviation of 13%. The correlation coefficient between the returns of the two assets is 0.27. If an investor allocates 50% of her funds to Asset A and 50% to Asset B, the expected standard deviation of the portfolio is closest to:",
+            "options": [
+                "10.97%",
+                "14.66%",
+                "18.62%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: sqrt(wA^2 * stdA^2 + wB^2 * stdB^2 + 2*wA*wB*stdA*stdB*corr)",
+            "explanation": "Calculation is performed using the portfolio variance formula. The portfolio standard deviation is 14.66%."
+        },
+        {
+            "id": 63,
+            "text": "Robert Chen, CFA, is a portfolio manager at Global Horizon Capital. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of ByteCorp. The report concludes that ByteCorp is severely undervalued. Before the report is distributed to clients, Robert Chen purchases 1000 shares of ByteCorp for her personal account and 36000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, Robert Chen has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 64,
+            "text": "James Smith, CFA, is a portfolio manager at Vanguard Analytics. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of NovaTech. The report concludes that NovaTech is severely undervalued. Before the report is distributed to clients, James Smith purchases 5000 shares of NovaTech for her personal account and 15000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, James Smith has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 65,
+            "text": "An analyst is evaluating a project with an initial outlay of $716,000. The project is expected to generate cash flows of $178,000 in Year 1, $221,000 in Year 2, $229,000 in Year 3, and $228,000 in Year 4. The company's weighted average cost of capital (WACC) is 9.1%. The net present value (NPV) of the project is closest to:",
+            "options": [
+                "$-25,910",
+                "$-29,903",
+                "$-34,841"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount each cash flow back to present value using the WACC.",
+            "explanation": "NPV = -Outlay + CF1/(1+r) + CF2/(1+r)^2 + CF3/(1+r)^3 + CF4/(1+r)^4. The exact NPV is $-29,903."
+        },
+        {
+            "id": 66,
+            "text": "Consider a portfolio composed of two risky assets, Asset A and Asset B. Asset A has an expected return of 10% and a standard deviation of 19%. Asset B has an expected return of 5% and a standard deviation of 9%. The correlation coefficient between the returns of the two assets is 0.38. If an investor allocates 60% of her funds to Asset A and 40% to Asset B, the expected standard deviation of the portfolio is closest to:",
+            "options": [
+                "10.29%",
+                "13.20%",
+                "15.58%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: sqrt(wA^2 * stdA^2 + wB^2 * stdB^2 + 2*wA*wB*stdA*stdB*corr)",
+            "explanation": "Calculation is performed using the portfolio variance formula. The portfolio standard deviation is 13.20%."
+        },
+        {
+            "id": 67,
+            "text": "An economist observes that in the country of Zephyria, the central bank has recently engaged in open market purchases of government securities, decreased the reserve requirement from 8% to 6%, and lowered the policy rate by 75 basis points. Concurrently, the government has increased infrastructure spending and decreased corporate tax rates. The combined effect of these monetary and fiscal policies on Zephyria's aggregate demand (AD) is most likely to be:",
+            "options": [
+                "Strongly contractionary.",
+                "Strongly expansionary.",
+                "Indeterminate without knowing the relative magnitudes."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Analyze whether each policy increases or decreases the money supply and government injections.",
+            "explanation": "Open market purchases, lower reserve requirements, lower policy rates, increased spending, and lower taxes all act to expand the economy and increase aggregate demand."
+        },
+        {
+            "id": 68,
+            "text": "A manufacturing firm operating under US GAAP reports the following financial data for the year ended December 31: Beginning Inventory of $44000, Purchases of $130000, and Ending Inventory of $47000. During the year, the firm recorded an inventory write-down of $10000 due to obsolescence. If the firm had used IFRS instead of US GAAP, and the net realizable value of the inventory subsequently recovered by $12000 in the following year, the most appropriate accounting treatment under IFRS would be to:",
+            "options": [
+                "Reverse the write-down up to the original cost of the inventory, decreasing COGS.",
+                "Recognize the recovery as a direct increase to retained earnings.",
+                "Ignore the recovery because inventory reversals are prohibited under IFRS."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "IFRS allows reversals of inventory write-downs, unlike US GAAP.",
+            "explanation": "Under IFRS, if the net realizable value of previously written-down inventory recovers, the write-down can be reversed. The reversal is recognized as a reduction in cost of goods sold (COGS) in the period it occurs, capped at the original cost."
+        },
+        {
+            "id": 69,
+            "text": "An economist observes that in the country of Gondwana, the central bank has recently engaged in open market sales of government securities, increased the reserve requirement from 8% to 11%, and raised the policy rate by 25 basis points. Concurrently, the government has reduced infrastructure spending and increased corporate tax rates. The combined effect of these monetary and fiscal policies on Gondwana's aggregate demand (AD) is most likely to be:",
+            "options": [
+                "Strongly contractionary.",
+                "Strongly expansionary.",
+                "Indeterminate without knowing the relative magnitudes."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Analyze whether each policy increases or decreases the money supply and government injections.",
+            "explanation": "Open market sales, higher reserve requirements, higher policy rates, reduced spending, and higher taxes all act to contract the economy and reduce aggregate demand."
+        },
+        {
+            "id": 70,
+            "text": "A manufacturing firm operating under US GAAP reports the following financial data for the year ended December 31: Beginning Inventory of $47000, Purchases of $147000, and Ending Inventory of $59000. During the year, the firm recorded an inventory write-down of $5000 due to obsolescence. If the firm had used IFRS instead of US GAAP, and the net realizable value of the inventory subsequently recovered by $15000 in the following year, the most appropriate accounting treatment under IFRS would be to:",
+            "options": [
+                "Reverse the write-down up to the original cost of the inventory, decreasing COGS.",
+                "Recognize the recovery as a direct increase to retained earnings.",
+                "Ignore the recovery because inventory reversals are prohibited under IFRS."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "IFRS allows reversals of inventory write-downs, unlike US GAAP.",
+            "explanation": "Under IFRS, if the net realizable value of previously written-down inventory recovers, the write-down can be reversed. The reversal is recognized as a reduction in cost of goods sold (COGS) in the period it occurs, capped at the original cost."
+        },
+        {
+            "id": 71,
+            "text": "Consider a portfolio composed of two risky assets, Asset A and Asset B. Asset A has an expected return of 12% and a standard deviation of 18%. Asset B has an expected return of 6% and a standard deviation of 11%. The correlation coefficient between the returns of the two assets is -0.28. If an investor allocates 60% of her funds to Asset A and 40% to Asset B, the expected standard deviation of the portfolio is closest to:",
+            "options": [
+                "7.94%",
+                "10.46%",
+                "12.35%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Use the formula: sqrt(wA^2 * stdA^2 + wB^2 * stdB^2 + 2*wA*wB*stdA*stdB*corr)",
+            "explanation": "Calculation is performed using the portfolio variance formula. The portfolio standard deviation is 10.46%."
+        },
+        {
+            "id": 72,
+            "text": "James Smith, CFA, is a portfolio manager at Meridian Wealth. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of BioGenix. The report concludes that BioGenix is severely undervalued. Before the report is distributed to clients, James Smith purchases 1000 shares of BioGenix for her personal account and 46000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, James Smith has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 73,
+            "text": "Sarah Jenkins, a research analyst at Vanguard Analytics, is preparing a report on the telecommunications sector. He incorporates several paragraphs from a recent industry journal article published by Dr. A. Smith into his report. Sarah Jenkins changes a few words in the copied text but does not cite the original author or the journal. According to the CFA Institute Standards of Professional Conduct, Sarah Jenkins has violated the Standard relating to:",
+            "options": [
+                "Misrepresentation (Plagiarism).",
+                "Diligence and Reasonable Basis.",
+                "Communication with Clients and Prospective Clients."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Using someone else's work without credit is a specific violation.",
+            "explanation": "Standard I(C) Misrepresentation strictly prohibits plagiarism. Changing a few words without citing the original source still constitutes plagiarism."
+        },
+        {
+            "id": 74,
+            "text": "Michael Chang, CFA, is a portfolio manager at Apex Investments. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of AeroDynamics. The report concludes that AeroDynamics is severely undervalued. Before the report is distributed to clients, Michael Chang purchases 5000 shares of AeroDynamics for her personal account and 26000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, Michael Chang has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 75,
+            "text": "An economist observes that in the country of Eldoria, the central bank has recently engaged in open market sales of government securities, increased the reserve requirement from 9% to 12%, and raised the policy rate by 25 basis points. Concurrently, the government has reduced infrastructure spending and increased corporate tax rates. The combined effect of these monetary and fiscal policies on Eldoria's aggregate demand (AD) is most likely to be:",
+            "options": [
+                "Strongly contractionary.",
+                "Strongly expansionary.",
+                "Indeterminate without knowing the relative magnitudes."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Analyze whether each policy increases or decreases the money supply and government injections.",
+            "explanation": "Open market sales, higher reserve requirements, higher policy rates, reduced spending, and higher taxes all act to contract the economy and reduce aggregate demand."
+        },
+        {
+            "id": 76,
+            "text": "James Smith, CFA, is a portfolio manager at Meridian Wealth. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of NovaTech. The report concludes that NovaTech is severely undervalued. Before the report is distributed to clients, James Smith purchases 1000 shares of NovaTech for her personal account and 39000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, James Smith has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 77,
+            "text": "Michael Chang, CFA, is a portfolio manager at Summit Partners. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of AeroDynamics. The report concludes that AeroDynamics is severely undervalued. Before the report is distributed to clients, Michael Chang purchases 1000 shares of AeroDynamics for her personal account and 21000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, Michael Chang has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 78,
+            "text": "An economist observes that in the country of Mercia, the central bank has recently engaged in open market purchases of government securities, decreased the reserve requirement from 9% to 7%, and lowered the policy rate by 25 basis points. Concurrently, the government has increased infrastructure spending and decreased corporate tax rates. The combined effect of these monetary and fiscal policies on Mercia's aggregate demand (AD) is most likely to be:",
+            "options": [
+                "Strongly contractionary.",
+                "Strongly expansionary.",
+                "Indeterminate without knowing the relative magnitudes."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Analyze whether each policy increases or decreases the money supply and government injections.",
+            "explanation": "Open market purchases, lower reserve requirements, lower policy rates, increased spending, and lower taxes all act to expand the economy and increase aggregate demand."
+        },
+        {
+            "id": 79,
+            "text": "A manufacturing firm operating under US GAAP reports the following financial data for the year ended December 31: Beginning Inventory of $46000, Purchases of $112000, and Ending Inventory of $44000. During the year, the firm recorded an inventory write-down of $10000 due to obsolescence. If the firm had used IFRS instead of US GAAP, and the net realizable value of the inventory subsequently recovered by $10000 in the following year, the most appropriate accounting treatment under IFRS would be to:",
+            "options": [
+                "Reverse the write-down up to the original cost of the inventory, decreasing COGS.",
+                "Recognize the recovery as a direct increase to retained earnings.",
+                "Ignore the recovery because inventory reversals are prohibited under IFRS."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "IFRS allows reversals of inventory write-downs, unlike US GAAP.",
+            "explanation": "Under IFRS, if the net realizable value of previously written-down inventory recovers, the write-down can be reversed. The reversal is recognized as a reduction in cost of goods sold (COGS) in the period it occurs, capped at the original cost."
+        },
+        {
+            "id": 80,
+            "text": "Sarah Jenkins, CFA, is a portfolio manager at Vanguard Analytics. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of AeroDynamics. The report concludes that AeroDynamics is severely undervalued. Before the report is distributed to clients, Sarah Jenkins purchases 2000 shares of AeroDynamics for her personal account and 14000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, Sarah Jenkins has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 81,
+            "text": "A manufacturing firm operating under US GAAP reports the following financial data for the year ended December 31: Beginning Inventory of $45000, Purchases of $132000, and Ending Inventory of $54000. During the year, the firm recorded an inventory write-down of $5000 due to obsolescence. If the firm had used IFRS instead of US GAAP, and the net realizable value of the inventory subsequently recovered by $15000 in the following year, the most appropriate accounting treatment under IFRS would be to:",
+            "options": [
+                "Reverse the write-down up to the original cost of the inventory, decreasing COGS.",
+                "Recognize the recovery as a direct increase to retained earnings.",
+                "Ignore the recovery because inventory reversals are prohibited under IFRS."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "IFRS allows reversals of inventory write-downs, unlike US GAAP.",
+            "explanation": "Under IFRS, if the net realizable value of previously written-down inventory recovers, the write-down can be reversed. The reversal is recognized as a reduction in cost of goods sold (COGS) in the period it occurs, capped at the original cost."
+        },
+        {
+            "id": 82,
+            "text": "Elena Rostova, CFA, is a portfolio manager at Summit Partners. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of Stellar Energy. The report concludes that Stellar Energy is severely undervalued. Before the report is distributed to clients, Elena Rostova purchases 3000 shares of Stellar Energy for her personal account and 19000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, Elena Rostova has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 83,
+            "text": "Robert Chen, a research analyst at Summit Partners, is preparing a report on the telecommunications sector. He incorporates several paragraphs from a recent industry journal article published by Dr. H. Markowitz into his report. Robert Chen changes a few words in the copied text but does not cite the original author or the journal. According to the CFA Institute Standards of Professional Conduct, Robert Chen has violated the Standard relating to:",
+            "options": [
+                "Misrepresentation (Plagiarism).",
+                "Diligence and Reasonable Basis.",
+                "Communication with Clients and Prospective Clients."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Using someone else's work without credit is a specific violation.",
+            "explanation": "Standard I(C) Misrepresentation strictly prohibits plagiarism. Changing a few words without citing the original source still constitutes plagiarism."
+        },
+        {
+            "id": 84,
+            "text": "Robert Chen, CFA, is a portfolio manager at Meridian Wealth. She recently received a non-public research report from her firm's equity analyst regarding a potential acquisition of Stellar Energy. The report concludes that Stellar Energy is severely undervalued. Before the report is distributed to clients, Robert Chen purchases 1000 shares of Stellar Energy for her personal account and 22000 shares for her largest institutional client. According to the CFA Institute Standards of Professional Conduct, Robert Chen has most likely violated the standard relating to:",
+            "options": [
+                "Priority of Transactions and Material Nonpublic Information.",
+                "Loyalty, Prudence, and Care only.",
+                "Fair Dealing and Diligence."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Consider the rules around trading on information before clients and trading on non-public info.",
+            "explanation": "By trading for her personal account before clients, she violates Priority of Transactions. By acting on a non-public internal report regarding an acquisition, she may also be acting on material nonpublic information depending on the source."
+        },
+        {
+            "id": 85,
+            "text": "Sarah Jenkins, a research analyst at Summit Partners, is preparing a report on the telecommunications sector. He incorporates several paragraphs from a recent industry journal article published by Dr. H. Markowitz into his report. Sarah Jenkins changes a few words in the copied text but does not cite the original author or the journal. According to the CFA Institute Standards of Professional Conduct, Sarah Jenkins has violated the Standard relating to:",
+            "options": [
+                "Misrepresentation (Plagiarism).",
+                "Diligence and Reasonable Basis.",
+                "Communication with Clients and Prospective Clients."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Using someone else's work without credit is a specific violation.",
+            "explanation": "Standard I(C) Misrepresentation strictly prohibits plagiarism. Changing a few words without citing the original source still constitutes plagiarism."
+        },
+        {
+            "id": 86,
+            "text": "Robert Chen, a research analyst at Vanguard Analytics, is preparing a report on the telecommunications sector. He incorporates several paragraphs from a recent industry journal article published by Dr. A. Smith into his report. Robert Chen changes a few words in the copied text but does not cite the original author or the journal. According to the CFA Institute Standards of Professional Conduct, Robert Chen has violated the Standard relating to:",
+            "options": [
+                "Misrepresentation (Plagiarism).",
+                "Diligence and Reasonable Basis.",
+                "Communication with Clients and Prospective Clients."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Using someone else's work without credit is a specific violation.",
+            "explanation": "Standard I(C) Misrepresentation strictly prohibits plagiarism. Changing a few words without citing the original source still constitutes plagiarism."
+        },
+        {
+            "id": 87,
+            "text": "An analyst is evaluating a project with an initial outlay of $528,000. The project is expected to generate cash flows of $149,000 in Year 1, $187,000 in Year 2, $296,000 in Year 3, and $281,000 in Year 4. The company's weighted average cost of capital (WACC) is 7.2%. The net present value (NPV) of the project is closest to:",
+            "options": [
+                "$189,623",
+                "$226,769",
+                "$265,182"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount each cash flow back to present value using the WACC.",
+            "explanation": "NPV = -Outlay + CF1/(1+r) + CF2/(1+r)^2 + CF3/(1+r)^3 + CF4/(1+r)^4. The exact NPV is $226,769."
+        },
+        {
+            "id": 88,
+            "text": "An economist observes that in the country of Gondwana, the central bank has recently engaged in open market purchases of government securities, decreased the reserve requirement from 10% to 5%, and lowered the policy rate by 25 basis points. Concurrently, the government has increased infrastructure spending and decreased corporate tax rates. The combined effect of these monetary and fiscal policies on Gondwana's aggregate demand (AD) is most likely to be:",
+            "options": [
+                "Strongly contractionary.",
+                "Strongly expansionary.",
+                "Indeterminate without knowing the relative magnitudes."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Analyze whether each policy increases or decreases the money supply and government injections.",
+            "explanation": "Open market purchases, lower reserve requirements, lower policy rates, increased spending, and lower taxes all act to expand the economy and increase aggregate demand."
+        },
+        {
+            "id": 89,
+            "text": "A manufacturing firm operating under US GAAP reports the following financial data for the year ended December 31: Beginning Inventory of $50000, Purchases of $141000, and Ending Inventory of $49000. During the year, the firm recorded an inventory write-down of $11000 due to obsolescence. If the firm had used IFRS instead of US GAAP, and the net realizable value of the inventory subsequently recovered by $5000 in the following year, the most appropriate accounting treatment under IFRS would be to:",
+            "options": [
+                "Reverse the write-down up to the original cost of the inventory, decreasing COGS.",
+                "Recognize the recovery as a direct increase to retained earnings.",
+                "Ignore the recovery because inventory reversals are prohibited under IFRS."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "IFRS allows reversals of inventory write-downs, unlike US GAAP.",
+            "explanation": "Under IFRS, if the net realizable value of previously written-down inventory recovers, the write-down can be reversed. The reversal is recognized as a reduction in cost of goods sold (COGS) in the period it occurs, capped at the original cost."
+        },
+        {
+            "id": 90,
+            "text": "An economist observes that in the country of Mercia, the central bank has recently engaged in open market purchases of government securities, decreased the reserve requirement from 8% to 5%, and lowered the policy rate by 50 basis points. Concurrently, the government has increased infrastructure spending and decreased corporate tax rates. The combined effect of these monetary and fiscal policies on Mercia's aggregate demand (AD) is most likely to be:",
+            "options": [
+                "Strongly contractionary.",
+                "Strongly expansionary.",
+                "Indeterminate without knowing the relative magnitudes."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Analyze whether each policy increases or decreases the money supply and government injections.",
+            "explanation": "Open market purchases, lower reserve requirements, lower policy rates, increased spending, and lower taxes all act to expand the economy and increase aggregate demand."
+        }
+    ]
+}
