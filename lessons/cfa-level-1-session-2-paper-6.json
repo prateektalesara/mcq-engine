@@ -1,0 +1,1268 @@
+{
+    "id": "cfa-level-1-session-2-paper-6",
+    "title": "CFA Level I - Session 2 Mock Exam (Paper 6 - ADVANCED DIFFICULTY 4/5)",
+    "description": "Full-length 90-question, Level 4/5 difficulty mock exam. Features multi-step calculations, complex edge-cases, and deep-dive scenarios replicating the hardest percentiles of the CFA exam for Session 2.",
+    "durationMinutes": 135,
+    "questions": [
+        {
+            "id": 1,
+            "text": "An investor is evaluating an option strategy known as a protective put. The investor holds one share of Quantum Materials currently priced at $83.88. The investor purchases a put option with a strike price of $73.00 for a premium of $2.52. If at expiration the stock price is $101.00, the total profit or loss on the combined position is closest to:",
+            "options": [
+                "$10.22",
+                "$18.97",
+                "$14.59"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Total Profit = (Value of Stock at Expiration - Initial Stock Price) + Max(0, Strike - Stock at Expiration) - Put Premium.",
+            "explanation": "A protective put caps the downside risk. The payoff includes the gain/loss on the stock plus the payoff from the put, minus the cost of the put. Stock profit = $17.12. Put payoff = $0.00. Net of $2.52 premium, total is $14.59."
+        },
+        {
+            "id": 2,
+            "text": "A fixed income manager is evaluating a 17-year, 3% annual pay bond trading at a yield to maturity (YTM) of 6%. The bond's modified duration is 9.79 and its convexity is 54.45. If interest rates across the yield curve suddenly shift downward by 75 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "6.75%",
+                "7.50%",
+                "8.25%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 7.35%. Convexity effect = 0.15%. Total change = 7.50%."
+        },
+        {
+            "id": 3,
+            "text": "A fixed income manager is evaluating a 9-year, 4% annual pay bond trading at a yield to maturity (YTM) of 4%. The bond's modified duration is 5.56 and its convexity is 61.7. If interest rates across the yield curve suddenly shift downward by 100 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "5.28%",
+                "5.87%",
+                "6.45%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 5.56%. Convexity effect = 0.31%. Total change = 5.87%."
+        },
+        {
+            "id": 4,
+            "text": "An investor holds a portfolio with a beta of 1.69. The current market value of the portfolio is $16,000,000. The investor wishes to reduce the portfolio beta to 0.81 using an equity index futures contract. The futures contract is currently priced at 2689, and the multiplier is 250. The number of futures contracts the investor must execute is closest to:",
+            "options": [
+                "Sell 21 contracts",
+                "Buy 21 contracts",
+                "Sell 31 contracts"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Number of Contracts = ((Target Beta - Portfolio Beta) / Futures Beta) \u00d7 (Portfolio Value / (Futures Price \u00d7 Multiplier)). Assume Futures Beta is 1.0.",
+            "explanation": "To reduce beta, the investor must short futures contracts. The exact number is derived from the beta adjustment formula. Contracts = ((0.81 - 1.69) / 1) * (16000000 / (2689 * 250)) = -21. Negative means sell."
+        },
+        {
+            "id": 5,
+            "text": "A fixed income manager is evaluating a 19-year, 3% annual pay bond trading at a yield to maturity (YTM) of 8%. The bond's modified duration is 8.84 and its convexity is 61.15. If interest rates across the yield curve suddenly shift downward by 100 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "8.23%",
+                "9.14%",
+                "10.06%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 8.84%. Convexity effect = 0.31%. Total change = 9.14%."
+        },
+        {
+            "id": 6,
+            "text": "A hedge fund charges a 1.5% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 8% and a high-water mark. At the start of the year, the AUM is $150 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 29%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$6.84 million",
+                "$8.55 million",
+                "$10.95 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $2.25M. The profit over the 8% hurdle is $31.50M. Incentive fee is $6.30M. Total is $8.55M."
+        },
+        {
+            "id": 7,
+            "text": "An investor holds a portfolio with a beta of 1.66. The current market value of the portfolio is $19,000,000. The investor wishes to reduce the portfolio beta to 0.86 using an equity index futures contract. The futures contract is currently priced at 1689, and the multiplier is 50. The number of futures contracts the investor must execute is closest to:",
+            "options": [
+                "Sell 180 contracts",
+                "Buy 180 contracts",
+                "Sell 270 contracts"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Number of Contracts = ((Target Beta - Portfolio Beta) / Futures Beta) \u00d7 (Portfolio Value / (Futures Price \u00d7 Multiplier)). Assume Futures Beta is 1.0.",
+            "explanation": "To reduce beta, the investor must short futures contracts. The exact number is derived from the beta adjustment formula. Contracts = ((0.86 - 1.66) / 1) * (19000000 / (1689 * 50)) = -180. Negative means sell."
+        },
+        {
+            "id": 8,
+            "text": "A fixed income manager is evaluating a 10-year, 5% annual pay bond trading at a yield to maturity (YTM) of 9%. The bond's modified duration is 8.91 and its convexity is 111.52. If interest rates across the yield curve suddenly shift downward by 75 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "6.30%",
+                "6.99%",
+                "7.69%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 6.68%. Convexity effect = 0.31%. Total change = 6.99%."
+        },
+        {
+            "id": 9,
+            "text": "An investor is evaluating an option strategy known as a protective put. The investor holds one share of Stellar Energy currently priced at $118.67. The investor purchases a put option with a strike price of $105.00 for a premium of $2.12. If at expiration the stock price is $142.00, the total profit or loss on the combined position is closest to:",
+            "options": [
+                "$27.57",
+                "$14.85",
+                "$21.21"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Total Profit = (Value of Stock at Expiration - Initial Stock Price) + Max(0, Strike - Stock at Expiration) - Put Premium.",
+            "explanation": "A protective put caps the downside risk. The payoff includes the gain/loss on the stock plus the payoff from the put, minus the cost of the put. Stock profit = $23.33. Put payoff = $0.00. Net of $2.12 premium, total is $21.21."
+        },
+        {
+            "id": 10,
+            "text": "An analyst is valuing ByteCorp using a two-stage Free Cash Flow to Equity (FCFE) model. The company currently has an FCFE of $4.36 per share. FCFE is expected to grow at 15% per year for the next 3 years. After this high-growth phase, the growth rate will drop immediately to a stable 3% indefinitely. The firm's required return on equity is 13%. The estimated intrinsic value per share is closest to:",
+            "options": [
+                "$60.85",
+                "$69.98",
+                "$51.73"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Discount the FCFE for each year in the high-growth phase. Then, calculate the terminal value at the end of the high-growth phase using the Gordon Growth Model with the stable growth rate, and discount it back to present value.",
+            "explanation": "The intrinsic value is the sum of the present value of the high-growth cash flows and the present value of the terminal value. The exact intrinsic value calculates to $60.85."
+        },
+        {
+            "id": 11,
+            "text": "An investor holds a portfolio with a beta of 1.27. The current market value of the portfolio is $22,000,000. The investor wishes to reduce the portfolio beta to 0.94 using an equity index futures contract. The futures contract is currently priced at 2299, and the multiplier is 50. The number of futures contracts the investor must execute is closest to:",
+            "options": [
+                "Sell 63 contracts",
+                "Buy 63 contracts",
+                "Sell 94 contracts"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Number of Contracts = ((Target Beta - Portfolio Beta) / Futures Beta) \u00d7 (Portfolio Value / (Futures Price \u00d7 Multiplier)). Assume Futures Beta is 1.0.",
+            "explanation": "To reduce beta, the investor must short futures contracts. The exact number is derived from the beta adjustment formula. Contracts = ((0.94 - 1.27) / 1) * (22000000 / (2299 * 50)) = -63. Negative means sell."
+        },
+        {
+            "id": 12,
+            "text": "A fixed income manager is evaluating a 15-year, 6% annual pay bond trading at a yield to maturity (YTM) of 4%. The bond's modified duration is 7.2 and its convexity is 57.33. If interest rates across the yield curve suddenly shift downward by 100 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "6.74%",
+                "7.49%",
+                "8.24%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 7.20%. Convexity effect = 0.29%. Total change = 7.49%."
+        },
+        {
+            "id": 13,
+            "text": "A fixed income manager is evaluating a 9-year, 4% annual pay bond trading at a yield to maturity (YTM) of 9%. The bond's modified duration is 11.27 and its convexity is 44.69. If interest rates across the yield curve suddenly shift downward by 100 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "10.34%",
+                "11.49%",
+                "12.64%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 11.27%. Convexity effect = 0.22%. Total change = 11.49%."
+        },
+        {
+            "id": 14,
+            "text": "An investor is evaluating an option strategy known as a protective put. The investor holds one share of BioGenix currently priced at $98.40. The investor purchases a put option with a strike price of $83.00 for a premium of $3.30. If at expiration the stock price is $69.00, the total profit or loss on the combined position is closest to:",
+            "options": [
+                "$-13.09",
+                "$-24.30",
+                "$-18.69"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Total Profit = (Value of Stock at Expiration - Initial Stock Price) + Max(0, Strike - Stock at Expiration) - Put Premium.",
+            "explanation": "A protective put caps the downside risk. The payoff includes the gain/loss on the stock plus the payoff from the put, minus the cost of the put. Stock profit = $-29.40. Put payoff = $14.00. Net of $3.30 premium, total is $-18.69."
+        },
+        {
+            "id": 15,
+            "text": "An analyst is valuing AeroDynamics using a two-stage Free Cash Flow to Equity (FCFE) model. The company currently has an FCFE of $3.32 per share. FCFE is expected to grow at 21% per year for the next 3 years. After this high-growth phase, the growth rate will drop immediately to a stable 4% indefinitely. The firm's required return on equity is 10%. The estimated intrinsic value per share is closest to:",
+            "options": [
+                "$75.45",
+                "$88.76",
+                "$102.07"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount the FCFE for each year in the high-growth phase. Then, calculate the terminal value at the end of the high-growth phase using the Gordon Growth Model with the stable growth rate, and discount it back to present value.",
+            "explanation": "The intrinsic value is the sum of the present value of the high-growth cash flows and the present value of the terminal value. The exact intrinsic value calculates to $88.76."
+        },
+        {
+            "id": 16,
+            "text": "A fixed income manager is evaluating a 17-year, 6% annual pay bond trading at a yield to maturity (YTM) of 8%. The bond's modified duration is 6.91 and its convexity is 67.07. If interest rates across the yield curve suddenly shift downward by 50 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "3.19%",
+                "3.54%",
+                "3.89%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 3.46%. Convexity effect = 0.08%. Total change = 3.54%."
+        },
+        {
+            "id": 17,
+            "text": "An investor holds a portfolio with a beta of 1.23. The current market value of the portfolio is $15,000,000. The investor wishes to reduce the portfolio beta to 0.85 using an equity index futures contract. The futures contract is currently priced at 3605, and the multiplier is 250. The number of futures contracts the investor must execute is closest to:",
+            "options": [
+                "Sell 6 contracts",
+                "Buy 6 contracts",
+                "Sell 9 contracts"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Number of Contracts = ((Target Beta - Portfolio Beta) / Futures Beta) \u00d7 (Portfolio Value / (Futures Price \u00d7 Multiplier)). Assume Futures Beta is 1.0.",
+            "explanation": "To reduce beta, the investor must short futures contracts. The exact number is derived from the beta adjustment formula. Contracts = ((0.85 - 1.23) / 1) * (15000000 / (3605 * 250)) = -6. Negative means sell."
+        },
+        {
+            "id": 18,
+            "text": "An investor holds a portfolio with a beta of 1.46. The current market value of the portfolio is $49,000,000. The investor wishes to reduce the portfolio beta to 0.89 using an equity index futures contract. The futures contract is currently priced at 2465, and the multiplier is 50. The number of futures contracts the investor must execute is closest to:",
+            "options": [
+                "Sell 227 contracts",
+                "Buy 227 contracts",
+                "Sell 340 contracts"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Number of Contracts = ((Target Beta - Portfolio Beta) / Futures Beta) \u00d7 (Portfolio Value / (Futures Price \u00d7 Multiplier)). Assume Futures Beta is 1.0.",
+            "explanation": "To reduce beta, the investor must short futures contracts. The exact number is derived from the beta adjustment formula. Contracts = ((0.89 - 1.46) / 1) * (49000000 / (2465 * 50)) = -227. Negative means sell."
+        },
+        {
+            "id": 19,
+            "text": "A fixed income manager is evaluating a 19-year, 7% annual pay bond trading at a yield to maturity (YTM) of 9%. The bond's modified duration is 8.15 and its convexity is 66.97. If interest rates across the yield curve suddenly shift downward by 75 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "5.67%",
+                "6.30%",
+                "6.93%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 6.11%. Convexity effect = 0.19%. Total change = 6.30%."
+        },
+        {
+            "id": 20,
+            "text": "A fixed income manager is evaluating a 8-year, 5% annual pay bond trading at a yield to maturity (YTM) of 9%. The bond's modified duration is 5.69 and its convexity is 85.66. If interest rates across the yield curve suddenly shift downward by 50 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "2.65%",
+                "2.95%",
+                "3.24%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 2.84%. Convexity effect = 0.11%. Total change = 2.95%."
+        },
+        {
+            "id": 21,
+            "text": "An investor is evaluating an option strategy known as a protective put. The investor holds one share of Quantum Materials currently priced at $63.63. The investor purchases a put option with a strike price of $58.00 for a premium of $2.17. If at expiration the stock price is $76.00, the total profit or loss on the combined position is closest to:",
+            "options": [
+                "$7.14",
+                "$13.26",
+                "$10.20"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Total Profit = (Value of Stock at Expiration - Initial Stock Price) + Max(0, Strike - Stock at Expiration) - Put Premium.",
+            "explanation": "A protective put caps the downside risk. The payoff includes the gain/loss on the stock plus the payoff from the put, minus the cost of the put. Stock profit = $12.37. Put payoff = $0.00. Net of $2.17 premium, total is $10.20."
+        },
+        {
+            "id": 22,
+            "text": "An analyst is valuing Quantum Materials using a two-stage Free Cash Flow to Equity (FCFE) model. The company currently has an FCFE of $2.55 per share. FCFE is expected to grow at 23% per year for the next 5 years. After this high-growth phase, the growth rate will drop immediately to a stable 6% indefinitely. The firm's required return on equity is 11%. The estimated intrinsic value per share is closest to:",
+            "options": [
+                "$107.96",
+                "$91.77",
+                "$124.16"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Discount the FCFE for each year in the high-growth phase. Then, calculate the terminal value at the end of the high-growth phase using the Gordon Growth Model with the stable growth rate, and discount it back to present value.",
+            "explanation": "The intrinsic value is the sum of the present value of the high-growth cash flows and the present value of the terminal value. The exact intrinsic value calculates to $107.96."
+        },
+        {
+            "id": 23,
+            "text": "A hedge fund charges a 2.0% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 5% and a high-water mark. At the start of the year, the AUM is $500 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 20%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$20.00 million",
+                "$25.00 million",
+                "$30.00 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $10.00M. The profit over the 5% hurdle is $75.00M. Incentive fee is $15.00M. Total is $25.00M."
+        },
+        {
+            "id": 24,
+            "text": "An analyst is valuing Stellar Energy using a two-stage Free Cash Flow to Equity (FCFE) model. The company currently has an FCFE of $3.75 per share. FCFE is expected to grow at 25% per year for the next 4 years. After this high-growth phase, the growth rate will drop immediately to a stable 3% indefinitely. The firm's required return on equity is 10%. The estimated intrinsic value per share is closest to:",
+            "options": [
+                "$129.64",
+                "$95.82",
+                "$112.73"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Discount the FCFE for each year in the high-growth phase. Then, calculate the terminal value at the end of the high-growth phase using the Gordon Growth Model with the stable growth rate, and discount it back to present value.",
+            "explanation": "The intrinsic value is the sum of the present value of the high-growth cash flows and the present value of the terminal value. The exact intrinsic value calculates to $112.73."
+        },
+        {
+            "id": 25,
+            "text": "An investor is evaluating an option strategy known as a protective put. The investor holds one share of Quantum Materials currently priced at $46.13. The investor purchases a put option with a strike price of $38.00 for a premium of $3.85. If at expiration the stock price is $55.00, the total profit or loss on the combined position is closest to:",
+            "options": [
+                "$3.51",
+                "$6.52",
+                "$5.02"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Total Profit = (Value of Stock at Expiration - Initial Stock Price) + Max(0, Strike - Stock at Expiration) - Put Premium.",
+            "explanation": "A protective put caps the downside risk. The payoff includes the gain/loss on the stock plus the payoff from the put, minus the cost of the put. Stock profit = $8.87. Put payoff = $0.00. Net of $3.85 premium, total is $5.02."
+        },
+        {
+            "id": 26,
+            "text": "A fixed income manager is evaluating a 20-year, 6% annual pay bond trading at a yield to maturity (YTM) of 7%. The bond's modified duration is 9.89 and its convexity is 67.59. If interest rates across the yield curve suddenly shift downward by 50 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "4.53%",
+                "5.03%",
+                "5.53%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 4.95%. Convexity effect = 0.08%. Total change = 5.03%."
+        },
+        {
+            "id": 27,
+            "text": "A hedge fund charges a 1.5% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 6% and a high-water mark. At the start of the year, the AUM is $250 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 26%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$11.00 million",
+                "$13.75 million",
+                "$16.75 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $3.75M. The profit over the 6% hurdle is $50.00M. Incentive fee is $10.00M. Total is $13.75M."
+        },
+        {
+            "id": 28,
+            "text": "An investor holds a portfolio with a beta of 1.67. The current market value of the portfolio is $43,000,000. The investor wishes to reduce the portfolio beta to 0.97 using an equity index futures contract. The futures contract is currently priced at 3606, and the multiplier is 250. The number of futures contracts the investor must execute is closest to:",
+            "options": [
+                "Sell 33 contracts",
+                "Buy 33 contracts",
+                "Sell 49 contracts"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Number of Contracts = ((Target Beta - Portfolio Beta) / Futures Beta) \u00d7 (Portfolio Value / (Futures Price \u00d7 Multiplier)). Assume Futures Beta is 1.0.",
+            "explanation": "To reduce beta, the investor must short futures contracts. The exact number is derived from the beta adjustment formula. Contracts = ((0.97 - 1.67) / 1) * (43000000 / (3606 * 250)) = -33. Negative means sell."
+        },
+        {
+            "id": 29,
+            "text": "An investor holds a portfolio with a beta of 1.67. The current market value of the portfolio is $15,000,000. The investor wishes to reduce the portfolio beta to 1.0 using an equity index futures contract. The futures contract is currently priced at 2702, and the multiplier is 50. The number of futures contracts the investor must execute is closest to:",
+            "options": [
+                "Sell 74 contracts",
+                "Buy 74 contracts",
+                "Sell 111 contracts"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Number of Contracts = ((Target Beta - Portfolio Beta) / Futures Beta) \u00d7 (Portfolio Value / (Futures Price \u00d7 Multiplier)). Assume Futures Beta is 1.0.",
+            "explanation": "To reduce beta, the investor must short futures contracts. The exact number is derived from the beta adjustment formula. Contracts = ((1.0 - 1.67) / 1) * (15000000 / (2702 * 50)) = -74. Negative means sell."
+        },
+        {
+            "id": 30,
+            "text": "A fixed income manager is evaluating a 19-year, 7% annual pay bond trading at a yield to maturity (YTM) of 4%. The bond's modified duration is 8.48 and its convexity is 84.8. If interest rates across the yield curve suddenly shift downward by 50 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "3.91%",
+                "4.35%",
+                "4.78%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 4.24%. Convexity effect = 0.11%. Total change = 4.35%."
+        },
+        {
+            "id": 31,
+            "text": "An investor is evaluating an option strategy known as a protective put. The investor holds one share of AeroDynamics currently priced at $55.56. The investor purchases a put option with a strike price of $50.00 for a premium of $2.57. If at expiration the stock price is $67.00, the total profit or loss on the combined position is closest to:",
+            "options": [
+                "$11.53",
+                "$6.21",
+                "$8.87"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Total Profit = (Value of Stock at Expiration - Initial Stock Price) + Max(0, Strike - Stock at Expiration) - Put Premium.",
+            "explanation": "A protective put caps the downside risk. The payoff includes the gain/loss on the stock plus the payoff from the put, minus the cost of the put. Stock profit = $11.44. Put payoff = $0.00. Net of $2.57 premium, total is $8.87."
+        },
+        {
+            "id": 32,
+            "text": "A fixed income manager is evaluating a 13-year, 3% annual pay bond trading at a yield to maturity (YTM) of 9%. The bond's modified duration is 9.1 and its convexity is 94.22. If interest rates across the yield curve suddenly shift downward by 100 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "8.62%",
+                "9.58%",
+                "10.53%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 9.10%. Convexity effect = 0.47%. Total change = 9.58%."
+        },
+        {
+            "id": 33,
+            "text": "An analyst is valuing NovaTech using a two-stage Free Cash Flow to Equity (FCFE) model. The company currently has an FCFE of $4.17 per share. FCFE is expected to grow at 20% per year for the next 3 years. After this high-growth phase, the growth rate will drop immediately to a stable 5% indefinitely. The firm's required return on equity is 14%. The estimated intrinsic value per share is closest to:",
+            "options": [
+                "$59.99",
+                "$70.57",
+                "$81.16"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount the FCFE for each year in the high-growth phase. Then, calculate the terminal value at the end of the high-growth phase using the Gordon Growth Model with the stable growth rate, and discount it back to present value.",
+            "explanation": "The intrinsic value is the sum of the present value of the high-growth cash flows and the present value of the terminal value. The exact intrinsic value calculates to $70.57."
+        },
+        {
+            "id": 34,
+            "text": "A fixed income manager is evaluating a 8-year, 8% annual pay bond trading at a yield to maturity (YTM) of 5%. The bond's modified duration is 5.76 and its convexity is 90.04. If interest rates across the yield curve suddenly shift downward by 75 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "4.11%",
+                "4.57%",
+                "5.03%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 4.32%. Convexity effect = 0.25%. Total change = 4.57%."
+        },
+        {
+            "id": 35,
+            "text": "An investor is evaluating an option strategy known as a protective put. The investor holds one share of Stellar Energy currently priced at $93.01. The investor purchases a put option with a strike price of $76.00 for a premium of $2.08. If at expiration the stock price is $112.00, the total profit or loss on the combined position is closest to:",
+            "options": [
+                "$21.99",
+                "$11.84",
+                "$16.91"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Total Profit = (Value of Stock at Expiration - Initial Stock Price) + Max(0, Strike - Stock at Expiration) - Put Premium.",
+            "explanation": "A protective put caps the downside risk. The payoff includes the gain/loss on the stock plus the payoff from the put, minus the cost of the put. Stock profit = $18.99. Put payoff = $0.00. Net of $2.08 premium, total is $16.91."
+        },
+        {
+            "id": 36,
+            "text": "A hedge fund charges a 1.5% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 8% and a high-water mark. At the start of the year, the AUM is $250 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 12%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$4.60 million",
+                "$5.75 million",
+                "$9.75 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $3.75M. The profit over the 8% hurdle is $10.00M. Incentive fee is $2.00M. Total is $5.75M."
+        },
+        {
+            "id": 37,
+            "text": "A fixed income manager is evaluating a 14-year, 5% annual pay bond trading at a yield to maturity (YTM) of 7%. The bond's modified duration is 9.14 and its convexity is 90.24. If interest rates across the yield curve suddenly shift downward by 75 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "6.40%",
+                "7.11%",
+                "7.82%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 6.85%. Convexity effect = 0.25%. Total change = 7.11%."
+        },
+        {
+            "id": 38,
+            "text": "A hedge fund charges a 1.5% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 6% and a high-water mark. At the start of the year, the AUM is $500 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 14%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$12.40 million",
+                "$15.50 million",
+                "$21.50 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $7.50M. The profit over the 6% hurdle is $40.00M. Incentive fee is $8.00M. Total is $15.50M."
+        },
+        {
+            "id": 39,
+            "text": "An investor holds a portfolio with a beta of 1.47. The current market value of the portfolio is $44,000,000. The investor wishes to reduce the portfolio beta to 0.94 using an equity index futures contract. The futures contract is currently priced at 1576, and the multiplier is 250. The number of futures contracts the investor must execute is closest to:",
+            "options": [
+                "Sell 59 contracts",
+                "Buy 59 contracts",
+                "Sell 88 contracts"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Number of Contracts = ((Target Beta - Portfolio Beta) / Futures Beta) \u00d7 (Portfolio Value / (Futures Price \u00d7 Multiplier)). Assume Futures Beta is 1.0.",
+            "explanation": "To reduce beta, the investor must short futures contracts. The exact number is derived from the beta adjustment formula. Contracts = ((0.94 - 1.47) / 1) * (44000000 / (1576 * 250)) = -59. Negative means sell."
+        },
+        {
+            "id": 40,
+            "text": "An analyst is valuing AeroDynamics using a two-stage Free Cash Flow to Equity (FCFE) model. The company currently has an FCFE of $2.18 per share. FCFE is expected to grow at 22% per year for the next 4 years. After this high-growth phase, the growth rate will drop immediately to a stable 6% indefinitely. The firm's required return on equity is 10%. The estimated intrinsic value per share is closest to:",
+            "options": [
+                "$83.83",
+                "$98.62",
+                "$113.42"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount the FCFE for each year in the high-growth phase. Then, calculate the terminal value at the end of the high-growth phase using the Gordon Growth Model with the stable growth rate, and discount it back to present value.",
+            "explanation": "The intrinsic value is the sum of the present value of the high-growth cash flows and the present value of the terminal value. The exact intrinsic value calculates to $98.62."
+        },
+        {
+            "id": 41,
+            "text": "A hedge fund charges a 2.0% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 6% and a high-water mark. At the start of the year, the AUM is $250 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 16%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$8.00 million",
+                "$10.00 million",
+                "$13.00 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $5.00M. The profit over the 6% hurdle is $25.00M. Incentive fee is $5.00M. Total is $10.00M."
+        },
+        {
+            "id": 42,
+            "text": "A hedge fund charges a 1.5% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 6% and a high-water mark. At the start of the year, the AUM is $150 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 22%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$5.64 million",
+                "$7.05 million",
+                "$8.85 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $2.25M. The profit over the 6% hurdle is $24.00M. Incentive fee is $4.80M. Total is $7.05M."
+        },
+        {
+            "id": 43,
+            "text": "An analyst is valuing ByteCorp using a two-stage Free Cash Flow to Equity (FCFE) model. The company currently has an FCFE of $3.12 per share. FCFE is expected to grow at 19% per year for the next 4 years. After this high-growth phase, the growth rate will drop immediately to a stable 6% indefinitely. The firm's required return on equity is 13%. The estimated intrinsic value per share is closest to:",
+            "options": [
+                "$83.31",
+                "$61.58",
+                "$72.45"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Discount the FCFE for each year in the high-growth phase. Then, calculate the terminal value at the end of the high-growth phase using the Gordon Growth Model with the stable growth rate, and discount it back to present value.",
+            "explanation": "The intrinsic value is the sum of the present value of the high-growth cash flows and the present value of the terminal value. The exact intrinsic value calculates to $72.45."
+        },
+        {
+            "id": 44,
+            "text": "A hedge fund charges a 2.0% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 6% and a high-water mark. At the start of the year, the AUM is $250 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 13%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$6.80 million",
+                "$8.50 million",
+                "$11.50 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $5.00M. The profit over the 6% hurdle is $17.50M. Incentive fee is $3.50M. Total is $8.50M."
+        },
+        {
+            "id": 45,
+            "text": "A fixed income manager is evaluating a 11-year, 7% annual pay bond trading at a yield to maturity (YTM) of 5%. The bond's modified duration is 11.47 and its convexity is 109.0. If interest rates across the yield curve suddenly shift downward by 50 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "5.29%",
+                "5.87%",
+                "6.46%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 5.74%. Convexity effect = 0.14%. Total change = 5.87%."
+        },
+        {
+            "id": 46,
+            "text": "An investor holds a portfolio with a beta of 1.38. The current market value of the portfolio is $12,000,000. The investor wishes to reduce the portfolio beta to 0.83 using an equity index futures contract. The futures contract is currently priced at 2061, and the multiplier is 250. The number of futures contracts the investor must execute is closest to:",
+            "options": [
+                "Sell 13 contracts",
+                "Buy 13 contracts",
+                "Sell 19 contracts"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Number of Contracts = ((Target Beta - Portfolio Beta) / Futures Beta) \u00d7 (Portfolio Value / (Futures Price \u00d7 Multiplier)). Assume Futures Beta is 1.0.",
+            "explanation": "To reduce beta, the investor must short futures contracts. The exact number is derived from the beta adjustment formula. Contracts = ((0.83 - 1.38) / 1) * (12000000 / (2061 * 250)) = -13. Negative means sell."
+        },
+        {
+            "id": 47,
+            "text": "A hedge fund charges a 1.5% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 5% and a high-water mark. At the start of the year, the AUM is $250 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 27%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$11.80 million",
+                "$14.75 million",
+                "$17.25 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $3.75M. The profit over the 5% hurdle is $55.00M. Incentive fee is $11.00M. Total is $14.75M."
+        },
+        {
+            "id": 48,
+            "text": "A hedge fund charges a 1.5% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 5% and a high-water mark. At the start of the year, the AUM is $500 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 22%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$19.60 million",
+                "$24.50 million",
+                "$29.50 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $7.50M. The profit over the 5% hurdle is $85.00M. Incentive fee is $17.00M. Total is $24.50M."
+        },
+        {
+            "id": 49,
+            "text": "A hedge fund charges a 1.5% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 5% and a high-water mark. At the start of the year, the AUM is $150 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 18%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$4.92 million",
+                "$6.15 million",
+                "$7.65 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $2.25M. The profit over the 5% hurdle is $19.50M. Incentive fee is $3.90M. Total is $6.15M."
+        },
+        {
+            "id": 50,
+            "text": "An investor holds a portfolio with a beta of 1.61. The current market value of the portfolio is $42,000,000. The investor wishes to reduce the portfolio beta to 0.96 using an equity index futures contract. The futures contract is currently priced at 2177, and the multiplier is 50. The number of futures contracts the investor must execute is closest to:",
+            "options": [
+                "Sell 251 contracts",
+                "Buy 251 contracts",
+                "Sell 376 contracts"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Number of Contracts = ((Target Beta - Portfolio Beta) / Futures Beta) \u00d7 (Portfolio Value / (Futures Price \u00d7 Multiplier)). Assume Futures Beta is 1.0.",
+            "explanation": "To reduce beta, the investor must short futures contracts. The exact number is derived from the beta adjustment formula. Contracts = ((0.96 - 1.61) / 1) * (42000000 / (2177 * 50)) = -251. Negative means sell."
+        },
+        {
+            "id": 51,
+            "text": "An analyst is valuing BioGenix using a two-stage Free Cash Flow to Equity (FCFE) model. The company currently has an FCFE of $3.68 per share. FCFE is expected to grow at 17% per year for the next 4 years. After this high-growth phase, the growth rate will drop immediately to a stable 4% indefinitely. The firm's required return on equity is 10%. The estimated intrinsic value per share is closest to:",
+            "options": [
+                "$84.02",
+                "$98.85",
+                "$113.67"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount the FCFE for each year in the high-growth phase. Then, calculate the terminal value at the end of the high-growth phase using the Gordon Growth Model with the stable growth rate, and discount it back to present value.",
+            "explanation": "The intrinsic value is the sum of the present value of the high-growth cash flows and the present value of the terminal value. The exact intrinsic value calculates to $98.85."
+        },
+        {
+            "id": 52,
+            "text": "An investor is evaluating an option strategy known as a protective put. The investor holds one share of BioGenix currently priced at $110.99. The investor purchases a put option with a strike price of $95.00 for a premium of $1.98. If at expiration the stock price is $133.00, the total profit or loss on the combined position is closest to:",
+            "options": [
+                "$14.02",
+                "$26.04",
+                "$20.03"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Total Profit = (Value of Stock at Expiration - Initial Stock Price) + Max(0, Strike - Stock at Expiration) - Put Premium.",
+            "explanation": "A protective put caps the downside risk. The payoff includes the gain/loss on the stock plus the payoff from the put, minus the cost of the put. Stock profit = $22.01. Put payoff = $0.00. Net of $1.98 premium, total is $20.03."
+        },
+        {
+            "id": 53,
+            "text": "An investor holds a portfolio with a beta of 1.37. The current market value of the portfolio is $25,000,000. The investor wishes to reduce the portfolio beta to 0.98 using an equity index futures contract. The futures contract is currently priced at 1618, and the multiplier is 50. The number of futures contracts the investor must execute is closest to:",
+            "options": [
+                "Sell 121 contracts",
+                "Buy 121 contracts",
+                "Sell 181 contracts"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Number of Contracts = ((Target Beta - Portfolio Beta) / Futures Beta) \u00d7 (Portfolio Value / (Futures Price \u00d7 Multiplier)). Assume Futures Beta is 1.0.",
+            "explanation": "To reduce beta, the investor must short futures contracts. The exact number is derived from the beta adjustment formula. Contracts = ((0.98 - 1.37) / 1) * (25000000 / (1618 * 50)) = -121. Negative means sell."
+        },
+        {
+            "id": 54,
+            "text": "A hedge fund charges a 2.0% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 8% and a high-water mark. At the start of the year, the AUM is $500 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 27%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$23.20 million",
+                "$29.00 million",
+                "$37.00 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $10.00M. The profit over the 8% hurdle is $95.00M. Incentive fee is $19.00M. Total is $29.00M."
+        },
+        {
+            "id": 55,
+            "text": "A hedge fund charges a 2.0% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 6% and a high-water mark. At the start of the year, the AUM is $250 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 29%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$13.20 million",
+                "$16.50 million",
+                "$19.50 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $5.00M. The profit over the 6% hurdle is $57.50M. Incentive fee is $11.50M. Total is $16.50M."
+        },
+        {
+            "id": 56,
+            "text": "A hedge fund charges a 2.0% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 6% and a high-water mark. At the start of the year, the AUM is $500 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 23%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$21.60 million",
+                "$27.00 million",
+                "$33.00 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $10.00M. The profit over the 6% hurdle is $85.00M. Incentive fee is $17.00M. Total is $27.00M."
+        },
+        {
+            "id": 57,
+            "text": "An analyst is valuing Quantum Materials using a two-stage Free Cash Flow to Equity (FCFE) model. The company currently has an FCFE of $4.65 per share. FCFE is expected to grow at 23% per year for the next 3 years. After this high-growth phase, the growth rate will drop immediately to a stable 4% indefinitely. The firm's required return on equity is 13%. The estimated intrinsic value per share is closest to:",
+            "options": [
+                "$73.04",
+                "$98.82",
+                "$85.93"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Discount the FCFE for each year in the high-growth phase. Then, calculate the terminal value at the end of the high-growth phase using the Gordon Growth Model with the stable growth rate, and discount it back to present value.",
+            "explanation": "The intrinsic value is the sum of the present value of the high-growth cash flows and the present value of the terminal value. The exact intrinsic value calculates to $85.93."
+        },
+        {
+            "id": 58,
+            "text": "A fixed income manager is evaluating a 8-year, 5% annual pay bond trading at a yield to maturity (YTM) of 7%. The bond's modified duration is 10.21 and its convexity is 85.71. If interest rates across the yield curve suddenly shift downward by 100 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "9.57%",
+                "10.64%",
+                "11.70%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 10.21%. Convexity effect = 0.43%. Total change = 10.64%."
+        },
+        {
+            "id": 59,
+            "text": "A fixed income manager is evaluating a 16-year, 7% annual pay bond trading at a yield to maturity (YTM) of 7%. The bond's modified duration is 7.3 and its convexity is 97.98. If interest rates across the yield curve suddenly shift downward by 75 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "5.18%",
+                "5.75%",
+                "6.33%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 5.48%. Convexity effect = 0.28%. Total change = 5.75%."
+        },
+        {
+            "id": 60,
+            "text": "A hedge fund charges a 2.0% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 6% and a high-water mark. At the start of the year, the AUM is $250 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 26%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$12.00 million",
+                "$15.00 million",
+                "$18.00 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $5.00M. The profit over the 6% hurdle is $50.00M. Incentive fee is $10.00M. Total is $15.00M."
+        },
+        {
+            "id": 61,
+            "text": "A hedge fund charges a 2.0% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 6% and a high-water mark. At the start of the year, the AUM is $250 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 16%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$8.00 million",
+                "$10.00 million",
+                "$13.00 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $5.00M. The profit over the 6% hurdle is $25.00M. Incentive fee is $5.00M. Total is $10.00M."
+        },
+        {
+            "id": 62,
+            "text": "An investor is evaluating an option strategy known as a protective put. The investor holds one share of NovaTech currently priced at $59.51. The investor purchases a put option with a strike price of $49.00 for a premium of $2.49. If at expiration the stock price is $71.00, the total profit or loss on the combined position is closest to:",
+            "options": [
+                "$9.00",
+                "$6.30",
+                "$11.70"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Total Profit = (Value of Stock at Expiration - Initial Stock Price) + Max(0, Strike - Stock at Expiration) - Put Premium.",
+            "explanation": "A protective put caps the downside risk. The payoff includes the gain/loss on the stock plus the payoff from the put, minus the cost of the put. Stock profit = $11.49. Put payoff = $0.00. Net of $2.49 premium, total is $9.00."
+        },
+        {
+            "id": 63,
+            "text": "A fixed income manager is evaluating a 20-year, 5% annual pay bond trading at a yield to maturity (YTM) of 5%. The bond's modified duration is 11.37 and its convexity is 56.14. If interest rates across the yield curve suddenly shift downward by 50 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "5.18%",
+                "5.76%",
+                "6.33%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 5.69%. Convexity effect = 0.07%. Total change = 5.76%."
+        },
+        {
+            "id": 64,
+            "text": "An investor is evaluating an option strategy known as a protective put. The investor holds one share of Stellar Energy currently priced at $62.49. The investor purchases a put option with a strike price of $51.00 for a premium of $3.24. If at expiration the stock price is $75.00, the total profit or loss on the combined position is closest to:",
+            "options": [
+                "$12.05",
+                "$9.27",
+                "$6.49"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Total Profit = (Value of Stock at Expiration - Initial Stock Price) + Max(0, Strike - Stock at Expiration) - Put Premium.",
+            "explanation": "A protective put caps the downside risk. The payoff includes the gain/loss on the stock plus the payoff from the put, minus the cost of the put. Stock profit = $12.51. Put payoff = $0.00. Net of $3.24 premium, total is $9.27."
+        },
+        {
+            "id": 65,
+            "text": "A hedge fund charges a 1.5% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 6% and a high-water mark. At the start of the year, the AUM is $150 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 14%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$3.72 million",
+                "$4.65 million",
+                "$6.45 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $2.25M. The profit over the 6% hurdle is $12.00M. Incentive fee is $2.40M. Total is $4.65M."
+        },
+        {
+            "id": 66,
+            "text": "An investor holds a portfolio with a beta of 1.6. The current market value of the portfolio is $37,000,000. The investor wishes to reduce the portfolio beta to 0.85 using an equity index futures contract. The futures contract is currently priced at 2512, and the multiplier is 50. The number of futures contracts the investor must execute is closest to:",
+            "options": [
+                "Sell 221 contracts",
+                "Buy 221 contracts",
+                "Sell 331 contracts"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Number of Contracts = ((Target Beta - Portfolio Beta) / Futures Beta) \u00d7 (Portfolio Value / (Futures Price \u00d7 Multiplier)). Assume Futures Beta is 1.0.",
+            "explanation": "To reduce beta, the investor must short futures contracts. The exact number is derived from the beta adjustment formula. Contracts = ((0.85 - 1.6) / 1) * (37000000 / (2512 * 50)) = -221. Negative means sell."
+        },
+        {
+            "id": 67,
+            "text": "An investor holds a portfolio with a beta of 1.58. The current market value of the portfolio is $47,000,000. The investor wishes to reduce the portfolio beta to 0.91 using an equity index futures contract. The futures contract is currently priced at 2059, and the multiplier is 50. The number of futures contracts the investor must execute is closest to:",
+            "options": [
+                "Sell 306 contracts",
+                "Buy 306 contracts",
+                "Sell 459 contracts"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Number of Contracts = ((Target Beta - Portfolio Beta) / Futures Beta) \u00d7 (Portfolio Value / (Futures Price \u00d7 Multiplier)). Assume Futures Beta is 1.0.",
+            "explanation": "To reduce beta, the investor must short futures contracts. The exact number is derived from the beta adjustment formula. Contracts = ((0.91 - 1.58) / 1) * (47000000 / (2059 * 50)) = -306. Negative means sell."
+        },
+        {
+            "id": 68,
+            "text": "A hedge fund charges a 2.0% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 8% and a high-water mark. At the start of the year, the AUM is $250 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 24%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$10.40 million",
+                "$13.00 million",
+                "$17.00 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $5.00M. The profit over the 8% hurdle is $40.00M. Incentive fee is $8.00M. Total is $13.00M."
+        },
+        {
+            "id": 69,
+            "text": "An investor is evaluating an option strategy known as a protective put. The investor holds one share of AeroDynamics currently priced at $108.85. The investor purchases a put option with a strike price of $100.00 for a premium of $2.46. If at expiration the stock price is $76.00, the total profit or loss on the combined position is closest to:",
+            "options": [
+                "$-7.92",
+                "$-11.31",
+                "$-14.70"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Total Profit = (Value of Stock at Expiration - Initial Stock Price) + Max(0, Strike - Stock at Expiration) - Put Premium.",
+            "explanation": "A protective put caps the downside risk. The payoff includes the gain/loss on the stock plus the payoff from the put, minus the cost of the put. Stock profit = $-32.85. Put payoff = $24.00. Net of $2.46 premium, total is $-11.31."
+        },
+        {
+            "id": 70,
+            "text": "An investor is evaluating an option strategy known as a protective put. The investor holds one share of Stellar Energy currently priced at $94.55. The investor purchases a put option with a strike price of $87.00 for a premium of $1.86. If at expiration the stock price is $113.00, the total profit or loss on the combined position is closest to:",
+            "options": [
+                "$11.62",
+                "$21.57",
+                "$16.60"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Total Profit = (Value of Stock at Expiration - Initial Stock Price) + Max(0, Strike - Stock at Expiration) - Put Premium.",
+            "explanation": "A protective put caps the downside risk. The payoff includes the gain/loss on the stock plus the payoff from the put, minus the cost of the put. Stock profit = $18.45. Put payoff = $0.00. Net of $1.86 premium, total is $16.60."
+        },
+        {
+            "id": 71,
+            "text": "An investor is evaluating an option strategy known as a protective put. The investor holds one share of AeroDynamics currently priced at $92.20. The investor purchases a put option with a strike price of $77.00 for a premium of $3.67. If at expiration the stock price is $111.00, the total profit or loss on the combined position is closest to:",
+            "options": [
+                "$19.67",
+                "$15.13",
+                "$10.59"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Total Profit = (Value of Stock at Expiration - Initial Stock Price) + Max(0, Strike - Stock at Expiration) - Put Premium.",
+            "explanation": "A protective put caps the downside risk. The payoff includes the gain/loss on the stock plus the payoff from the put, minus the cost of the put. Stock profit = $18.80. Put payoff = $0.00. Net of $3.67 premium, total is $15.13."
+        },
+        {
+            "id": 72,
+            "text": "A hedge fund charges a 1.5% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 8% and a high-water mark. At the start of the year, the AUM is $150 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 30%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$7.08 million",
+                "$8.85 million",
+                "$11.25 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $2.25M. The profit over the 8% hurdle is $33.00M. Incentive fee is $6.60M. Total is $8.85M."
+        },
+        {
+            "id": 73,
+            "text": "An investor is evaluating an option strategy known as a protective put. The investor holds one share of ByteCorp currently priced at $72.28. The investor purchases a put option with a strike price of $61.00 for a premium of $1.35. If at expiration the stock price is $87.00, the total profit or loss on the combined position is closest to:",
+            "options": [
+                "$9.36",
+                "$17.39",
+                "$13.37"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Total Profit = (Value of Stock at Expiration - Initial Stock Price) + Max(0, Strike - Stock at Expiration) - Put Premium.",
+            "explanation": "A protective put caps the downside risk. The payoff includes the gain/loss on the stock plus the payoff from the put, minus the cost of the put. Stock profit = $14.72. Put payoff = $0.00. Net of $1.35 premium, total is $13.37."
+        },
+        {
+            "id": 74,
+            "text": "An analyst is valuing BioGenix using a two-stage Free Cash Flow to Equity (FCFE) model. The company currently has an FCFE of $3.37 per share. FCFE is expected to grow at 25% per year for the next 5 years. After this high-growth phase, the growth rate will drop immediately to a stable 3% indefinitely. The firm's required return on equity is 11%. The estimated intrinsic value per share is closest to:",
+            "options": [
+                "$118.52",
+                "$103.06",
+                "$87.60"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount the FCFE for each year in the high-growth phase. Then, calculate the terminal value at the end of the high-growth phase using the Gordon Growth Model with the stable growth rate, and discount it back to present value.",
+            "explanation": "The intrinsic value is the sum of the present value of the high-growth cash flows and the present value of the terminal value. The exact intrinsic value calculates to $103.06."
+        },
+        {
+            "id": 75,
+            "text": "An investor is evaluating an option strategy known as a protective put. The investor holds one share of AeroDynamics currently priced at $64.26. The investor purchases a put option with a strike price of $55.00 for a premium of $1.25. If at expiration the stock price is $77.00, the total profit or loss on the combined position is closest to:",
+            "options": [
+                "$8.04",
+                "$14.94",
+                "$11.49"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Total Profit = (Value of Stock at Expiration - Initial Stock Price) + Max(0, Strike - Stock at Expiration) - Put Premium.",
+            "explanation": "A protective put caps the downside risk. The payoff includes the gain/loss on the stock plus the payoff from the put, minus the cost of the put. Stock profit = $12.74. Put payoff = $0.00. Net of $1.25 premium, total is $11.49."
+        },
+        {
+            "id": 76,
+            "text": "An analyst is valuing AeroDynamics using a two-stage Free Cash Flow to Equity (FCFE) model. The company currently has an FCFE of $4.49 per share. FCFE is expected to grow at 22% per year for the next 5 years. After this high-growth phase, the growth rate will drop immediately to a stable 6% indefinitely. The firm's required return on equity is 13%. The estimated intrinsic value per share is closest to:",
+            "options": [
+                "$128.24",
+                "$109.00",
+                "$147.47"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Discount the FCFE for each year in the high-growth phase. Then, calculate the terminal value at the end of the high-growth phase using the Gordon Growth Model with the stable growth rate, and discount it back to present value.",
+            "explanation": "The intrinsic value is the sum of the present value of the high-growth cash flows and the present value of the terminal value. The exact intrinsic value calculates to $128.24."
+        },
+        {
+            "id": 77,
+            "text": "An investor is evaluating an option strategy known as a protective put. The investor holds one share of Stellar Energy currently priced at $90.55. The investor purchases a put option with a strike price of $85.00 for a premium of $1.63. If at expiration the stock price is $63.00, the total profit or loss on the combined position is closest to:",
+            "options": [
+                "$-7.18",
+                "$-9.34",
+                "$-5.03"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Total Profit = (Value of Stock at Expiration - Initial Stock Price) + Max(0, Strike - Stock at Expiration) - Put Premium.",
+            "explanation": "A protective put caps the downside risk. The payoff includes the gain/loss on the stock plus the payoff from the put, minus the cost of the put. Stock profit = $-27.55. Put payoff = $22.00. Net of $1.63 premium, total is $-7.18."
+        },
+        {
+            "id": 78,
+            "text": "A fixed income manager is evaluating a 7-year, 7% annual pay bond trading at a yield to maturity (YTM) of 8%. The bond's modified duration is 11.13 and its convexity is 85.25. If interest rates across the yield curve suddenly shift downward by 50 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "5.10%",
+                "5.67%",
+                "6.24%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 5.56%. Convexity effect = 0.11%. Total change = 5.67%."
+        },
+        {
+            "id": 79,
+            "text": "A fixed income manager is evaluating a 20-year, 5% annual pay bond trading at a yield to maturity (YTM) of 6%. The bond's modified duration is 10.81 and its convexity is 76.8. If interest rates across the yield curve suddenly shift downward by 100 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "10.07%",
+                "11.19%",
+                "12.31%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 10.81%. Convexity effect = 0.38%. Total change = 11.19%."
+        },
+        {
+            "id": 80,
+            "text": "An analyst is valuing BioGenix using a two-stage Free Cash Flow to Equity (FCFE) model. The company currently has an FCFE of $3.11 per share. FCFE is expected to grow at 18% per year for the next 3 years. After this high-growth phase, the growth rate will drop immediately to a stable 4% indefinitely. The firm's required return on equity is 12%. The estimated intrinsic value per share is closest to:",
+            "options": [
+                "$57.69",
+                "$66.34",
+                "$49.04"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Discount the FCFE for each year in the high-growth phase. Then, calculate the terminal value at the end of the high-growth phase using the Gordon Growth Model with the stable growth rate, and discount it back to present value.",
+            "explanation": "The intrinsic value is the sum of the present value of the high-growth cash flows and the present value of the terminal value. The exact intrinsic value calculates to $57.69."
+        },
+        {
+            "id": 81,
+            "text": "An investor is evaluating an option strategy known as a protective put. The investor holds one share of Quantum Materials currently priced at $65.32. The investor purchases a put option with a strike price of $59.00 for a premium of $3.10. If at expiration the stock price is $78.00, the total profit or loss on the combined position is closest to:",
+            "options": [
+                "$12.46",
+                "$9.58",
+                "$6.71"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Total Profit = (Value of Stock at Expiration - Initial Stock Price) + Max(0, Strike - Stock at Expiration) - Put Premium.",
+            "explanation": "A protective put caps the downside risk. The payoff includes the gain/loss on the stock plus the payoff from the put, minus the cost of the put. Stock profit = $12.68. Put payoff = $0.00. Net of $3.10 premium, total is $9.58."
+        },
+        {
+            "id": 82,
+            "text": "An analyst is valuing Stellar Energy using a two-stage Free Cash Flow to Equity (FCFE) model. The company currently has an FCFE of $3.88 per share. FCFE is expected to grow at 25% per year for the next 3 years. After this high-growth phase, the growth rate will drop immediately to a stable 5% indefinitely. The firm's required return on equity is 10%. The estimated intrinsic value per share is closest to:",
+            "options": [
+                "$134.53",
+                "$154.71",
+                "$114.35"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Discount the FCFE for each year in the high-growth phase. Then, calculate the terminal value at the end of the high-growth phase using the Gordon Growth Model with the stable growth rate, and discount it back to present value.",
+            "explanation": "The intrinsic value is the sum of the present value of the high-growth cash flows and the present value of the terminal value. The exact intrinsic value calculates to $134.53."
+        },
+        {
+            "id": 83,
+            "text": "A fixed income manager is evaluating a 14-year, 7% annual pay bond trading at a yield to maturity (YTM) of 6%. The bond's modified duration is 11.51 and its convexity is 119.14. If interest rates across the yield curve suddenly shift downward by 75 basis points, the estimated percentage price change of the bond, incorporating both duration and convexity effects, is closest to:",
+            "options": [
+                "8.07%",
+                "8.97%",
+                "9.86%"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Percentage Price Change \u2248 (-Modified Duration \u00d7 \u0394y) + (0.5 \u00d7 Convexity \u00d7 (\u0394y)^2). Ensure \u0394y is in decimal format (e.g., 50 bps = 0.0050).",
+            "explanation": "The calculation requires the Taylor expansion formula for bond price changes, combining the linear effect of duration and the second-order curvature effect of convexity. Duration effect = 8.63%. Convexity effect = 0.34%. Total change = 8.97%."
+        },
+        {
+            "id": 84,
+            "text": "A hedge fund charges a 2.0% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 8% and a high-water mark. At the start of the year, the AUM is $500 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 12%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$11.20 million",
+                "$14.00 million",
+                "$22.00 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $10.00M. The profit over the 8% hurdle is $20.00M. Incentive fee is $4.00M. Total is $14.00M."
+        },
+        {
+            "id": 85,
+            "text": "An investor holds a portfolio with a beta of 1.32. The current market value of the portfolio is $18,000,000. The investor wishes to reduce the portfolio beta to 0.85 using an equity index futures contract. The futures contract is currently priced at 1504, and the multiplier is 250. The number of futures contracts the investor must execute is closest to:",
+            "options": [
+                "Sell 23 contracts",
+                "Buy 23 contracts",
+                "Sell 34 contracts"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Number of Contracts = ((Target Beta - Portfolio Beta) / Futures Beta) \u00d7 (Portfolio Value / (Futures Price \u00d7 Multiplier)). Assume Futures Beta is 1.0.",
+            "explanation": "To reduce beta, the investor must short futures contracts. The exact number is derived from the beta adjustment formula. Contracts = ((0.85 - 1.32) / 1) * (18000000 / (1504 * 250)) = -23. Negative means sell."
+        },
+        {
+            "id": 86,
+            "text": "A hedge fund charges a 2.0% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 6% and a high-water mark. At the start of the year, the AUM is $150 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 27%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$7.44 million",
+                "$9.30 million",
+                "$11.10 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $3.00M. The profit over the 6% hurdle is $31.50M. Incentive fee is $6.30M. Total is $9.30M."
+        },
+        {
+            "id": 87,
+            "text": "An investor holds a portfolio with a beta of 1.58. The current market value of the portfolio is $36,000,000. The investor wishes to reduce the portfolio beta to 0.97 using an equity index futures contract. The futures contract is currently priced at 4400, and the multiplier is 50. The number of futures contracts the investor must execute is closest to:",
+            "options": [
+                "Sell 100 contracts",
+                "Buy 100 contracts",
+                "Sell 150 contracts"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Number of Contracts = ((Target Beta - Portfolio Beta) / Futures Beta) \u00d7 (Portfolio Value / (Futures Price \u00d7 Multiplier)). Assume Futures Beta is 1.0.",
+            "explanation": "To reduce beta, the investor must short futures contracts. The exact number is derived from the beta adjustment formula. Contracts = ((0.97 - 1.58) / 1) * (36000000 / (4400 * 50)) = -100. Negative means sell."
+        },
+        {
+            "id": 88,
+            "text": "A hedge fund charges a 2.0% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 5% and a high-water mark. At the start of the year, the AUM is $500 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 14%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$15.20 million",
+                "$19.00 million",
+                "$24.00 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $10.00M. The profit over the 5% hurdle is $45.00M. Incentive fee is $9.00M. Total is $19.00M."
+        },
+        {
+            "id": 89,
+            "text": "An analyst is valuing AeroDynamics using a two-stage Free Cash Flow to Equity (FCFE) model. The company currently has an FCFE of $2.31 per share. FCFE is expected to grow at 15% per year for the next 3 years. After this high-growth phase, the growth rate will drop immediately to a stable 6% indefinitely. The firm's required return on equity is 9%. The estimated intrinsic value per share is closest to:",
+            "options": [
+                "$88.19",
+                "$103.75",
+                "$119.31"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Discount the FCFE for each year in the high-growth phase. Then, calculate the terminal value at the end of the high-growth phase using the Gordon Growth Model with the stable growth rate, and discount it back to present value.",
+            "explanation": "The intrinsic value is the sum of the present value of the high-growth cash flows and the present value of the terminal value. The exact intrinsic value calculates to $103.75."
+        },
+        {
+            "id": 90,
+            "text": "A hedge fund charges a 2.0% management fee (calculated on beginning-of-year AUM) and a 20% incentive fee. The incentive fee is calculated independently of the management fee (returns are not net of management fee for incentive purposes), but it is subject to a hard hurdle rate of 6% and a high-water mark. At the start of the year, the AUM is $500 million, which is exactly equal to the previous high-water mark. If the gross return for the year is 27%, the total fees earned by the fund manager are closest to:",
+            "options": [
+                "$24.80 million",
+                "$31.00 million",
+                "$37.00 million"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the management fee first. For the incentive fee, subtract the hurdle rate amount from the total gross profit. The incentive fee is applied only to the profit exceeding the hurdle amount.",
+            "explanation": "In a hard hurdle structure independent of the management fee, the incentive fee is charged only on the gross profit that exceeds the hurdle return. Management fee is $10.00M. The profit over the 6% hurdle is $105.00M. Incentive fee is $21.00M. Total is $31.00M."
+        }
+    ]
+}

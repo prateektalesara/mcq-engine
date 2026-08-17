@@ -1,0 +1,1268 @@
+{
+    "id": "cfa-level-1-session-1-paper-4",
+    "title": "CFA Level I - Session 1 Mock Exam (Paper 4 - ADVANCED DIFFICULTY 4/5)",
+    "description": "Full-length 90-question, Level 4/5 difficulty mock exam. Features multi-step calculations, complex edge-cases, and deep-dive scenarios replicating the hardest percentiles of the CFA exam for Session 1.",
+    "durationMinutes": 135,
+    "questions": [
+        {
+            "id": 1,
+            "text": "An analyst is given the following spot exchange rates: JPY/GBP is 1.2649-1.2653, and JPY/USD is 0.7524-0.7528. A dealer is quoting the GBP/USD cross rate at 0.6002-0.6012. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of JPY, the arbitrage profit is closest to:",
+            "options": [
+                "524,881 units of JPY",
+                "680,286 units of JPY",
+                "585,788 units of JPY"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 585,788 units."
+        },
+        {
+            "id": 2,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 1.5%. A sample of 60 months yields a mean return of 2.23% and a sample standard deviation of 4.13%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 1.37; Fail to reject the null hypothesis",
+                "t-statistic: 1.64; Fail to reject the null hypothesis",
+                "t-statistic: 1.37; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (2.23 - 1.5) / (4.13 / sqrt(60)) = 1.37. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 3,
+            "text": "David O'Connor, a CFA candidate, serves on the board of a publicly traded firm, Quantum Materials. During a closed board meeting, David O'Connor learns that Quantum Materials will surprisingly slash its dividend by 50% next week. To avoid the appearance of insider trading, David O'Connor refrains from trading Quantum Materials stock. However, David O'Connor realizes this cut indicates severe industry-wide macroeconomic stress and aggressively short-sells a highly correlated competitor, Quantum Materials. According to the CFA Institute Standards, David O'Connor:",
+            "options": [
+                "Did not violate the standards because {competitor} was not the subject of the inside information and mosaic theory applies.",
+                "Violated the standards by trading {competitor} because the information was material, non-public, and affected the entire sector.",
+                "Violated the standards because board members are strictly prohibited from trading any stocks in the same sector."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Material nonpublic information (MNPI) applies to any security whose price would be significantly impacted by the information, even if it's not the specific company the information originated from.",
+            "explanation": "Standard II(A) Material Nonpublic Information prohibits trading on MNPI. If the dividend cut of a major firm is highly material to a correlated competitor, trading the competitor's stock based on that closed-door information is a violation. It does not qualify as mosaic theory because the foundational piece of information is explicitly non-public and material."
+        },
+        {
+            "id": 4,
+            "text": "An economist is applying the Mundell-Fleming model to a country with high capital mobility and a floating exchange rate regime. The central bank implements a severely restrictive monetary policy to combat inflation, while the government simultaneously passes a massive deficit-spending infrastructure bill. The most likely effect on the country's domestic interest rates and its domestic currency value is:",
+            "options": [
+                "Interest rates increase; currency appreciates.",
+                "Interest rates increase; currency depreciates.",
+                "Interest rates decrease; currency appreciates."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Expansionary fiscal policy and restrictive monetary policy both drive interest rates up. In a floating regime with high capital mobility, higher rates attract foreign capital.",
+            "explanation": "Under the Mundell-Fleming model with high capital mobility, restrictive monetary policy raises interest rates, and expansionary fiscal policy also puts upward pressure on rates. The resulting high interest rates attract capital inflows, causing the domestic currency to appreciate strongly."
+        },
+        {
+            "id": 5,
+            "text": "Sarah Jenkins, CFA, is analyzing AeroDynamics's deferred tax position. For tax purposes, the company uses an accelerated depreciation method over 10 years, while for financial reporting it uses straight-line depreciation over the same period with zero salvage value. The asset was purchased for $238,000. In year 2, the statutory tax rate unexpectedly decreases from 40% to 25%. The company's pretax accounting income for year 2 is $92,000. Assuming this is the company's only asset, what is the most likely impact on the income statement in year 2 resulting from the tax rate change?",
+            "options": [
+                "A deferred tax benefit of $3,570",
+                "A deferred tax expense of $3,570",
+                "A deferred tax benefit of $9,520"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the carrying value and tax base at the end of year 1 to find the DTL balance. A decrease in the tax rate will decrease the DTL liability, leading to a deferred tax benefit in the income statement.",
+            "explanation": "Calculation involves finding the deferred tax liability (DTL) at the end of Year 1, then adjusting its value in Year 2 due to the new tax rate. The reduction in DTL creates a deferred tax benefit, increasing net income. The DTL at Year 1 is $9,520. After the tax rate drops to 25%, the required DTL balance drops to $5,950. This results in a reversal/benefit of $3,570."
+        },
+        {
+            "id": 6,
+            "text": "An analyst is given the following spot exchange rates: JPY/GBP is 1.2614-1.2618, and JPY/CHF is 0.8887-0.8891. A dealer is quoting the GBP/CHF cross rate at 0.7099-0.7109. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of JPY, the arbitrage profit is closest to:",
+            "options": [
+                "579,292 units of JPY",
+                "486,150 units of JPY",
+                "709,507 units of JPY"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 579,292 units."
+        },
+        {
+            "id": 7,
+            "text": "An economist is applying the Mundell-Fleming model to a country with high capital mobility and a floating exchange rate regime. The central bank implements a severely restrictive monetary policy to combat inflation, while the government simultaneously passes a massive deficit-spending infrastructure bill. The most likely effect on the country's domestic interest rates and its domestic currency value is:",
+            "options": [
+                "Interest rates increase; currency appreciates.",
+                "Interest rates increase; currency depreciates.",
+                "Interest rates decrease; currency appreciates."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Expansionary fiscal policy and restrictive monetary policy both drive interest rates up. In a floating regime with high capital mobility, higher rates attract foreign capital.",
+            "explanation": "Under the Mundell-Fleming model with high capital mobility, restrictive monetary policy raises interest rates, and expansionary fiscal policy also puts upward pressure on rates. The resulting high interest rates attract capital inflows, causing the domestic currency to appreciate strongly."
+        },
+        {
+            "id": 8,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 0.5%. A sample of 36 months yields a mean return of 0.93% and a sample standard deviation of 4.25%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 0.61; Fail to reject the null hypothesis",
+                "t-statistic: 0.73; Fail to reject the null hypothesis",
+                "t-statistic: 0.61; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (0.93 - 0.5) / (4.25 / sqrt(36)) = 0.61. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 9,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 1.0%. A sample of 36 months yields a mean return of 1.34% and a sample standard deviation of 3.67%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 0.56; Fail to reject the null hypothesis",
+                "t-statistic: 0.67; Fail to reject the null hypothesis",
+                "t-statistic: 0.56; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (1.34 - 1.0) / (3.67 / sqrt(36)) = 0.56. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 10,
+            "text": "Robert Chen, a CFA candidate, serves on the board of a publicly traded firm, BioGenix. During a closed board meeting, Robert Chen learns that BioGenix will surprisingly slash its dividend by 50% next week. To avoid the appearance of insider trading, Robert Chen refrains from trading BioGenix stock. However, Robert Chen realizes this cut indicates severe industry-wide macroeconomic stress and aggressively short-sells a highly correlated competitor, Quantum Materials. According to the CFA Institute Standards, Robert Chen:",
+            "options": [
+                "Did not violate the standards because {competitor} was not the subject of the inside information and mosaic theory applies.",
+                "Violated the standards by trading {competitor} because the information was material, non-public, and affected the entire sector.",
+                "Violated the standards because board members are strictly prohibited from trading any stocks in the same sector."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Material nonpublic information (MNPI) applies to any security whose price would be significantly impacted by the information, even if it's not the specific company the information originated from.",
+            "explanation": "Standard II(A) Material Nonpublic Information prohibits trading on MNPI. If the dividend cut of a major firm is highly material to a correlated competitor, trading the competitor's stock based on that closed-door information is a violation. It does not qualify as mosaic theory because the foundational piece of information is explicitly non-public and material."
+        },
+        {
+            "id": 11,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 1.0%. A sample of 48 months yields a mean return of 1.51% and a sample standard deviation of 3.49%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 1.01; Fail to reject the null hypothesis",
+                "t-statistic: 1.22; Fail to reject the null hypothesis",
+                "t-statistic: 1.01; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (1.51 - 1.0) / (3.49 / sqrt(48)) = 1.01. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 12,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 0.5%. A sample of 48 months yields a mean return of 1.29% and a sample standard deviation of 4.61%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 1.19; Fail to reject the null hypothesis",
+                "t-statistic: 1.43; Fail to reject the null hypothesis",
+                "t-statistic: 1.19; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (1.29 - 0.5) / (4.61 / sqrt(48)) = 1.19. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 13,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 1.0%. A sample of 48 months yields a mean return of 1.42% and a sample standard deviation of 3.87%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 0.75; Fail to reject the null hypothesis",
+                "t-statistic: 0.89; Fail to reject the null hypothesis",
+                "t-statistic: 0.75; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (1.42 - 1.0) / (3.87 / sqrt(48)) = 0.75. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 14,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 1.0%. A sample of 60 months yields a mean return of 1.69% and a sample standard deviation of 2.14%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 2.50; Reject the null hypothesis",
+                "t-statistic: 3.00; Reject the null hypothesis",
+                "t-statistic: 2.50; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (1.69 - 1.0) / (2.14 / sqrt(60)) = 2.50. Since it is > 1.645, we reject the null hypothesis."
+        },
+        {
+            "id": 15,
+            "text": "An economist is applying the Mundell-Fleming model to a country with high capital mobility and a floating exchange rate regime. The central bank implements a severely restrictive monetary policy to combat inflation, while the government simultaneously passes a massive deficit-spending infrastructure bill. The most likely effect on the country's domestic interest rates and its domestic currency value is:",
+            "options": [
+                "Interest rates increase; currency appreciates.",
+                "Interest rates increase; currency depreciates.",
+                "Interest rates decrease; currency appreciates."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Expansionary fiscal policy and restrictive monetary policy both drive interest rates up. In a floating regime with high capital mobility, higher rates attract foreign capital.",
+            "explanation": "Under the Mundell-Fleming model with high capital mobility, restrictive monetary policy raises interest rates, and expansionary fiscal policy also puts upward pressure on rates. The resulting high interest rates attract capital inflows, causing the domestic currency to appreciate strongly."
+        },
+        {
+            "id": 16,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 1.0%. A sample of 36 months yields a mean return of 1.55% and a sample standard deviation of 2.41%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 1.37; Fail to reject the null hypothesis",
+                "t-statistic: 1.64; Fail to reject the null hypothesis",
+                "t-statistic: 1.37; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (1.55 - 1.0) / (2.41 / sqrt(36)) = 1.37. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 17,
+            "text": "An analyst is given the following spot exchange rates: GBP/USD is 1.1114-1.1118, and GBP/EUR is 0.7714-0.7718. A dealer is quoting the USD/EUR cross rate at 0.6994-0.7004. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of GBP, the arbitrage profit is closest to:",
+            "options": [
+                "267,424 units of GBP",
+                "225,767 units of GBP",
+                "200,129 units of GBP"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 225,767 units."
+        },
+        {
+            "id": 18,
+            "text": "An analyst is given the following spot exchange rates: USD/JPY is 1.4678-1.4682, and USD/AUD is 0.8052-0.8056. A dealer is quoting the JPY/AUD cross rate at 0.5538-0.5548. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of USD, the arbitrage profit is closest to:",
+            "options": [
+                "1,134,062 units of USD",
+                "999,755 units of USD",
+                "1,371,662 units of USD"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 1,134,062 units."
+        },
+        {
+            "id": 19,
+            "text": "An analyst is given the following spot exchange rates: GBP/USD is 1.1954-1.1958, and GBP/EUR is 0.7592-0.7596. A dealer is quoting the USD/EUR cross rate at 0.6404-0.6414. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of GBP, the arbitrage profit is closest to:",
+            "options": [
+                "459,264 units of GBP",
+                "326,762 units of GBP",
+                "417,172 units of GBP"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 417,172 units."
+        },
+        {
+            "id": 20,
+            "text": "An analyst is given the following spot exchange rates: USD/EUR is 1.3461-1.3465, and USD/AUD is 0.8148-0.8152. A dealer is quoting the EUR/AUD cross rate at 0.6106-0.6116. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of USD, the arbitrage profit is closest to:",
+            "options": [
+                "796,241 units of USD",
+                "889,428 units of USD",
+                "704,505 units of USD"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 796,241 units."
+        },
+        {
+            "id": 21,
+            "text": "Aisha Patel, a CFA candidate, serves on the board of a publicly traded firm, NovaTech. During a closed board meeting, Aisha Patel learns that NovaTech will surprisingly slash its dividend by 50% next week. To avoid the appearance of insider trading, Aisha Patel refrains from trading NovaTech stock. However, Aisha Patel realizes this cut indicates severe industry-wide macroeconomic stress and aggressively short-sells a highly correlated competitor, Quantum Materials. According to the CFA Institute Standards, Aisha Patel:",
+            "options": [
+                "Did not violate the standards because {competitor} was not the subject of the inside information and mosaic theory applies.",
+                "Violated the standards by trading {competitor} because the information was material, non-public, and affected the entire sector.",
+                "Violated the standards because board members are strictly prohibited from trading any stocks in the same sector."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Material nonpublic information (MNPI) applies to any security whose price would be significantly impacted by the information, even if it's not the specific company the information originated from.",
+            "explanation": "Standard II(A) Material Nonpublic Information prohibits trading on MNPI. If the dividend cut of a major firm is highly material to a correlated competitor, trading the competitor's stock based on that closed-door information is a violation. It does not qualify as mosaic theory because the foundational piece of information is explicitly non-public and material."
+        },
+        {
+            "id": 22,
+            "text": "Elena Rostova, CFA, is analyzing NovaTech's deferred tax position. For tax purposes, the company uses an accelerated depreciation method over 4 years, while for financial reporting it uses straight-line depreciation over the same period with zero salvage value. The asset was purchased for $208,000. In year 2, the statutory tax rate unexpectedly decreases from 40% to 21%. The company's pretax accounting income for year 2 is $107,000. Assuming this is the company's only asset, what is the most likely impact on the income statement in year 2 resulting from the tax rate change?",
+            "options": [
+                "A deferred tax benefit of $9,880",
+                "A deferred tax expense of $9,880",
+                "A deferred tax benefit of $20,800"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the carrying value and tax base at the end of year 1 to find the DTL balance. A decrease in the tax rate will decrease the DTL liability, leading to a deferred tax benefit in the income statement.",
+            "explanation": "Calculation involves finding the deferred tax liability (DTL) at the end of Year 1, then adjusting its value in Year 2 due to the new tax rate. The reduction in DTL creates a deferred tax benefit, increasing net income. The DTL at Year 1 is $20,800. After the tax rate drops to 21%, the required DTL balance drops to $10,920. This results in a reversal/benefit of $9,880."
+        },
+        {
+            "id": 23,
+            "text": "An analyst is given the following spot exchange rates: GBP/JPY is 1.2999-1.3003, and GBP/EUR is 0.8092-0.8096. A dealer is quoting the JPY/EUR cross rate at 0.6278-0.6288. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of GBP, the arbitrage profit is closest to:",
+            "options": [
+                "497,524 units of GBP",
+                "675,382 units of GBP",
+                "828,187 units of GBP"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 675,382 units."
+        },
+        {
+            "id": 24,
+            "text": "An analyst is given the following spot exchange rates: EUR/USD is 1.3054-1.3058, and EUR/GBP is 0.7866-0.7870. A dealer is quoting the USD/GBP cross rate at 0.6079-0.6089. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of EUR, the arbitrage profit is closest to:",
+            "options": [
+                "689,306 units of EUR",
+                "814,299 units of EUR",
+                "569,191 units of EUR"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 689,306 units."
+        },
+        {
+            "id": 25,
+            "text": "An analyst is given the following spot exchange rates: EUR/JPY is 1.2589-1.2593, and EUR/GBP is 0.7910-0.7914. A dealer is quoting the JPY/GBP cross rate at 0.6336-0.6346. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of EUR, the arbitrage profit is closest to:",
+            "options": [
+                "680,337 units of EUR",
+                "571,517 units of EUR",
+                "504,631 units of EUR"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 571,517 units."
+        },
+        {
+            "id": 26,
+            "text": "Michael Chang, CFA, is analyzing Quantum Materials's deferred tax position. For tax purposes, the company uses an accelerated depreciation method over 5 years, while for financial reporting it uses straight-line depreciation over the same period with zero salvage value. The asset was purchased for $125,000. In year 2, the statutory tax rate unexpectedly decreases from 40% to 25%. The company's pretax accounting income for year 2 is $148,000. Assuming this is the company's only asset, what is the most likely impact on the income statement in year 2 resulting from the tax rate change?",
+            "options": [
+                "A deferred tax benefit of $3,750",
+                "A deferred tax expense of $3,750",
+                "A deferred tax benefit of $10,000"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the carrying value and tax base at the end of year 1 to find the DTL balance. A decrease in the tax rate will decrease the DTL liability, leading to a deferred tax benefit in the income statement.",
+            "explanation": "Calculation involves finding the deferred tax liability (DTL) at the end of Year 1, then adjusting its value in Year 2 due to the new tax rate. The reduction in DTL creates a deferred tax benefit, increasing net income. The DTL at Year 1 is $10,000. After the tax rate drops to 25%, the required DTL balance drops to $6,250. This results in a reversal/benefit of $3,750."
+        },
+        {
+            "id": 27,
+            "text": "Michael Chang, a CFA candidate, serves on the board of a publicly traded firm, Quantum Materials. During a closed board meeting, Michael Chang learns that Quantum Materials will surprisingly slash its dividend by 50% next week. To avoid the appearance of insider trading, Michael Chang refrains from trading Quantum Materials stock. However, Michael Chang realizes this cut indicates severe industry-wide macroeconomic stress and aggressively short-sells a highly correlated competitor, Quantum Materials. According to the CFA Institute Standards, Michael Chang:",
+            "options": [
+                "Did not violate the standards because {competitor} was not the subject of the inside information and mosaic theory applies.",
+                "Violated the standards by trading {competitor} because the information was material, non-public, and affected the entire sector.",
+                "Violated the standards because board members are strictly prohibited from trading any stocks in the same sector."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Material nonpublic information (MNPI) applies to any security whose price would be significantly impacted by the information, even if it's not the specific company the information originated from.",
+            "explanation": "Standard II(A) Material Nonpublic Information prohibits trading on MNPI. If the dividend cut of a major firm is highly material to a correlated competitor, trading the competitor's stock based on that closed-door information is a violation. It does not qualify as mosaic theory because the foundational piece of information is explicitly non-public and material."
+        },
+        {
+            "id": 28,
+            "text": "An analyst is given the following spot exchange rates: AUD/JPY is 1.1039-1.1043, and AUD/GBP is 0.8138-0.8142. A dealer is quoting the JPY/GBP cross rate at 0.7426-0.7436. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of AUD, the arbitrage profit is closest to:",
+            "options": [
+                "231,680 units of AUD",
+                "175,378 units of AUD",
+                "209,693 units of AUD"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 209,693 units."
+        },
+        {
+            "id": 29,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 1.5%. A sample of 36 months yields a mean return of 2.15% and a sample standard deviation of 2.77%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 1.40; Fail to reject the null hypothesis",
+                "t-statistic: 1.68; Fail to reject the null hypothesis",
+                "t-statistic: 1.40; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (2.15 - 1.5) / (2.77 / sqrt(36)) = 1.40. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 30,
+            "text": "Sarah Jenkins, a CFA candidate, serves on the board of a publicly traded firm, Quantum Materials. During a closed board meeting, Sarah Jenkins learns that Quantum Materials will surprisingly slash its dividend by 50% next week. To avoid the appearance of insider trading, Sarah Jenkins refrains from trading Quantum Materials stock. However, Sarah Jenkins realizes this cut indicates severe industry-wide macroeconomic stress and aggressively short-sells a highly correlated competitor, Quantum Materials. According to the CFA Institute Standards, Sarah Jenkins:",
+            "options": [
+                "Did not violate the standards because {competitor} was not the subject of the inside information and mosaic theory applies.",
+                "Violated the standards by trading {competitor} because the information was material, non-public, and affected the entire sector.",
+                "Violated the standards because board members are strictly prohibited from trading any stocks in the same sector."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Material nonpublic information (MNPI) applies to any security whose price would be significantly impacted by the information, even if it's not the specific company the information originated from.",
+            "explanation": "Standard II(A) Material Nonpublic Information prohibits trading on MNPI. If the dividend cut of a major firm is highly material to a correlated competitor, trading the competitor's stock based on that closed-door information is a violation. It does not qualify as mosaic theory because the foundational piece of information is explicitly non-public and material."
+        },
+        {
+            "id": 31,
+            "text": "An economist is applying the Mundell-Fleming model to a country with high capital mobility and a floating exchange rate regime. The central bank implements a severely restrictive monetary policy to combat inflation, while the government simultaneously passes a massive deficit-spending infrastructure bill. The most likely effect on the country's domestic interest rates and its domestic currency value is:",
+            "options": [
+                "Interest rates increase; currency appreciates.",
+                "Interest rates increase; currency depreciates.",
+                "Interest rates decrease; currency appreciates."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Expansionary fiscal policy and restrictive monetary policy both drive interest rates up. In a floating regime with high capital mobility, higher rates attract foreign capital.",
+            "explanation": "Under the Mundell-Fleming model with high capital mobility, restrictive monetary policy raises interest rates, and expansionary fiscal policy also puts upward pressure on rates. The resulting high interest rates attract capital inflows, causing the domestic currency to appreciate strongly."
+        },
+        {
+            "id": 32,
+            "text": "An economist is applying the Mundell-Fleming model to a country with high capital mobility and a floating exchange rate regime. The central bank implements a severely restrictive monetary policy to combat inflation, while the government simultaneously passes a massive deficit-spending infrastructure bill. The most likely effect on the country's domestic interest rates and its domestic currency value is:",
+            "options": [
+                "Interest rates increase; currency appreciates.",
+                "Interest rates increase; currency depreciates.",
+                "Interest rates decrease; currency appreciates."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Expansionary fiscal policy and restrictive monetary policy both drive interest rates up. In a floating regime with high capital mobility, higher rates attract foreign capital.",
+            "explanation": "Under the Mundell-Fleming model with high capital mobility, restrictive monetary policy raises interest rates, and expansionary fiscal policy also puts upward pressure on rates. The resulting high interest rates attract capital inflows, causing the domestic currency to appreciate strongly."
+        },
+        {
+            "id": 33,
+            "text": "Aisha Patel, a CFA candidate, serves on the board of a publicly traded firm, AeroDynamics. During a closed board meeting, Aisha Patel learns that AeroDynamics will surprisingly slash its dividend by 50% next week. To avoid the appearance of insider trading, Aisha Patel refrains from trading AeroDynamics stock. However, Aisha Patel realizes this cut indicates severe industry-wide macroeconomic stress and aggressively short-sells a highly correlated competitor, Quantum Materials. According to the CFA Institute Standards, Aisha Patel:",
+            "options": [
+                "Did not violate the standards because {competitor} was not the subject of the inside information and mosaic theory applies.",
+                "Violated the standards by trading {competitor} because the information was material, non-public, and affected the entire sector.",
+                "Violated the standards because board members are strictly prohibited from trading any stocks in the same sector."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Material nonpublic information (MNPI) applies to any security whose price would be significantly impacted by the information, even if it's not the specific company the information originated from.",
+            "explanation": "Standard II(A) Material Nonpublic Information prohibits trading on MNPI. If the dividend cut of a major firm is highly material to a correlated competitor, trading the competitor's stock based on that closed-door information is a violation. It does not qualify as mosaic theory because the foundational piece of information is explicitly non-public and material."
+        },
+        {
+            "id": 34,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 1.5%. A sample of 48 months yields a mean return of 2.1% and a sample standard deviation of 4.0%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 1.04; Fail to reject the null hypothesis",
+                "t-statistic: 1.25; Fail to reject the null hypothesis",
+                "t-statistic: 1.04; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (2.10 - 1.5) / (4.00 / sqrt(48)) = 1.04. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 35,
+            "text": "An analyst is given the following spot exchange rates: USD/AUD is 1.1816-1.1820, and USD/EUR is 0.7680-0.7684. A dealer is quoting the AUD/EUR cross rate at 0.6553-0.6563. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of USD, the arbitrage profit is closest to:",
+            "options": [
+                "343,805 units of USD",
+                "468,805 units of USD",
+                "384,781 units of USD"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 384,781 units."
+        },
+        {
+            "id": 36,
+            "text": "Elena Rostova, a CFA candidate, serves on the board of a publicly traded firm, Quantum Materials. During a closed board meeting, Elena Rostova learns that Quantum Materials will surprisingly slash its dividend by 50% next week. To avoid the appearance of insider trading, Elena Rostova refrains from trading Quantum Materials stock. However, Elena Rostova realizes this cut indicates severe industry-wide macroeconomic stress and aggressively short-sells a highly correlated competitor, Quantum Materials. According to the CFA Institute Standards, Elena Rostova:",
+            "options": [
+                "Did not violate the standards because {competitor} was not the subject of the inside information and mosaic theory applies.",
+                "Violated the standards by trading {competitor} because the information was material, non-public, and affected the entire sector.",
+                "Violated the standards because board members are strictly prohibited from trading any stocks in the same sector."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Material nonpublic information (MNPI) applies to any security whose price would be significantly impacted by the information, even if it's not the specific company the information originated from.",
+            "explanation": "Standard II(A) Material Nonpublic Information prohibits trading on MNPI. If the dividend cut of a major firm is highly material to a correlated competitor, trading the competitor's stock based on that closed-door information is a violation. It does not qualify as mosaic theory because the foundational piece of information is explicitly non-public and material."
+        },
+        {
+            "id": 37,
+            "text": "An economist is applying the Mundell-Fleming model to a country with high capital mobility and a floating exchange rate regime. The central bank implements a severely restrictive monetary policy to combat inflation, while the government simultaneously passes a massive deficit-spending infrastructure bill. The most likely effect on the country's domestic interest rates and its domestic currency value is:",
+            "options": [
+                "Interest rates increase; currency appreciates.",
+                "Interest rates increase; currency depreciates.",
+                "Interest rates decrease; currency appreciates."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Expansionary fiscal policy and restrictive monetary policy both drive interest rates up. In a floating regime with high capital mobility, higher rates attract foreign capital.",
+            "explanation": "Under the Mundell-Fleming model with high capital mobility, restrictive monetary policy raises interest rates, and expansionary fiscal policy also puts upward pressure on rates. The resulting high interest rates attract capital inflows, causing the domestic currency to appreciate strongly."
+        },
+        {
+            "id": 38,
+            "text": "Sarah Jenkins, CFA, is analyzing Quantum Materials's deferred tax position. For tax purposes, the company uses an accelerated depreciation method over 5 years, while for financial reporting it uses straight-line depreciation over the same period with zero salvage value. The asset was purchased for $377,000. In year 2, the statutory tax rate unexpectedly decreases from 35% to 21%. The company's pretax accounting income for year 2 is $81,000. Assuming this is the company's only asset, what is the most likely impact on the income statement in year 2 resulting from the tax rate change?",
+            "options": [
+                "A deferred tax benefit of $10,556",
+                "A deferred tax expense of $10,556",
+                "A deferred tax benefit of $26,390"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the carrying value and tax base at the end of year 1 to find the DTL balance. A decrease in the tax rate will decrease the DTL liability, leading to a deferred tax benefit in the income statement.",
+            "explanation": "Calculation involves finding the deferred tax liability (DTL) at the end of Year 1, then adjusting its value in Year 2 due to the new tax rate. The reduction in DTL creates a deferred tax benefit, increasing net income. The DTL at Year 1 is $26,390. After the tax rate drops to 21%, the required DTL balance drops to $15,834. This results in a reversal/benefit of $10,556."
+        },
+        {
+            "id": 39,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 1.0%. A sample of 60 months yields a mean return of 1.52% and a sample standard deviation of 4.41%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 0.92; Fail to reject the null hypothesis",
+                "t-statistic: 1.11; Fail to reject the null hypothesis",
+                "t-statistic: 0.92; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (1.52 - 1.0) / (4.41 / sqrt(60)) = 0.92. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 40,
+            "text": "An economist is applying the Mundell-Fleming model to a country with high capital mobility and a floating exchange rate regime. The central bank implements a severely restrictive monetary policy to combat inflation, while the government simultaneously passes a massive deficit-spending infrastructure bill. The most likely effect on the country's domestic interest rates and its domestic currency value is:",
+            "options": [
+                "Interest rates increase; currency appreciates.",
+                "Interest rates increase; currency depreciates.",
+                "Interest rates decrease; currency appreciates."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Expansionary fiscal policy and restrictive monetary policy both drive interest rates up. In a floating regime with high capital mobility, higher rates attract foreign capital.",
+            "explanation": "Under the Mundell-Fleming model with high capital mobility, restrictive monetary policy raises interest rates, and expansionary fiscal policy also puts upward pressure on rates. The resulting high interest rates attract capital inflows, causing the domestic currency to appreciate strongly."
+        },
+        {
+            "id": 41,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 1.0%. A sample of 36 months yields a mean return of 1.73% and a sample standard deviation of 2.62%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 1.66; Reject the null hypothesis",
+                "t-statistic: 1.99; Reject the null hypothesis",
+                "t-statistic: 1.66; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (1.73 - 1.0) / (2.62 / sqrt(36)) = 1.66. Since it is > 1.645, we reject the null hypothesis."
+        },
+        {
+            "id": 42,
+            "text": "An economist is applying the Mundell-Fleming model to a country with high capital mobility and a floating exchange rate regime. The central bank implements a severely restrictive monetary policy to combat inflation, while the government simultaneously passes a massive deficit-spending infrastructure bill. The most likely effect on the country's domestic interest rates and its domestic currency value is:",
+            "options": [
+                "Interest rates increase; currency appreciates.",
+                "Interest rates increase; currency depreciates.",
+                "Interest rates decrease; currency appreciates."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Expansionary fiscal policy and restrictive monetary policy both drive interest rates up. In a floating regime with high capital mobility, higher rates attract foreign capital.",
+            "explanation": "Under the Mundell-Fleming model with high capital mobility, restrictive monetary policy raises interest rates, and expansionary fiscal policy also puts upward pressure on rates. The resulting high interest rates attract capital inflows, causing the domestic currency to appreciate strongly."
+        },
+        {
+            "id": 43,
+            "text": "Elena Rostova, CFA, is analyzing BioGenix's deferred tax position. For tax purposes, the company uses an accelerated depreciation method over 5 years, while for financial reporting it uses straight-line depreciation over the same period with zero salvage value. The asset was purchased for $288,000. In year 2, the statutory tax rate unexpectedly decreases from 35% to 25%. The company's pretax accounting income for year 2 is $83,000. Assuming this is the company's only asset, what is the most likely impact on the income statement in year 2 resulting from the tax rate change?",
+            "options": [
+                "A deferred tax benefit of $5,760",
+                "A deferred tax expense of $5,760",
+                "A deferred tax benefit of $20,160"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the carrying value and tax base at the end of year 1 to find the DTL balance. A decrease in the tax rate will decrease the DTL liability, leading to a deferred tax benefit in the income statement.",
+            "explanation": "Calculation involves finding the deferred tax liability (DTL) at the end of Year 1, then adjusting its value in Year 2 due to the new tax rate. The reduction in DTL creates a deferred tax benefit, increasing net income. The DTL at Year 1 is $20,160. After the tax rate drops to 25%, the required DTL balance drops to $14,400. This results in a reversal/benefit of $5,760."
+        },
+        {
+            "id": 44,
+            "text": "An analyst is given the following spot exchange rates: AUD/GBP is 1.2648-1.2652, and AUD/EUR is 0.7985-0.7989. A dealer is quoting the GBP/EUR cross rate at 0.6367-0.6377. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of AUD, the arbitrage profit is closest to:",
+            "options": [
+                "679,375 units of AUD",
+                "586,236 units of AUD",
+                "467,360 units of AUD"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 586,236 units."
+        },
+        {
+            "id": 45,
+            "text": "James Smith, a CFA candidate, serves on the board of a publicly traded firm, Quantum Materials. During a closed board meeting, James Smith learns that Quantum Materials will surprisingly slash its dividend by 50% next week. To avoid the appearance of insider trading, James Smith refrains from trading Quantum Materials stock. However, James Smith realizes this cut indicates severe industry-wide macroeconomic stress and aggressively short-sells a highly correlated competitor, Quantum Materials. According to the CFA Institute Standards, James Smith:",
+            "options": [
+                "Did not violate the standards because {competitor} was not the subject of the inside information and mosaic theory applies.",
+                "Violated the standards by trading {competitor} because the information was material, non-public, and affected the entire sector.",
+                "Violated the standards because board members are strictly prohibited from trading any stocks in the same sector."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Material nonpublic information (MNPI) applies to any security whose price would be significantly impacted by the information, even if it's not the specific company the information originated from.",
+            "explanation": "Standard II(A) Material Nonpublic Information prohibits trading on MNPI. If the dividend cut of a major firm is highly material to a correlated competitor, trading the competitor's stock based on that closed-door information is a violation. It does not qualify as mosaic theory because the foundational piece of information is explicitly non-public and material."
+        },
+        {
+            "id": 46,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 0.5%. A sample of 48 months yields a mean return of 0.78% and a sample standard deviation of 2.28%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 0.85; Fail to reject the null hypothesis",
+                "t-statistic: 1.02; Fail to reject the null hypothesis",
+                "t-statistic: 0.85; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (0.78 - 0.5) / (2.28 / sqrt(48)) = 0.85. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 47,
+            "text": "An economist is applying the Mundell-Fleming model to a country with high capital mobility and a floating exchange rate regime. The central bank implements a severely restrictive monetary policy to combat inflation, while the government simultaneously passes a massive deficit-spending infrastructure bill. The most likely effect on the country's domestic interest rates and its domestic currency value is:",
+            "options": [
+                "Interest rates increase; currency appreciates.",
+                "Interest rates increase; currency depreciates.",
+                "Interest rates decrease; currency appreciates."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Expansionary fiscal policy and restrictive monetary policy both drive interest rates up. In a floating regime with high capital mobility, higher rates attract foreign capital.",
+            "explanation": "Under the Mundell-Fleming model with high capital mobility, restrictive monetary policy raises interest rates, and expansionary fiscal policy also puts upward pressure on rates. The resulting high interest rates attract capital inflows, causing the domestic currency to appreciate strongly."
+        },
+        {
+            "id": 48,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 1.0%. A sample of 60 months yields a mean return of 1.25% and a sample standard deviation of 2.6%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 0.76; Fail to reject the null hypothesis",
+                "t-statistic: 0.91; Fail to reject the null hypothesis",
+                "t-statistic: 0.76; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (1.25 - 1.0) / (2.60 / sqrt(60)) = 0.76. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 49,
+            "text": "An analyst is given the following spot exchange rates: JPY/CHF is 1.3190-1.3194, and JPY/AUD is 0.8416-0.8420. A dealer is quoting the CHF/AUD cross rate at 0.6434-0.6444. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of JPY, the arbitrage profit is closest to:",
+            "options": [
+                "725,357 units of JPY",
+                "908,128 units of JPY",
+                "531,796 units of JPY"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 725,357 units."
+        },
+        {
+            "id": 50,
+            "text": "Sarah Jenkins, CFA, is analyzing Quantum Materials's deferred tax position. For tax purposes, the company uses an accelerated depreciation method over 10 years, while for financial reporting it uses straight-line depreciation over the same period with zero salvage value. The asset was purchased for $246,000. In year 2, the statutory tax rate unexpectedly decreases from 40% to 20%. The company's pretax accounting income for year 2 is $132,000. Assuming this is the company's only asset, what is the most likely impact on the income statement in year 2 resulting from the tax rate change?",
+            "options": [
+                "A deferred tax benefit of $4,920",
+                "A deferred tax expense of $4,920",
+                "A deferred tax benefit of $9,840"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the carrying value and tax base at the end of year 1 to find the DTL balance. A decrease in the tax rate will decrease the DTL liability, leading to a deferred tax benefit in the income statement.",
+            "explanation": "Calculation involves finding the deferred tax liability (DTL) at the end of Year 1, then adjusting its value in Year 2 due to the new tax rate. The reduction in DTL creates a deferred tax benefit, increasing net income. The DTL at Year 1 is $9,840. After the tax rate drops to 20%, the required DTL balance drops to $4,920. This results in a reversal/benefit of $4,920."
+        },
+        {
+            "id": 51,
+            "text": "James Smith, a CFA candidate, serves on the board of a publicly traded firm, Quantum Materials. During a closed board meeting, James Smith learns that Quantum Materials will surprisingly slash its dividend by 50% next week. To avoid the appearance of insider trading, James Smith refrains from trading Quantum Materials stock. However, James Smith realizes this cut indicates severe industry-wide macroeconomic stress and aggressively short-sells a highly correlated competitor, Quantum Materials. According to the CFA Institute Standards, James Smith:",
+            "options": [
+                "Did not violate the standards because {competitor} was not the subject of the inside information and mosaic theory applies.",
+                "Violated the standards by trading {competitor} because the information was material, non-public, and affected the entire sector.",
+                "Violated the standards because board members are strictly prohibited from trading any stocks in the same sector."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Material nonpublic information (MNPI) applies to any security whose price would be significantly impacted by the information, even if it's not the specific company the information originated from.",
+            "explanation": "Standard II(A) Material Nonpublic Information prohibits trading on MNPI. If the dividend cut of a major firm is highly material to a correlated competitor, trading the competitor's stock based on that closed-door information is a violation. It does not qualify as mosaic theory because the foundational piece of information is explicitly non-public and material."
+        },
+        {
+            "id": 52,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 1.0%. A sample of 36 months yields a mean return of 1.35% and a sample standard deviation of 2.55%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 0.81; Fail to reject the null hypothesis",
+                "t-statistic: 0.98; Fail to reject the null hypothesis",
+                "t-statistic: 0.81; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (1.35 - 1.0) / (2.55 / sqrt(36)) = 0.81. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 53,
+            "text": "An analyst is given the following spot exchange rates: GBP/JPY is 1.2039-1.2043, and GBP/EUR is 0.7262-0.7266. A dealer is quoting the JPY/EUR cross rate at 0.6085-0.6095. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of GBP, the arbitrage profit is closest to:",
+            "options": [
+                "370,597 units of GBP",
+                "436,623 units of GBP",
+                "535,747 units of GBP"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 436,623 units."
+        },
+        {
+            "id": 54,
+            "text": "An economist is applying the Mundell-Fleming model to a country with high capital mobility and a floating exchange rate regime. The central bank implements a severely restrictive monetary policy to combat inflation, while the government simultaneously passes a massive deficit-spending infrastructure bill. The most likely effect on the country's domestic interest rates and its domestic currency value is:",
+            "options": [
+                "Interest rates increase; currency appreciates.",
+                "Interest rates increase; currency depreciates.",
+                "Interest rates decrease; currency appreciates."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Expansionary fiscal policy and restrictive monetary policy both drive interest rates up. In a floating regime with high capital mobility, higher rates attract foreign capital.",
+            "explanation": "Under the Mundell-Fleming model with high capital mobility, restrictive monetary policy raises interest rates, and expansionary fiscal policy also puts upward pressure on rates. The resulting high interest rates attract capital inflows, causing the domestic currency to appreciate strongly."
+        },
+        {
+            "id": 55,
+            "text": "An analyst is given the following spot exchange rates: JPY/EUR is 1.1375-1.1379, and JPY/GBP is 0.8291-0.8295. A dealer is quoting the EUR/GBP cross rate at 0.7342-0.7352. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of JPY, the arbitrage profit is closest to:",
+            "options": [
+                "346,899 units of JPY",
+                "284,392 units of JPY",
+                "233,574 units of JPY"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 284,392 units."
+        },
+        {
+            "id": 56,
+            "text": "An economist is applying the Mundell-Fleming model to a country with high capital mobility and a floating exchange rate regime. The central bank implements a severely restrictive monetary policy to combat inflation, while the government simultaneously passes a massive deficit-spending infrastructure bill. The most likely effect on the country's domestic interest rates and its domestic currency value is:",
+            "options": [
+                "Interest rates increase; currency appreciates.",
+                "Interest rates increase; currency depreciates.",
+                "Interest rates decrease; currency appreciates."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Expansionary fiscal policy and restrictive monetary policy both drive interest rates up. In a floating regime with high capital mobility, higher rates attract foreign capital.",
+            "explanation": "Under the Mundell-Fleming model with high capital mobility, restrictive monetary policy raises interest rates, and expansionary fiscal policy also puts upward pressure on rates. The resulting high interest rates attract capital inflows, causing the domestic currency to appreciate strongly."
+        },
+        {
+            "id": 57,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 1.0%. A sample of 48 months yields a mean return of 1.7% and a sample standard deviation of 2.96%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 1.64; Fail to reject the null hypothesis",
+                "t-statistic: 1.97; Fail to reject the null hypothesis",
+                "t-statistic: 1.64; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (1.70 - 1.0) / (2.96 / sqrt(48)) = 1.64. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 58,
+            "text": "James Smith, CFA, is analyzing AeroDynamics's deferred tax position. For tax purposes, the company uses an accelerated depreciation method over 10 years, while for financial reporting it uses straight-line depreciation over the same period with zero salvage value. The asset was purchased for $463,000. In year 2, the statutory tax rate unexpectedly decreases from 35% to 20%. The company's pretax accounting income for year 2 is $64,000. Assuming this is the company's only asset, what is the most likely impact on the income statement in year 2 resulting from the tax rate change?",
+            "options": [
+                "A deferred tax benefit of $6,945",
+                "A deferred tax expense of $6,945",
+                "A deferred tax benefit of $16,205"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the carrying value and tax base at the end of year 1 to find the DTL balance. A decrease in the tax rate will decrease the DTL liability, leading to a deferred tax benefit in the income statement.",
+            "explanation": "Calculation involves finding the deferred tax liability (DTL) at the end of Year 1, then adjusting its value in Year 2 due to the new tax rate. The reduction in DTL creates a deferred tax benefit, increasing net income. The DTL at Year 1 is $16,205. After the tax rate drops to 20%, the required DTL balance drops to $9,260. This results in a reversal/benefit of $6,945."
+        },
+        {
+            "id": 59,
+            "text": "Michael Chang, a CFA candidate, serves on the board of a publicly traded firm, NovaTech. During a closed board meeting, Michael Chang learns that NovaTech will surprisingly slash its dividend by 50% next week. To avoid the appearance of insider trading, Michael Chang refrains from trading NovaTech stock. However, Michael Chang realizes this cut indicates severe industry-wide macroeconomic stress and aggressively short-sells a highly correlated competitor, Quantum Materials. According to the CFA Institute Standards, Michael Chang:",
+            "options": [
+                "Did not violate the standards because {competitor} was not the subject of the inside information and mosaic theory applies.",
+                "Violated the standards by trading {competitor} because the information was material, non-public, and affected the entire sector.",
+                "Violated the standards because board members are strictly prohibited from trading any stocks in the same sector."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Material nonpublic information (MNPI) applies to any security whose price would be significantly impacted by the information, even if it's not the specific company the information originated from.",
+            "explanation": "Standard II(A) Material Nonpublic Information prohibits trading on MNPI. If the dividend cut of a major firm is highly material to a correlated competitor, trading the competitor's stock based on that closed-door information is a violation. It does not qualify as mosaic theory because the foundational piece of information is explicitly non-public and material."
+        },
+        {
+            "id": 60,
+            "text": "An analyst is given the following spot exchange rates: USD/CHF is 1.4414-1.4418, and USD/GBP is 0.8891-0.8895. A dealer is quoting the CHF/GBP cross rate at 0.6221-0.6231. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of USD, the arbitrage profit is closest to:",
+            "options": [
+                "1,292,351 units of USD",
+                "837,637 units of USD",
+                "1,060,135 units of USD"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 1,060,135 units."
+        },
+        {
+            "id": 61,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 1.5%. A sample of 36 months yields a mean return of 1.86% and a sample standard deviation of 3.43%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 0.64; Fail to reject the null hypothesis",
+                "t-statistic: 0.76; Fail to reject the null hypothesis",
+                "t-statistic: 0.64; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (1.86 - 1.5) / (3.43 / sqrt(36)) = 0.64. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 62,
+            "text": "An economist is applying the Mundell-Fleming model to a country with high capital mobility and a floating exchange rate regime. The central bank implements a severely restrictive monetary policy to combat inflation, while the government simultaneously passes a massive deficit-spending infrastructure bill. The most likely effect on the country's domestic interest rates and its domestic currency value is:",
+            "options": [
+                "Interest rates increase; currency appreciates.",
+                "Interest rates increase; currency depreciates.",
+                "Interest rates decrease; currency appreciates."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Expansionary fiscal policy and restrictive monetary policy both drive interest rates up. In a floating regime with high capital mobility, higher rates attract foreign capital.",
+            "explanation": "Under the Mundell-Fleming model with high capital mobility, restrictive monetary policy raises interest rates, and expansionary fiscal policy also puts upward pressure on rates. The resulting high interest rates attract capital inflows, causing the domestic currency to appreciate strongly."
+        },
+        {
+            "id": 63,
+            "text": "James Smith, a CFA candidate, serves on the board of a publicly traded firm, AeroDynamics. During a closed board meeting, James Smith learns that AeroDynamics will surprisingly slash its dividend by 50% next week. To avoid the appearance of insider trading, James Smith refrains from trading AeroDynamics stock. However, James Smith realizes this cut indicates severe industry-wide macroeconomic stress and aggressively short-sells a highly correlated competitor, Quantum Materials. According to the CFA Institute Standards, James Smith:",
+            "options": [
+                "Did not violate the standards because {competitor} was not the subject of the inside information and mosaic theory applies.",
+                "Violated the standards by trading {competitor} because the information was material, non-public, and affected the entire sector.",
+                "Violated the standards because board members are strictly prohibited from trading any stocks in the same sector."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Material nonpublic information (MNPI) applies to any security whose price would be significantly impacted by the information, even if it's not the specific company the information originated from.",
+            "explanation": "Standard II(A) Material Nonpublic Information prohibits trading on MNPI. If the dividend cut of a major firm is highly material to a correlated competitor, trading the competitor's stock based on that closed-door information is a violation. It does not qualify as mosaic theory because the foundational piece of information is explicitly non-public and material."
+        },
+        {
+            "id": 64,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 0.5%. A sample of 48 months yields a mean return of 1.28% and a sample standard deviation of 2.29%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 2.35; Reject the null hypothesis",
+                "t-statistic: 2.82; Reject the null hypothesis",
+                "t-statistic: 2.35; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (1.28 - 0.5) / (2.29 / sqrt(48)) = 2.35. Since it is > 1.645, we reject the null hypothesis."
+        },
+        {
+            "id": 65,
+            "text": "An analyst is given the following spot exchange rates: GBP/JPY is 1.3895-1.3899, and GBP/USD is 0.7936-0.7940. A dealer is quoting the JPY/USD cross rate at 0.5764-0.5774. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of GBP, the arbitrage profit is closest to:",
+            "options": [
+                "912,978 units of GBP",
+                "1,042,347 units of GBP",
+                "707,033 units of GBP"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 912,978 units."
+        },
+        {
+            "id": 66,
+            "text": "Robert Chen, a CFA candidate, serves on the board of a publicly traded firm, NovaTech. During a closed board meeting, Robert Chen learns that NovaTech will surprisingly slash its dividend by 50% next week. To avoid the appearance of insider trading, Robert Chen refrains from trading NovaTech stock. However, Robert Chen realizes this cut indicates severe industry-wide macroeconomic stress and aggressively short-sells a highly correlated competitor, Quantum Materials. According to the CFA Institute Standards, Robert Chen:",
+            "options": [
+                "Did not violate the standards because {competitor} was not the subject of the inside information and mosaic theory applies.",
+                "Violated the standards by trading {competitor} because the information was material, non-public, and affected the entire sector.",
+                "Violated the standards because board members are strictly prohibited from trading any stocks in the same sector."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Material nonpublic information (MNPI) applies to any security whose price would be significantly impacted by the information, even if it's not the specific company the information originated from.",
+            "explanation": "Standard II(A) Material Nonpublic Information prohibits trading on MNPI. If the dividend cut of a major firm is highly material to a correlated competitor, trading the competitor's stock based on that closed-door information is a violation. It does not qualify as mosaic theory because the foundational piece of information is explicitly non-public and material."
+        },
+        {
+            "id": 67,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 0.5%. A sample of 48 months yields a mean return of 0.79% and a sample standard deviation of 4.8%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 0.42; Fail to reject the null hypothesis",
+                "t-statistic: 0.50; Fail to reject the null hypothesis",
+                "t-statistic: 0.42; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (0.79 - 0.5) / (4.80 / sqrt(48)) = 0.42. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 68,
+            "text": "An analyst is given the following spot exchange rates: GBP/EUR is 1.4586-1.4590, and GBP/JPY is 0.7934-0.7938. A dealer is quoting the EUR/JPY cross rate at 0.5492-0.5502. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of GBP, the arbitrage profit is closest to:",
+            "options": [
+                "804,658 units of GBP",
+                "1,107,202 units of GBP",
+                "1,328,124 units of GBP"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 1,107,202 units."
+        },
+        {
+            "id": 69,
+            "text": "An economist is applying the Mundell-Fleming model to a country with high capital mobility and a floating exchange rate regime. The central bank implements a severely restrictive monetary policy to combat inflation, while the government simultaneously passes a massive deficit-spending infrastructure bill. The most likely effect on the country's domestic interest rates and its domestic currency value is:",
+            "options": [
+                "Interest rates increase; currency appreciates.",
+                "Interest rates increase; currency depreciates.",
+                "Interest rates decrease; currency appreciates."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Expansionary fiscal policy and restrictive monetary policy both drive interest rates up. In a floating regime with high capital mobility, higher rates attract foreign capital.",
+            "explanation": "Under the Mundell-Fleming model with high capital mobility, restrictive monetary policy raises interest rates, and expansionary fiscal policy also puts upward pressure on rates. The resulting high interest rates attract capital inflows, causing the domestic currency to appreciate strongly."
+        },
+        {
+            "id": 70,
+            "text": "Elena Rostova, CFA, is analyzing ByteCorp's deferred tax position. For tax purposes, the company uses an accelerated depreciation method over 5 years, while for financial reporting it uses straight-line depreciation over the same period with zero salvage value. The asset was purchased for $475,000. In year 2, the statutory tax rate unexpectedly decreases from 30% to 25%. The company's pretax accounting income for year 2 is $57,000. Assuming this is the company's only asset, what is the most likely impact on the income statement in year 2 resulting from the tax rate change?",
+            "options": [
+                "A deferred tax benefit of $4,750",
+                "A deferred tax expense of $4,750",
+                "A deferred tax benefit of $28,500"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the carrying value and tax base at the end of year 1 to find the DTL balance. A decrease in the tax rate will decrease the DTL liability, leading to a deferred tax benefit in the income statement.",
+            "explanation": "Calculation involves finding the deferred tax liability (DTL) at the end of Year 1, then adjusting its value in Year 2 due to the new tax rate. The reduction in DTL creates a deferred tax benefit, increasing net income. The DTL at Year 1 is $28,500. After the tax rate drops to 25%, the required DTL balance drops to $23,750. This results in a reversal/benefit of $4,750."
+        },
+        {
+            "id": 71,
+            "text": "James Smith, CFA, is analyzing ByteCorp's deferred tax position. For tax purposes, the company uses an accelerated depreciation method over 10 years, while for financial reporting it uses straight-line depreciation over the same period with zero salvage value. The asset was purchased for $196,000. In year 2, the statutory tax rate unexpectedly decreases from 35% to 21%. The company's pretax accounting income for year 2 is $102,000. Assuming this is the company's only asset, what is the most likely impact on the income statement in year 2 resulting from the tax rate change?",
+            "options": [
+                "A deferred tax benefit of $2,744",
+                "A deferred tax expense of $2,744",
+                "A deferred tax benefit of $6,860"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the carrying value and tax base at the end of year 1 to find the DTL balance. A decrease in the tax rate will decrease the DTL liability, leading to a deferred tax benefit in the income statement.",
+            "explanation": "Calculation involves finding the deferred tax liability (DTL) at the end of Year 1, then adjusting its value in Year 2 due to the new tax rate. The reduction in DTL creates a deferred tax benefit, increasing net income. The DTL at Year 1 is $6,860. After the tax rate drops to 21%, the required DTL balance drops to $4,116. This results in a reversal/benefit of $2,744."
+        },
+        {
+            "id": 72,
+            "text": "Elena Rostova, CFA, is analyzing ByteCorp's deferred tax position. For tax purposes, the company uses an accelerated depreciation method over 5 years, while for financial reporting it uses straight-line depreciation over the same period with zero salvage value. The asset was purchased for $244,000. In year 2, the statutory tax rate unexpectedly decreases from 40% to 20%. The company's pretax accounting income for year 2 is $143,000. Assuming this is the company's only asset, what is the most likely impact on the income statement in year 2 resulting from the tax rate change?",
+            "options": [
+                "A deferred tax benefit of $9,760",
+                "A deferred tax expense of $9,760",
+                "A deferred tax benefit of $19,520"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the carrying value and tax base at the end of year 1 to find the DTL balance. A decrease in the tax rate will decrease the DTL liability, leading to a deferred tax benefit in the income statement.",
+            "explanation": "Calculation involves finding the deferred tax liability (DTL) at the end of Year 1, then adjusting its value in Year 2 due to the new tax rate. The reduction in DTL creates a deferred tax benefit, increasing net income. The DTL at Year 1 is $19,520. After the tax rate drops to 20%, the required DTL balance drops to $9,760. This results in a reversal/benefit of $9,760."
+        },
+        {
+            "id": 73,
+            "text": "An economist is applying the Mundell-Fleming model to a country with high capital mobility and a floating exchange rate regime. The central bank implements a severely restrictive monetary policy to combat inflation, while the government simultaneously passes a massive deficit-spending infrastructure bill. The most likely effect on the country's domestic interest rates and its domestic currency value is:",
+            "options": [
+                "Interest rates increase; currency appreciates.",
+                "Interest rates increase; currency depreciates.",
+                "Interest rates decrease; currency appreciates."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Expansionary fiscal policy and restrictive monetary policy both drive interest rates up. In a floating regime with high capital mobility, higher rates attract foreign capital.",
+            "explanation": "Under the Mundell-Fleming model with high capital mobility, restrictive monetary policy raises interest rates, and expansionary fiscal policy also puts upward pressure on rates. The resulting high interest rates attract capital inflows, causing the domestic currency to appreciate strongly."
+        },
+        {
+            "id": 74,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 0.5%. A sample of 48 months yields a mean return of 1.23% and a sample standard deviation of 2.63%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 1.92; Reject the null hypothesis",
+                "t-statistic: 2.30; Reject the null hypothesis",
+                "t-statistic: 1.92; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (1.23 - 0.5) / (2.63 / sqrt(48)) = 1.92. Since it is > 1.645, we reject the null hypothesis."
+        },
+        {
+            "id": 75,
+            "text": "Robert Chen, a CFA candidate, serves on the board of a publicly traded firm, Quantum Materials. During a closed board meeting, Robert Chen learns that Quantum Materials will surprisingly slash its dividend by 50% next week. To avoid the appearance of insider trading, Robert Chen refrains from trading Quantum Materials stock. However, Robert Chen realizes this cut indicates severe industry-wide macroeconomic stress and aggressively short-sells a highly correlated competitor, Quantum Materials. According to the CFA Institute Standards, Robert Chen:",
+            "options": [
+                "Did not violate the standards because {competitor} was not the subject of the inside information and mosaic theory applies.",
+                "Violated the standards by trading {competitor} because the information was material, non-public, and affected the entire sector.",
+                "Violated the standards because board members are strictly prohibited from trading any stocks in the same sector."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Material nonpublic information (MNPI) applies to any security whose price would be significantly impacted by the information, even if it's not the specific company the information originated from.",
+            "explanation": "Standard II(A) Material Nonpublic Information prohibits trading on MNPI. If the dividend cut of a major firm is highly material to a correlated competitor, trading the competitor's stock based on that closed-door information is a violation. It does not qualify as mosaic theory because the foundational piece of information is explicitly non-public and material."
+        },
+        {
+            "id": 76,
+            "text": "Sarah Jenkins, CFA, is analyzing ByteCorp's deferred tax position. For tax purposes, the company uses an accelerated depreciation method over 10 years, while for financial reporting it uses straight-line depreciation over the same period with zero salvage value. The asset was purchased for $187,000. In year 2, the statutory tax rate unexpectedly decreases from 35% to 21%. The company's pretax accounting income for year 2 is $71,000. Assuming this is the company's only asset, what is the most likely impact on the income statement in year 2 resulting from the tax rate change?",
+            "options": [
+                "A deferred tax benefit of $2,618",
+                "A deferred tax expense of $2,618",
+                "A deferred tax benefit of $6,545"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the carrying value and tax base at the end of year 1 to find the DTL balance. A decrease in the tax rate will decrease the DTL liability, leading to a deferred tax benefit in the income statement.",
+            "explanation": "Calculation involves finding the deferred tax liability (DTL) at the end of Year 1, then adjusting its value in Year 2 due to the new tax rate. The reduction in DTL creates a deferred tax benefit, increasing net income. The DTL at Year 1 is $6,545. After the tax rate drops to 21%, the required DTL balance drops to $3,927. This results in a reversal/benefit of $2,618."
+        },
+        {
+            "id": 77,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 0.5%. A sample of 36 months yields a mean return of 1.27% and a sample standard deviation of 2.97%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 1.56; Fail to reject the null hypothesis",
+                "t-statistic: 1.87; Fail to reject the null hypothesis",
+                "t-statistic: 1.56; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (1.27 - 0.5) / (2.97 / sqrt(36)) = 1.56. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 78,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 1.5%. A sample of 48 months yields a mean return of 2.15% and a sample standard deviation of 4.41%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 1.02; Fail to reject the null hypothesis",
+                "t-statistic: 1.23; Fail to reject the null hypothesis",
+                "t-statistic: 1.02; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (2.15 - 1.5) / (4.41 / sqrt(48)) = 1.02. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 79,
+            "text": "Michael Chang, CFA, is analyzing NovaTech's deferred tax position. For tax purposes, the company uses an accelerated depreciation method over 10 years, while for financial reporting it uses straight-line depreciation over the same period with zero salvage value. The asset was purchased for $182,000. In year 2, the statutory tax rate unexpectedly decreases from 35% to 20%. The company's pretax accounting income for year 2 is $110,000. Assuming this is the company's only asset, what is the most likely impact on the income statement in year 2 resulting from the tax rate change?",
+            "options": [
+                "A deferred tax benefit of $2,730",
+                "A deferred tax expense of $2,730",
+                "A deferred tax benefit of $6,370"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the carrying value and tax base at the end of year 1 to find the DTL balance. A decrease in the tax rate will decrease the DTL liability, leading to a deferred tax benefit in the income statement.",
+            "explanation": "Calculation involves finding the deferred tax liability (DTL) at the end of Year 1, then adjusting its value in Year 2 due to the new tax rate. The reduction in DTL creates a deferred tax benefit, increasing net income. The DTL at Year 1 is $6,370. After the tax rate drops to 20%, the required DTL balance drops to $3,640. This results in a reversal/benefit of $2,730."
+        },
+        {
+            "id": 80,
+            "text": "David O'Connor, a CFA candidate, serves on the board of a publicly traded firm, Stellar Energy. During a closed board meeting, David O'Connor learns that Stellar Energy will surprisingly slash its dividend by 50% next week. To avoid the appearance of insider trading, David O'Connor refrains from trading Stellar Energy stock. However, David O'Connor realizes this cut indicates severe industry-wide macroeconomic stress and aggressively short-sells a highly correlated competitor, Quantum Materials. According to the CFA Institute Standards, David O'Connor:",
+            "options": [
+                "Did not violate the standards because {competitor} was not the subject of the inside information and mosaic theory applies.",
+                "Violated the standards by trading {competitor} because the information was material, non-public, and affected the entire sector.",
+                "Violated the standards because board members are strictly prohibited from trading any stocks in the same sector."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Material nonpublic information (MNPI) applies to any security whose price would be significantly impacted by the information, even if it's not the specific company the information originated from.",
+            "explanation": "Standard II(A) Material Nonpublic Information prohibits trading on MNPI. If the dividend cut of a major firm is highly material to a correlated competitor, trading the competitor's stock based on that closed-door information is a violation. It does not qualify as mosaic theory because the foundational piece of information is explicitly non-public and material."
+        },
+        {
+            "id": 81,
+            "text": "An economist is applying the Mundell-Fleming model to a country with high capital mobility and a floating exchange rate regime. The central bank implements a severely restrictive monetary policy to combat inflation, while the government simultaneously passes a massive deficit-spending infrastructure bill. The most likely effect on the country's domestic interest rates and its domestic currency value is:",
+            "options": [
+                "Interest rates increase; currency appreciates.",
+                "Interest rates increase; currency depreciates.",
+                "Interest rates decrease; currency appreciates."
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Expansionary fiscal policy and restrictive monetary policy both drive interest rates up. In a floating regime with high capital mobility, higher rates attract foreign capital.",
+            "explanation": "Under the Mundell-Fleming model with high capital mobility, restrictive monetary policy raises interest rates, and expansionary fiscal policy also puts upward pressure on rates. The resulting high interest rates attract capital inflows, causing the domestic currency to appreciate strongly."
+        },
+        {
+            "id": 82,
+            "text": "James Smith, CFA, is analyzing ByteCorp's deferred tax position. For tax purposes, the company uses an accelerated depreciation method over 5 years, while for financial reporting it uses straight-line depreciation over the same period with zero salvage value. The asset was purchased for $418,000. In year 2, the statutory tax rate unexpectedly decreases from 35% to 21%. The company's pretax accounting income for year 2 is $149,000. Assuming this is the company's only asset, what is the most likely impact on the income statement in year 2 resulting from the tax rate change?",
+            "options": [
+                "A deferred tax benefit of $11,704",
+                "A deferred tax expense of $11,704",
+                "A deferred tax benefit of $29,260"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the carrying value and tax base at the end of year 1 to find the DTL balance. A decrease in the tax rate will decrease the DTL liability, leading to a deferred tax benefit in the income statement.",
+            "explanation": "Calculation involves finding the deferred tax liability (DTL) at the end of Year 1, then adjusting its value in Year 2 due to the new tax rate. The reduction in DTL creates a deferred tax benefit, increasing net income. The DTL at Year 1 is $29,260. After the tax rate drops to 21%, the required DTL balance drops to $17,556. This results in a reversal/benefit of $11,704."
+        },
+        {
+            "id": 83,
+            "text": "Sarah Jenkins, CFA, is analyzing NovaTech's deferred tax position. For tax purposes, the company uses an accelerated depreciation method over 10 years, while for financial reporting it uses straight-line depreciation over the same period with zero salvage value. The asset was purchased for $424,000. In year 2, the statutory tax rate unexpectedly decreases from 30% to 20%. The company's pretax accounting income for year 2 is $73,000. Assuming this is the company's only asset, what is the most likely impact on the income statement in year 2 resulting from the tax rate change?",
+            "options": [
+                "A deferred tax benefit of $4,240",
+                "A deferred tax expense of $4,240",
+                "A deferred tax benefit of $12,720"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the carrying value and tax base at the end of year 1 to find the DTL balance. A decrease in the tax rate will decrease the DTL liability, leading to a deferred tax benefit in the income statement.",
+            "explanation": "Calculation involves finding the deferred tax liability (DTL) at the end of Year 1, then adjusting its value in Year 2 due to the new tax rate. The reduction in DTL creates a deferred tax benefit, increasing net income. The DTL at Year 1 is $12,720. After the tax rate drops to 20%, the required DTL balance drops to $8,480. This results in a reversal/benefit of $4,240."
+        },
+        {
+            "id": 84,
+            "text": "A portfolio manager wants to test whether the mean monthly return of a newly formed quantitative strategy exceeds 1.0%. A sample of 36 months yields a mean return of 1.75% and a sample standard deviation of 4.68%. The returns are not normally distributed, but the sample size is large. The calculated test statistic and the appropriate decision at a 5% significance level (assuming the critical value is 1.645) are:",
+            "options": [
+                "t-statistic: 0.96; Fail to reject the null hypothesis",
+                "t-statistic: 1.16; Fail to reject the null hypothesis",
+                "t-statistic: 0.96; Opposite decision"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Use the t-statistic formula: (Sample Mean - Target Mean) / (Sample Std Dev / sqrt(n)). Remember this is a one-tailed test.",
+            "explanation": "Calculation uses the t-statistic for a mean. Compare the calculated t-stat against the critical value to determine rejection of the null hypothesis. t-stat = (1.75 - 1.0) / (4.68 / sqrt(36)) = 0.96. Since it is > 1.645, we fail to reject the null hypothesis."
+        },
+        {
+            "id": 85,
+            "text": "An analyst is given the following spot exchange rates: CHF/USD is 1.1326-1.1330, and CHF/EUR is 0.8677-0.8681. A dealer is quoting the USD/EUR cross rate at 0.7715-0.7725. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of CHF, the arbitrage profit is closest to:",
+            "options": [
+                "314,719 units of CHF",
+                "273,859 units of CHF",
+                "241,449 units of CHF"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 273,859 units."
+        },
+        {
+            "id": 86,
+            "text": "An analyst is given the following spot exchange rates: AUD/USD is 1.2556-1.2560, and AUD/EUR is 0.7887-0.7891. A dealer is quoting the USD/EUR cross rate at 0.6335-0.6345. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of AUD, the arbitrage profit is closest to:",
+            "options": [
+                "412,163 units of AUD",
+                "699,763 units of AUD",
+                "563,339 units of AUD"
+            ],
+            "correctIndices": [
+                2
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 563,339 units."
+        },
+        {
+            "id": 87,
+            "text": "David O'Connor, CFA, is analyzing BioGenix's deferred tax position. For tax purposes, the company uses an accelerated depreciation method over 5 years, while for financial reporting it uses straight-line depreciation over the same period with zero salvage value. The asset was purchased for $461,000. In year 2, the statutory tax rate unexpectedly decreases from 40% to 25%. The company's pretax accounting income for year 2 is $149,000. Assuming this is the company's only asset, what is the most likely impact on the income statement in year 2 resulting from the tax rate change?",
+            "options": [
+                "A deferred tax benefit of $13,830",
+                "A deferred tax expense of $13,830",
+                "A deferred tax benefit of $36,880"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the carrying value and tax base at the end of year 1 to find the DTL balance. A decrease in the tax rate will decrease the DTL liability, leading to a deferred tax benefit in the income statement.",
+            "explanation": "Calculation involves finding the deferred tax liability (DTL) at the end of Year 1, then adjusting its value in Year 2 due to the new tax rate. The reduction in DTL creates a deferred tax benefit, increasing net income. The DTL at Year 1 is $36,880. After the tax rate drops to 25%, the required DTL balance drops to $23,050. This results in a reversal/benefit of $13,830."
+        },
+        {
+            "id": 88,
+            "text": "An analyst is given the following spot exchange rates: CHF/JPY is 1.3094-1.3098, and CHF/EUR is 0.8107-0.8111. A dealer is quoting the JPY/EUR cross rate at 0.6244-0.6254. Based on these rates, a triangular arbitrage opportunity exists. For a trade size of 1,000,000 units of CHF, the arbitrage profit is closest to:",
+            "options": [
+                "786,910 units of CHF",
+                "699,995 units of CHF",
+                "612,154 units of CHF"
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Calculate the implied cross rate bid and ask. Compare it to the dealer's quote. Buy the base currency where it is cheaper and sell it where it is more expensive, factoring in the bid-ask spread.",
+            "explanation": "Triangular arbitrage requires calculating the implied cross rate using the bid/ask spreads appropriately, then executing a simulated trade to capture the risk-free profit. The implied cross rate deviates from the dealer quote, allowing for riskless profit of 699,995 units."
+        },
+        {
+            "id": 89,
+            "text": "David O'Connor, a CFA candidate, serves on the board of a publicly traded firm, NovaTech. During a closed board meeting, David O'Connor learns that NovaTech will surprisingly slash its dividend by 50% next week. To avoid the appearance of insider trading, David O'Connor refrains from trading NovaTech stock. However, David O'Connor realizes this cut indicates severe industry-wide macroeconomic stress and aggressively short-sells a highly correlated competitor, Quantum Materials. According to the CFA Institute Standards, David O'Connor:",
+            "options": [
+                "Did not violate the standards because {competitor} was not the subject of the inside information and mosaic theory applies.",
+                "Violated the standards by trading {competitor} because the information was material, non-public, and affected the entire sector.",
+                "Violated the standards because board members are strictly prohibited from trading any stocks in the same sector."
+            ],
+            "correctIndices": [
+                1
+            ],
+            "hint": "Material nonpublic information (MNPI) applies to any security whose price would be significantly impacted by the information, even if it's not the specific company the information originated from.",
+            "explanation": "Standard II(A) Material Nonpublic Information prohibits trading on MNPI. If the dividend cut of a major firm is highly material to a correlated competitor, trading the competitor's stock based on that closed-door information is a violation. It does not qualify as mosaic theory because the foundational piece of information is explicitly non-public and material."
+        },
+        {
+            "id": 90,
+            "text": "Robert Chen, CFA, is analyzing ByteCorp's deferred tax position. For tax purposes, the company uses an accelerated depreciation method over 10 years, while for financial reporting it uses straight-line depreciation over the same period with zero salvage value. The asset was purchased for $232,000. In year 2, the statutory tax rate unexpectedly decreases from 40% to 21%. The company's pretax accounting income for year 2 is $142,000. Assuming this is the company's only asset, what is the most likely impact on the income statement in year 2 resulting from the tax rate change?",
+            "options": [
+                "A deferred tax benefit of $4,408",
+                "A deferred tax expense of $4,408",
+                "A deferred tax benefit of $9,280"
+            ],
+            "correctIndices": [
+                0
+            ],
+            "hint": "Calculate the carrying value and tax base at the end of year 1 to find the DTL balance. A decrease in the tax rate will decrease the DTL liability, leading to a deferred tax benefit in the income statement.",
+            "explanation": "Calculation involves finding the deferred tax liability (DTL) at the end of Year 1, then adjusting its value in Year 2 due to the new tax rate. The reduction in DTL creates a deferred tax benefit, increasing net income. The DTL at Year 1 is $9,280. After the tax rate drops to 21%, the required DTL balance drops to $4,872. This results in a reversal/benefit of $4,408."
+        }
+    ]
+}
