@@ -1,0 +1,61 @@
+%%{init: {
+  "theme": "dark",
+  "themeVariables": {
+    "primaryColor": "#1f2937",
+    "primaryTextColor": "#ffffff",
+    "primaryBorderColor": "#6366f1",
+    "lineColor": "#9ca3af",
+    "secondaryColor": "#111827",
+    "tertiaryColor": "#0f172a",
+    "fontSize": "14px"
+  }
+}}%%
+
+flowchart TD
+
+    A[📞 Client Call Recording<br/>Capture discussion]
+
+    B[📝 Transcription Agent<br/>Convert call → structured text]
+
+    C[🧠 Fatum Analysis Agent<br/>Extract requirements & insights]
+
+    D[📋 Jira Manager Agent<br/>Auto-create & prioritize tickets]
+
+    E[📐 Technical Planner Agent<br/>Define implementation approach]
+
+    F[💻 Development Agent<br/>Generate code per ticket]
+
+    G[🧪 Code Quality Agent<br/>Run validations, tests & checks]
+
+    H[📦 PR Manager Agent<br/>Create & push PR]
+
+    I[🚀 Deployment Agent<br/>Deploy to Salesforce Sandbox]
+
+    J{👤 Architect Review<br/>Validate in Sandbox}
+
+    K[🔄 Fix Agent Loop<br/>Address feedback & re-implement]
+
+    L[🔀 Merge Manager Agent<br/>Merge approved changes]
+
+    M[🏁 Release Manager Agent<br/>Deploy to Production]
+
+    N[End]
+
+    A --> B --> C --> D --> E --> F --> G --> H --> I --> J
+
+    J -- Changes Required --> K --> F
+    J -- Approved --> L --> M --> N
+
+    D -->|Parallel Tickets| F
+
+    %% Color Styles
+    classDef agent fill:#1e3a8a,stroke:#60a5fa,color:#e0f2fe,stroke-width:2px;
+    classDef human fill:#7c2d12,stroke:#fb923c,color:#fff7ed,stroke-width:2px;
+    classDef system fill:#065f46,stroke:#34d399,color:#ecfdf5,stroke-width:2px;
+    classDef terminal fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff,stroke-width:2px;
+
+    %% Apply classes
+    class B,C,D,E,F,G,H,I,K,L,M agent;
+    class J human;
+    class A system;
+    class N terminal;

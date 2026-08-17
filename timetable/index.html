@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Updated Weekly Timetable</title>
+    <style>
+        :root {
+            --border-color: #cbd5e1;
+            --header-bg: #f8fafc;
+            --break-bg: #f1f5f9;
+        }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            color: #1e293b;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #1d4ed8;
+        }
+        h1 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #0f172a;
+        }
+        table {
+            width: 100%;
+            max-width: 1100px;
+            border-collapse: collapse;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            background: white;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px 10px;
+            text-align: center;
+        }
+        th {
+            background-color: var(--header-bg);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.05em;
+        }
+        td:first-child {
+            font-weight: 600;
+            background-color: var(--header-bg);
+        }
+        .break-row {
+            background-color: var(--break-bg);
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .lunch {
+            font-size: 1.1em;
+            padding: 16px;
+        }
+        .snack {
+            font-size: 0.95em;
+            padding: 10px;
+            color: #475569;
+        }
+        .unclear {
+            color: #64748b;
+            font-style: italic;
+            font-size: 0.85em;
+        }
+        .notes {
+            width: 100%;
+            max-width: 1100px;
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+        .notes h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .notes ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .notes li {
+            margin-bottom: 5px;
+        }
+        
+        /* Print Specific Styles */
+        @media print {
+            @page {
+                size: landscape;
+                margin: 10mm;
+            }
+            body {
+                padding: 0;
+                background: white;
+            }
+            .controls {
+                display: none;
+            }
+            table, .notes {
+                box-shadow: none;
+                border: 2px solid #000;
+            }
+            th, td {
+                border: 1px solid #000;
+                color: #000;
+            }
+            th, td:first-child, .break-row, .notes {
+                background-color: #f0f0f0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <button onclick="window.print()">🖨️ Print Landscape</button>
+    </div>
+
+    <h1>Weekly Timetable</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Period</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>VA / Music</td>
+                <td>English</td>
+                <td>Maths</td>
+                <td>PS</td>
+                <td>Maths</td>
+            </tr>
+            <tr>
+                <td colspan="6" class="break-row snack">Snack Break</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>English</td>
+                <td>Maths</td>
+                <td>English</td>
+                <td>Phy/Chem</td>
+                <td>Library</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Phy/Chem</td>
+                <td>SST</td>
+                <td>W.T</td>
+                <td>Maths</td>
+                <td>SDP</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Taekwondo</td>
+                <td>PT <br><span class="unclear">(unclear)</span></td>
+                <td>W.T <br><span class="unclear">(unclear)</span></td>
+                <td>2nd Language</td>
+                <td>English</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Maths</td>
+                <td>2nd Language</td>
+                <td>Biology</td>
+                <td>SST</td>
+                <td>English</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Maths</td>
+                <td>Basketball</td>
+                <td>SST</td>
+                <td>English</td>
+                <td>Football</td>
+            </tr>
+            <tr>
+                <td colspan="6" class="break-row lunch">Lunch Break</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>2nd Language</td>
+                <td>English</td>
+                <td>Maths</td>
+                <td>Coding</td>
+                <td>Phy/Chem</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>H.T</td>
+                <td>Phy/Chem</td>
+                <td>3rd Language</td>
+                <td>Coding</td>
+                <td>SST</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>SST / 3rd Language</td>
+                <td>FL / Astro</td>
+                <td>2nd Language / IM</td>
+                <td>Biology / ScH</td>
+                <td>SST / 2nd Language</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="notes">
+        <h3>Notes:</h3>
+        <ul>
+            <li><strong>Snack Break:</strong> Between Periods 1 & 2</li>
+            <li><strong>Lunch Break:</strong> Between Periods 6 & 7</li>
+            <li>Tuesday Period 4 is difficult to read (looks like PT).</li>
+            <li>Wednesday Period 4 appears to be W.T.</li>
+            <li>Thursday Period 9 last word looks like ScH (possibly School/Science Club).</li>
+        </ul>
+    </div>
+
+</body>
+</html>
+
+
+```

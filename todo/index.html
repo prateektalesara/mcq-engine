@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProDo - Anti-Procrastination Task Manager</title>
+
+    <!-- Load React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+    <!-- Load Babel for in-browser JSX compilation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8fafc;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo, useRef } = React;
+
+        // --- Inline Icon Components ---
+        const Icon = ({ children, className = "w-5 h-5", ...props }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+                {children}
+            </svg>
+        );
+
+        const Check = (p) => <Icon {...p}><polyline points="20 6 9 17 4 12"></polyline></Icon>;
+        const Clock = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></Icon>;
+        const Phone = (p) => <Icon {...p}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></Icon>;
+        const Mic = (p) => <Icon {...p}><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></Icon>;
+        const Plus = (p) => <Icon {...p}><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></Icon>;
+        const Trash2 = (p) => <Icon {...p}><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></Icon>;
+        const Play = (p) => <Icon {...p}><polygon points="5 3 19 12 5 21 5 3"></polygon></Icon>;
+        const Pause = (p) => <Icon {...p}><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></Icon>;
+        const BarChart2 = (p) => <Icon {...p}><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></Icon>;
+        const ListTodo = (p) => <Icon {...p}><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></Icon>;
+        const Calendar = (p) => <Icon {...p}><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></Icon>;
+        const AlertCircle = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></Icon>;
+        const PhoneCall = (p) => <Icon {...p}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path><path d="M14.05 2a9 9 0 0 1 8 7.94"></path><path d="M14.05 6A5 5 0 0 1 18 10"></path></Icon>;
+        const Zap = (p) => <Icon {...p}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></Icon>;
+        const Activity = (p) => <Icon {...p}><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></Icon>;
+        const RefreshCw = (p) => <Icon {...p}><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></Icon>;
+
+        const PRIORITIES = {
+            high: { label: 'High Priority', color: 'text-red-500', bg: 'bg-red-100', border: 'border-red-500' },
+            medium: { label: 'Medium', color: 'text-amber-500', bg: 'bg-amber-100', border: 'border-amber-500' },
+            low: { label: 'Low', color: 'text-blue-500', bg: 'bg-blue-100', border: 'border-blue-500' }
+        };
+
+        const generateId = () => Math.random().toString(36).substr(2, 9);
+
+        function App() {
+            const [tasks, setTasks] = useState(() => {
+                const saved = localStorage.getItem('prodo-tasks');
+                if (saved) {
+                    try { return JSON.parse(saved); } catch (e) { console.error("Failed to load tasks", e); }
+                }
+                return [];
+            });
+
+            const [activeTab, setActiveTab] = useState('tasks');
+
+            const [newTaskTitle, setNewTaskTitle] = useState('');
+            const [newTaskPriority, setNewTaskPriority] = useState('medium');
+            const [newTaskType, setNewTaskType] = useState('standard');
+            const [newTaskPhone, setNewTaskPhone] = useState('');
+            const [newTaskDueDate, setNewTaskDueDate] = useState('');
+
+            const [isListening, setIsListening] = useState(false);
+            const [voiceError, setVoiceError] = useState('');
+
+            useEffect(() => {
+                localStorage.setItem('prodo-tasks', JSON.stringify(tasks));
+            }, [tasks]);
+
+            const handleAddTask = (e) => {
+                if (e) e.preventDefault();
+                if (!newTaskTitle.trim()) return;
+
+                const newTask = {
+                    id: generateId(),
+                    title: newTaskTitle.trim(),
+                    status: 'todo',
+                    priority: newTaskPriority,
+                    type: newTaskType,
+                    phone: newTaskType === 'call' ? newTaskPhone : null,
+                    dueDate: newTaskDueDate || null,
+                    createdAt: new Date().toISOString(),
+                    completedAt: null,
+                    snoozedUntil: null,
+                    snoozeCount: 0
+                };
+
+                setTasks(prev => [newTask, ...prev]);
+
+                setNewTaskTitle('');
+                setNewTaskPriority('medium');
+                setNewTaskType('standard');
+                setNewTaskPhone('');
+                setNewTaskDueDate('');
+            };
+
+            const updateTaskStatus = (id, newStatus) => {
+                setTasks(prev => prev.map(t => {
+                    if (t.id === id) {
+                        return {
+                            ...t,
+                            status: newStatus,
+                            completedAt: newStatus === 'done' ? new Date().toISOString() : t.completedAt
+                        };
+                    }
+                    return t;
+                }));
+            };
+
+            const deleteTask = (id) => {
+                setTasks(prev => prev.filter(t => t.id !== id));
+            };
+
+            const handleSnooze = (id, hoursToAdd) => {
+                const snoozeTime = new Date();
+                snoozeTime.setHours(snoozeTime.getHours() + hoursToAdd);
+
+                setTasks(prev => prev.map(t => {
+                    if (t.id === id) {
+                        return {
+                            ...t,
+                            snoozedUntil: snoozeTime.toISOString(),
+                            snoozeCount: (t.snoozeCount || 0) + 1,
+                            status: 'todo'
+                        };
+                    }
+                    return t;
+                }));
+            };
+
+            const toggleVoiceInput = () => {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+                if (!SpeechRecognition) {
+                    setVoiceError("Your browser doesn't support voice input.");
+                    setTimeout(() => setVoiceError(''), 3000);
+                    return;
+                }
+
+                if (isListening) {
+                    setIsListening(false);
+                    return;
+                }
+
+                const recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.lang = 'en-US';
+
+                recognition.onstart = () => {
+                    setIsListening(true);
+                    setVoiceError('');
+                };
+
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    setNewTaskTitle(prev => prev ? `${prev} ${transcript}` : transcript);
+
+                    const lowerTranscript = transcript.toLowerCase();
+                    if (lowerTranscript.includes('call') || lowerTranscript.includes('phone')) {
+                        setNewTaskType('call');
+                    }
+                    if (lowerTranscript.includes('urgent') || lowerTranscript.includes('important')) {
+                        setNewTaskPriority('high');
+                    }
+
+                    setIsListening(false);
+                };
+
+                recognition.onerror = (event) => {
+                    console.error(event.error);
+                    setIsListening(false);
+                    setVoiceError("Couldn't hear you clearly. Please try again.");
+                    setTimeout(() => setVoiceError(''), 3000);
+                };
+
+                recognition.onend = () => {
+                    setIsListening(false);
+                };
+
+                recognition.start();
+            };
+
+            const [now, setNow] = useState(new Date().toISOString());
+
+            // Update time periodically to refresh snooze statuses
+            useEffect(() => {
+                const interval = setInterval(() => setNow(new Date().toISOString()), 60000);
+                return () => clearInterval(interval);
+            }, []);
+
+            const visibleTasks = useMemo(() => {
+                return tasks.filter(t => {
+                    const isSnoozed = t.snoozedUntil && t.snoozedUntil > now;
+
+                    if (activeTab === 'tasks') {
+                        return !isSnoozed && t.dueDate === null && t.status !== 'done';
+                    }
+                    if (activeTab === 'scheduled') {
+                        return (t.dueDate !== null || isSnoozed) && t.status !== 'done';
+                    }
+                    if (activeTab === 'reports') {
+                        return t.status === 'done';
+                    }
+                    return true;
+                }).sort((a, b) => {
+                    const priorityWeights = { high: 3, medium: 2, low: 1 };
+                    if (priorityWeights[a.priority] !== priorityWeights[b.priority]) {
+                        return priorityWeights[b.priority] - priorityWeights[a.priority];
+                    }
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                });
+            }, [tasks, activeTab, now]);
+
+            return (
+                <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900">
+
+                    <header className="bg-white border-b border-slate-200 sticky top-0 z-10 shadow-sm">
+                        <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <Zap className="w-6 h-6 text-indigo-600" />
+                                <h1 className="text-xl font-bold text-slate-800 tracking-tight">ProDo</h1>
+                            </div>
+
+                            <nav className="flex gap-1 bg-slate-100 p-1 rounded-lg">
+                                <TabButton
+                                    active={activeTab === 'tasks'}
+                                    onClick={() => setActiveTab('tasks')}
+                                    icon={<ListTodo className="w-4 h-4" />}
+                                    label="Focus"
+                                />
+                                <TabButton
+                                    active={activeTab === 'scheduled'}
+                                    onClick={() => setActiveTab('scheduled')}
+                                    icon={<Calendar className="w-4 h-4" />}
+                                    label="Scheduled"
+                                />
+                                <TabButton
+                                    active={activeTab === 'reports'}
+                                    onClick={() => setActiveTab('reports')}
+                                    icon={<BarChart2 className="w-4 h-4" />}
+                                    label="Reports"
+                                />
+                            </nav>
+                        </div>
+                    </header>
+
+                    <main className="max-w-4xl mx-auto px-4 py-8">
+
+                        {activeTab !== 'reports' && (
+                            <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200 mb-8 transition-all hover:shadow-md">
+                                <form onSubmit={handleAddTask} className="flex flex-col gap-4">
+                                    <div className="flex flex-col sm:flex-row gap-3">
+                                        <div className="relative flex-grow">
+                                            <input
+                                                type="text"
+                                                value={newTaskTitle}
+                                                onChange={(e) => setNewTaskTitle(e.target.value)}
+                                                placeholder="What needs to get done?"
+                                                className="w-full pl-4 pr-12 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all sm:text-lg"
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={toggleVoiceInput}
+                                                className={`absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-lg transition-colors ${isListening ? 'bg-red-100 text-red-600 animate-pulse' : 'text-slate-400 hover:text-indigo-600 hover:bg-indigo-50'
+                                                    }`}
+                                                title="Use Voice Input"
+                                            >
+                                                <Mic className="w-5 h-5" />
+                                            </button>
+                                        </div>
+
+                                        <button
+                                            type="submit"
+                                            disabled={!newTaskTitle.trim()}
+                                            className="bg-indigo-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+                                        >
+                                            <Plus className="w-5 h-5" />
+                                            <span>Add Task</span>
+                                        </button>
+                                    </div>
+
+                                    {voiceError && (
+                                        <p className="text-red-500 text-sm animate-fade-in">{voiceError}</p>
+                                    )}
+
+                                    <div className="flex flex-col sm:flex-row flex-wrap sm:items-center gap-4 pt-2">
+                                        <div className="flex items-center gap-2 bg-slate-50 p-1.5 rounded-lg border border-slate-200 self-start sm:self-auto">
+                                            {Object.keys(PRIORITIES).map(p => (
+                                                <button
+                                                    key={p}
+                                                    type="button"
+                                                    onClick={() => setNewTaskPriority(p)}
+                                                    className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${newTaskPriority === p
+                                                            ? 'bg-white shadow-sm text-slate-800'
+                                                            : 'text-slate-500 hover:text-slate-700'
+                                                        }`}
+                                                >
+                                                    {PRIORITIES[p].label}
+                                                </button>
+                                            ))}
+                                        </div>
+
+                                        <div className="flex items-center gap-2 self-start sm:self-auto">
+                                            <button
+                                                type="button"
+                                                onClick={() => setNewTaskType(newTaskType === 'call' ? 'standard' : 'call')}
+                                                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors border ${newTaskType === 'call'
+                                                        ? 'bg-green-50 border-green-200 text-green-700'
+                                                        : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
+                                                    }`}
+                                            >
+                                                <Phone className="w-4 h-4" />
+                                                Call Task
+                                            </button>
+
+                                            {newTaskType === 'call' && (
+                                                <input
+                                                    type="tel"
+                                                    value={newTaskPhone}
+                                                    onChange={(e) => setNewTaskPhone(e.target.value)}
+                                                    placeholder="Phone number"
+                                                    className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm w-full sm:w-40"
+                                                />
+                                            )}
+                                        </div>
+
+                                        <div className="flex items-center gap-2 sm:ml-auto self-start sm:self-auto">
+                                            <input
+                                                type="date"
+                                                value={newTaskDueDate}
+                                                onChange={(e) => setNewTaskDueDate(e.target.value)}
+                                                className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm text-slate-600 w-full sm:w-auto"
+                                            />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        )}
+
+                        {activeTab !== 'reports' && (
+                            <div className="space-y-4">
+                                {visibleTasks.length === 0 ? (
+                                    <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 border-dashed">
+                                        <Activity className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+                                        <h3 className="text-lg font-medium text-slate-700 mb-1">You're all caught up!</h3>
+                                        <p className="text-slate-500">Enjoy your zero-procrastination state, or add a new task.</p>
+                                    </div>
+                                ) : (
+                                    visibleTasks.map(task => (
+                                        <TaskCard
+                                            key={task.id}
+                                            task={task}
+                                            updateStatus={updateTaskStatus}
+                                            deleteTask={deleteTask}
+                                            snoozeTask={handleSnooze}
+                                        />
+                                    ))
+                                )}
+                            </div>
+                        )}
+
+                        {activeTab === 'reports' && <ReportsDashboard tasks={tasks} />}
+
+                    </main>
+                </div>
+            );
+        }
+
+        function TaskCard({ task, updateStatus, deleteTask, snoozeTask }) {
+            const priorityInfo = PRIORITIES[task.priority];
+            const isOverSnoozed = task.snoozeCount > 2;
+            const isCall = task.type === 'call';
+
+            return (
+                <div className={`group bg-white rounded-xl p-4 sm:p-5 shadow-sm border-l-4 border-y border-r border-slate-200 transition-all hover:shadow-md flex flex-col sm:flex-row gap-4 sm:items-center ${priorityInfo.border}`}>
+
+                    <div className="flex items-center gap-3">
+                        {task.status === 'todo' ? (
+                            <button
+                                onClick={() => updateStatus(task.id, 'in-progress')}
+                                className="w-10 h-10 rounded-full border-2 border-slate-300 flex items-center justify-center text-slate-400 hover:border-indigo-500 hover:text-indigo-600 transition-colors bg-slate-50 hover:bg-indigo-50 shrink-0"
+                                title="Start Task"
+                            >
+                                <Play className="w-4 h-4 ml-0.5" />
+                            </button>
+                        ) : task.status === 'in-progress' ? (
+                            <button
+                                onClick={() => updateStatus(task.id, 'todo')}
+                                className="w-10 h-10 rounded-full border-2 border-indigo-500 flex items-center justify-center text-indigo-600 bg-indigo-50 hover:bg-indigo-100 transition-colors animate-pulse shrink-0"
+                                title="Pause Task"
+                            >
+                                <Pause className="w-4 h-4" />
+                            </button>
+                        ) : null}
+                    </div>
+
+                    <div className="flex-grow min-w-0">
+                        <div className="flex items-center flex-wrap gap-2 mb-1">
+                            <h3 className={`text-base sm:text-lg font-semibold truncate ${task.status === 'done' ? 'text-slate-400 line-through' : 'text-slate-800'}`}>
+                                {task.title}
+                            </h3>
+                            {isOverSnoozed && task.status !== 'done' && (
+                                <span className="flex items-center gap-1 text-xs font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full whitespace-nowrap" title="You've snoozed this multiple times!">
+                                    <AlertCircle className="w-3 h-3" /> Stop Procrastinating
+                                </span>
+                            )}
+                        </div>
+
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-slate-500 mt-2 sm:mt-0">
+                            <span className={`px-2 py-0.5 rounded-md font-medium ${priorityInfo.bg} ${priorityInfo.color}`}>
+                                {priorityInfo.label}
+                            </span>
+
+                            {task.status === 'in-progress' && (
+                                <span className="flex items-center gap-1 text-indigo-600 font-medium">
+                                    <RefreshCw className="w-3 h-3 animate-spin" /> In Progress
+                                </span>
+                            )}
+
+                            {task.dueDate && (
+                                <span className="flex items-center gap-1">
+                                    <Calendar className="w-3 h-3" /> Due {new Date(task.dueDate).toLocaleDateString()}
+                                </span>
+                            )}
+
+                            {task.snoozedUntil && new Date(task.snoozedUntil) > new Date() && (
+                                <span className="flex items-center gap-1 text-amber-600">
+                                    <Clock className="w-3 h-3" /> Snoozed until {new Date(task.snoozedUntil).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                </span>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 sm:ml-auto pt-3 sm:pt-0 border-t sm:border-t-0 border-slate-100 mt-2 sm:mt-0">
+
+                        {isCall && task.status !== 'done' && (
+                            <a
+                                href={`tel:${task.phone}`}
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-green-100 text-green-700 hover:bg-green-200 rounded-lg font-medium text-sm transition-colors"
+                            >
+                                <PhoneCall className="w-4 h-4" />
+                                <span className="hidden sm:inline">Call Now</span>
+                                <span className="sm:hidden">Call</span>
+                            </a>
+                        )}
+
+                        {task.status !== 'done' && (
+                            <div className="relative group/snooze inline-block">
+                                <button className="p-2 text-slate-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors">
+                                    <Clock className="w-5 h-5" />
+                                </button>
+                                <div className="absolute right-0 top-full mt-1 w-32 bg-white rounded-xl shadow-lg border border-slate-200 p-1 opacity-0 invisible group-hover/snooze:opacity-100 group-hover/snooze:visible transition-all z-10">
+                                    <button onClick={() => snoozeTask(task.id, 1)} className="w-full text-left px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 rounded-lg">1 Hour</button>
+                                    <button onClick={() => snoozeTask(task.id, 24)} className="w-full text-left px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 rounded-lg">Tomorrow</button>
+                                </div>
+                            </div>
+                        )}
+
+                        {task.status !== 'done' && (
+                            <button
+                                onClick={() => updateStatus(task.id, 'done')}
+                                className="p-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                                title="Mark as Done"
+                            >
+                                <Check className="w-5 h-5" />
+                            </button>
+                        )}
+
+                        <button
+                            onClick={() => deleteTask(task.id)}
+                            className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors sm:opacity-0 group-hover:opacity-100 focus:opacity-100"
+                            title="Delete Task"
+                        >
+                            <Trash2 className="w-5 h-5" />
+                        </button>
+
+                    </div>
+                </div>
+            );
+        }
+
+        function ReportsDashboard({ tasks }) {
+            const totalTasks = tasks.length;
+            const completedTasks = tasks.filter(t => t.status === 'done').length;
+            const completionRate = totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
+
+            const snoozedTasksCount = tasks.filter(t => t.snoozeCount > 0).length;
+            const heavyProcrastination = tasks.filter(t => t.snoozeCount > 2).length;
+
+            return (
+                <div className="space-y-6 animate-fade-in">
+                    <h2 className="text-2xl font-bold text-slate-800">Productivity Insights</h2>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                            <div className="flex items-center justify-between mb-2">
+                                <h3 className="text-sm font-medium text-slate-500">Completion Rate</h3>
+                                <Activity className="w-5 h-5 text-indigo-500" />
+                            </div>
+                            <p className="text-3xl font-bold text-slate-800">{completionRate}%</p>
+                            <div className="w-full bg-slate-100 h-2 rounded-full mt-4 overflow-hidden">
+                                <div
+                                    className="bg-indigo-500 h-full rounded-full transition-all duration-1000"
+                                    style={{ width: `${completionRate}%` }}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                            <div className="flex items-center justify-between mb-2">
+                                <h3 className="text-sm font-medium text-slate-500">Tasks Completed</h3>
+                                <Check className="w-5 h-5 text-emerald-500" />
+                            </div>
+                            <p className="text-3xl font-bold text-slate-800">{completedTasks} <span className="text-lg text-slate-400 font-normal">/ {totalTasks}</span></p>
+                        </div>
+
+                        <div className={`bg-white p-6 rounded-2xl shadow-sm border ${heavyProcrastination > 0 ? 'border-red-200 bg-red-50/30' : 'border-slate-200'}`}>
+                            <div className="flex items-center justify-between mb-2">
+                                <h3 className="text-sm font-medium text-slate-500">Procrastination Index</h3>
+                                <AlertCircle className={`w-5 h-5 ${heavyProcrastination > 0 ? 'text-red-500' : 'text-amber-500'}`} />
+                            </div>
+                            <p className="text-3xl font-bold text-slate-800">{heavyProcrastination}</p>
+                            <p className="text-sm text-slate-500 mt-2">
+                                Tasks snoozed more than twice. {heavyProcrastination > 0 ? 'Time to tackle these!' : 'Great job staying on track!'}
+                            </p>
+                        </div>
+                    </div>
+
+                    {heavyProcrastination > 0 && (
+                        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mt-8">
+                            <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                                <AlertCircle className="w-5 h-5 text-red-500" />
+                                Procrastination Danger Zone
+                            </h3>
+                            <ul className="space-y-3">
+                                {tasks.filter(t => t.snoozeCount > 2 && t.status !== 'done').map(task => (
+                                    <li key={task.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 bg-red-50 rounded-lg border border-red-100 gap-2">
+                                        <span className="font-medium text-slate-800">{task.title}</span>
+                                        <span className="text-xs font-bold text-red-600 bg-red-100 px-2 py-1 rounded-md self-start sm:self-auto">
+                                            Snoozed {task.snoozeCount} times
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        function TabButton({ active, onClick, icon, label }) {
+            return (
+                <button
+                    onClick={onClick}
+                    className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-md text-sm font-medium transition-all ${active
+                            ? 'bg-white text-indigo-700 shadow-sm'
+                            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+                        }`}
+                >
+                    {icon}
+                    <span className="hidden sm:inline">{label}</span>
+                </button>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
